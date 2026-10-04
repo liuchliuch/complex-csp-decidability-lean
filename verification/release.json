@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-04",
+  "lean_version": "4.24.0",
+  "source_tree_sha256": "8ab86f339005eb1cc9a9962841e7a50694296fdab56cd869bec84b980e765422",
+  "builds": {
+    "original": "passed",
+    "reorganized": "passed",
+    "independent_directory_fresh_main_sources": "passed; verified vendor and public dependency caches reused"
+  },
+  "source_inventory": {
+    "production_modules": 3377,
+    "original_main_modules_preserved_under_renaming": 357,
+    "vendored_modules_preserved_byte_for_byte": 3018
+  },
+  "production_axiom_audit": {
+    "declarations": 271562,
+    "result": "passed",
+    "dependencies": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "paper_correspondence": {
+    "numbered_items": 36,
+    "proof_items_mapped": 31,
+    "declaration_entries_checked": 158,
+    "printed_theorem_5_2": "refuted; all-instance replacement proved"
+  },
+  "regressions": {
+    "modules": 6,
+    "executable_assertions": 36,
+    "result": "passed in the production and independent source directories"
+  },
+  "comparator": {
+    "goals": 123,
+    "statement_and_definition_comparison": "passed",
+    "axiom_policy": "passed",
+    "fresh_lean_kernel_replay": "passed",
+    "kernel_implementation": "Lean 4.24.0 default kernel",
+    "process_isolation": "disabled; explicit local-author mode on macOS ARM64"
+  },
+  "github_actions": {
+    "linux_landrun_workflow": "configured",
+    "remote_run": "not yet run"
+  }
+}

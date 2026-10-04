@@ -1,0 +1,90 @@
+--- a/paper/source/cai-chen-complex-csp-decidability.tex
++++ b/paper/source/cai-chen-complex-csp-decidability.tex
+@@ -2245,9 +2245,9 @@
+ 
+ \subsection{Tensor characters and pinned indistinguishability}
+ 
+-We recall the consequence of Young's constraint-function isomorphism theorem
+-needed below~\cite[Definitions~3--7, Section~4.1, and
+-Corollary~35]{Young2025}.  A constraint-function
++We use the all-instance form of constraint-function isomorphism, proved
++independently below.  For related terminology, see
++Young~\cite[Definitions~3--7 and Section~4.1]{Young2025}.  A constraint-function
+ family $\mathcal H$ is defined over a common finite domain, denoted
+ $V(\mathcal H)$.  Two finite families $\mathcal H$ and $\mathcal G$ are
+ \emph{similar} if they are equipped with an arity-preserving bijection between
+@@ -2276,7 +2276,7 @@
+ $I_{\mathcal H\to\mathcal G}$ be the $\mathcal G$-instance obtained by
+ replacing every function of $\mathcal H$ by its corresponding function of
+ $\mathcal G$, while retaining the variables, labels, and constraint scopes.
+-Under this notation, the cited result gives the following pinned form.
++Under this notation, the all-instance statement has the following pinned form.
+ 
+ \begin{theorem}[Pinned constraint-function isomorphism]
+ \label{thm:young-pinned}
+@@ -2288,7 +2288,7 @@
+   Z_{\beta}^{\mathcal H}(I)
+   =Z_{\gamma}^{\mathcal G}(I_{\mathcal H\to\mathcal G})
+ \end{equation*}
+-for every simple $k$-labelled $\mathcal H$-instance $I$, then the two
++for every $k$-labelled $\mathcal H$-instance $I$, then the two
+ domains have the same size and there is an isomorphism
+ $\sigma:V(\mathcal H)\to V(\mathcal G)$ of the two families such that
+ $\sigma(\beta(i))$ and $\gamma(i)$ are twins in $\mathcal G$ for every
+@@ -2299,8 +2299,44 @@
+ \end{theorem}
+ 
+ The theorem is applied at a fixed triple $(k,\beta,\gamma)$: equality is
+-quantified over all simple instances for these fixed data, and the resulting
++quantified over all instances for these fixed data, and the resulting
+ isomorphism may depend on the triple.
++
++\begin{proof}
++We first establish extension of indistinguishable pins.  Give an instance one
++additional label and regard its pinned value as a function of the value at that
++label.  Among the finitely many values in the disjoint union of the two domains,
++there are only finitely many distinct evaluation profiles.  Choose finitely many
++instances separating these profiles.  Over the coefficient field, products of
++normalized linear factors give an indicator polynomial for any one profile.
++Labelled gluing represents products of pinned values; the empty instance
++represents the constant one.  Thus each indicator polynomial is a linear
++combination of pinned values of finite instances.  Closing the additional label
++sums this indicator over its domain.  If a profile realized in the first domain
++were absent from the second, these two sums would be a positive integer and
++zero, respectively.  Characteristic zero and the assumed equality of all
++instances exclude this possibility.  Each prescribed additional pin therefore
++has an indistinguishable matching pin in the other domain.
++
++Apply this extension repeatedly to enumerate the first domain, and then apply
++it in the reverse direction to enumerate the second.  The resulting paired
++pins cover both domains and still agree on every instance.  In particular,
++single-constraint instances give agreement of their atomic table diagrams.
++This induces a bijection between twin classes: values at paired labels have
++matching one-coordinate atomic profiles, and the labels cover every possible
++choice of the other coordinates.  Indicator polynomials for these finite atomic
++profiles, followed by closing one additional label, show that corresponding
++twin classes have equal sizes.  Choose a bijection within each corresponding
++pair of classes.  The atomic diagram and invariance under twin replacement show
++that the union of these bijections is a domain isomorphism.  Each original pin
++is sent to a twin of its prescribed counterpart.  The converse is the change
++of summation variables and twin invariance described below.
++
++The construction uses unrestricted labelled gluing, including repeated
++constraints and scope positions.  It does not assert the simple-instance
++implication.  The pin-extension, atomic-diagram, and twin-multiplicity steps are
++also proved in the accompanying Lean formalization.
++\end{proof}
+ 
+ For the converse, an isomorphism is a change of summation variables, and
+ replacing a pin by a twin preserves every constraint value.  In our exactly
+@@ -2668,8 +2704,8 @@
+ $\widehat g_f$ produces its $\widehat{\mathcal H}_N$ interpretation.
+ 
+ If the right-hand side of
+-\eqref{eq:character-agreement-tagged-agreement} holds, it holds in
+-particular for every simple instance.  By \cref{thm:young-pinned}, the
++\eqref{eq:character-agreement-tagged-agreement} holds, then by
++\cref{thm:young-pinned}, the
+ domains have equal size and there is a bijection
+ \begin{equation}
+   \sigma:A_M\to A_N

@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.lean text
+*.tex text
+*.bib text

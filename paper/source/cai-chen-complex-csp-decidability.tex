@@ -1,0 +1,4479 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf,skip=6pt]{caption}
+\usepackage{needspace}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{aliascnt}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
+\usepackage{authblk}
+
+\renewcommand\Authfont{\normalsize}
+\renewcommand\Affilfont{\small}
+\setlength{\affilsep}{0.5em}
+
+\Urlmuskip=0mu plus 1mu\relax
+
+\allowdisplaybreaks[2]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+
+\newaliascnt{claim}{theorem}
+\newtheorem{claim}[claim]{Claim}
+\aliascntresetthe{claim}
+
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+\newaliascnt{procedure}{theorem}
+\newtheorem{procedure}[procedure]{Decision Procedure}
+\aliascntresetthe{procedure}
+
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\crefname{theorem}{Theorem}{Theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{claim}{Claim}{Claims}
+\Crefname{claim}{Claim}{Claims}
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{procedure}{Procedure}{Procedures}
+\Crefname{procedure}{Procedure}{Procedures}
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
+
+\newcommand{\AlgNums}{\overline{\mathbb Q}}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\WF}{W_{\cF}}
+\newcommand{\CC}{\mathsf{CC}}
+\newcommand{\BO}{\mathsf{BO}}
+\newcommand{\TP}{\mathsf{TP}}
+\newcommand{\Mal}{\mathsf{Mal}}
+\newcommand{\CSP}[1]{\mathsf{\#CSP}(#1)}
+\newcommand{\CSPdeg}[2]{\mathsf{\#CSP}^{#1}(#2)}
+\newcommand{\WFdeg}[1]{W_{\cF}^{#1}}
+\newcommand{\SuppRel}[1]{\Phi_{#1}}
+\newcommand{\RowEq}[1]{\Omega_{#1}}
+\newcommand{\Pow}[2]{#1^{\langle #2\rangle}}
+\newcommand{\zvec}[1]{\mathbf z_{#1}}
+\newcommand{\InstMonoid}[1]{\mathfrak M_{#1}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\emptytuple}{\epsilon}
+\newcommand{\YES}{\textnormal{\textsc{yes}}}
+\newcommand{\NO}{\textnormal{\textsc{no}}}
+\DeclareMathOperator{\Pure}{Pure}
+\DeclareMathOperator{\arity}{arity}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\typeop}{type}
+\DeclareMathOperator{\Row}{Row}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+\begin{document}
+
+\title{From Block Orthogonality to 
+Decidability \\[0.15em] in Complex-Weighted Counting CSP}
+
+\author[1]{Chenghua Liu}
+\author[2]{Boning Meng}
+
+\affil[1]{Institute of Software, Chinese Academy of Sciences, Beijing, China}
+\affil[2]{University of Regensburg, Regensburg, Germany}
+\affil[ ]{\texttt{liuch.russell@gmail.com}, \texttt{mengboning2013@gmail.com}}
+\date{}
+
+\maketitle
+
+\begin{abstract}
+In a landmark JACM paper recognized with the 2021 G{\"o}del Prize, Cai and
+Chen established a complete complexity dichotomy for counting CSPs over
+arbitrary finite domains with algebraic complex weights.  Its polynomial-time
+side is characterized by three conditions---Block Orthogonality, Type
+Partition, and preservation by a common Mal'tsev operation---quantified over
+the countably infinite family $W_{\mathcal{F}}$ generated from arbitrary
+$\#\mathrm{CSP}(\mathcal{F})$ instances by partial summation.  They asked
+whether these infinitary conditions are decidable from the finite language
+$\mathcal{F}$ alone---equivalently, whether the polynomial-time side of this
+complete fixed-language classification is uniformly recognizable.  We settle
+this problem by giving, for every nonempty finite domain $D$ and every finite
+exactly encoded algebraic-complex language $\mathcal{F}$, a total exact
+algorithm that decides all three conditions on the full unbounded family
+$W_{\mathcal{F}}$.  Beyond decidability, we prove that Block Orthogonality
+alone forces both Type Partition and the existence of a single Mal'tsev
+operation preserving all generated support and row-equivalence relations.
+Thus the three-condition characterization collapses to Block Orthogonality,
+and the finite input $(D,\mathcal{F})$ determines which side of the dichotomy
+applies.  The same framework decides the corresponding conditions in the
+dichotomy theorem for degree-multiple counting CSP proved by Lin.
+Technically, any violation at external arity greater than $|D|^2+1$ can be
+compressed, by identifying variables, to a violation of external arity at
+most $|D|^2+1$.  At each bounded arity, testing all generated tables reduces
+to finitely many homogeneous polynomial identities.  We construct a
+tensor-character oracle that decides these identities without enumerating
+$W_{\mathcal{F}}$.  Scalar tags resolve collisions introduced by
+tensorization.  Young's pinned constraint-function isomorphism theorem then
+reduces equality of induced characters to a finite isomorphism test.  Linear
+independence of distinct monoid characters reduces universal vanishing to
+finitely many exact coefficient-sum tests.  For the structural collapse,
+power amplification controls complex cancellation, while a generated support
+detector realizes every row-equivalence relation as another generated
+support; the resulting common Mal'tsev operation yields Type Partition.
+\end{abstract}
+\section*{Acknowledgments}
+The authors used OpenAI's ChatGPT in preparing
+this manuscript, including for language editing and \LaTeX{} preparation.
+ChatGPT also contributed to the exploratory development of most of the
+arguments. All claims and proofs were independently checked and finalized
+by the authors, who take full responsibility for the content.
+
+\section{Introduction}
+\label{sec:introduction}
+
+Counting constraint satisfaction problems provide a common language for
+partition functions, weighted graph homomorphisms, and many other counting
+problems.  For nonnegative weights, supports and magnitudes interact
+monotonically.  Algebraic complex weights remove this monotonicity: partial
+summation can create new zeros, and proportionality or orthogonality can
+emerge only after exact cancellation.  These phenomena are central to the
+dichotomy theorem of Cai and Chen for complex-weighted
+$\#\mathrm{CSP}$~\cite{CaiChen2017}.
+
+Let $D$ be a nonempty finite domain and let $\cF$ be a finite language of
+algebraic complex-valued constraint functions.  A finite $\CSP{\cF}$
+instance $I$, with variable set $V(I)$, defines a function $F_I$ of all its
+variables.  After ordering those variables, let $F_I^{[t]}$ be the function
+obtained by summing out every variable after the first $t$.  Following Cai and
+Chen~\cite[Section~3]{CaiChen2017}, we associate with $\cF$ the countably
+infinite generated family
+\begin{equation}
+  W_{\cF}
+  =\left\{F_I^{[t]}:
+    \begin{array}{l}
+      I\text{ is a finite }\CSP{\cF}\text{ instance},\\
+      1\le t\le \abs{V(I)}
+    \end{array}
+    \right\}.
+  \label{eq:intro-generated-family}
+\end{equation}
+Variable scopes may repeat variables, and the variables may be reordered
+before marginalization.  Thus $W_{\cF}$ contains every generated partial
+marginal, permutation, and diagonal minor.  Both the instance size and the
+arity in~\eqref{eq:intro-generated-family} are unbounded.
+
+Cai and Chen characterize the polynomial-time side of their dichotomy by
+three conditions on this entire family~\cite[Theorem~1 and
+Section~3.1]{CaiChen2017}.  The first is a jointly purified
+\emph{Block Orthogonality} condition.  The second is \emph{Type Partition}
+for the complex row representations of generated functions.  The third asks
+for one Mal'tsev operation on $D$ that preserves every generated support and
+every generated row-equivalence relation.  Their theorem classifies every
+fixed language, and Cai and Chen explicitly asked whether the conjunction of
+the three conditions can be recognized uniformly from the finite input
+language~\cite[Section~9]{CaiChen2017}.
+
+Using the exact definitions in \cref{sec:preliminaries}, write
+$\BO(\cF)$, $\TP(\cF)$, and $\Mal(\cF)$ for these three global predicates,
+and put
+\[
+  \CC(\cF)=\BO(\cF)\wedge\TP(\cF)\wedge\Mal(\cF).
+\]
+Our main result resolves the uniform recognition problem and proves that the
+conjunction of these three conditions is equivalent to Block Orthogonality.
+
+\begin{theorem}[Uniform decidability]
+\label{thm:main}
+Let $D$ be a nonempty finite domain and let $\cF$ be a finite
+constraint language whose values are algebraic complex numbers given by
+exact encodings.  There is a deterministic algorithm that halts on every
+input $(D,\cF)$ and decides whether $\CC(\cF)$ holds on the full generated
+family $W_{\cF}$.  Moreover,
+\begin{equation}
+  \CC(\cF)\quad\Longleftrightarrow\quad\BO(\cF).
+  \label{eq:main-equivalence}
+\end{equation}
+\end{theorem}
+
+For a prescribed integer $\delta\ge1$, let
+$\CSPdeg{\delta}{\cF}$ denote the restriction of $\CSP{\cF}$ to instances in
+which every variable has occurrence degree divisible by $\delta$, and let
+$\WFdeg{\delta}$ be the corresponding generated family.  Lin proved a
+dichotomy theorem for $\CSPdeg{\delta}{\cF}$ whose tractable side is
+characterized by the corresponding Block Orthogonality, Type Partition, and
+common Mal'tsev conditions on $\WFdeg{\delta}$~\cite[Theorem~3]{Lin2021}.
+Our decision procedure and structural-collapse argument apply to this
+generated family as well.
+
+\begin{corollary}[Uniform recognition for $\#\mathrm{CSP}^{\delta}$]
+\label{cor:degree-multiple-main}
+Let $\delta\ge1$.  On input a nonempty finite domain $D$ and a finite
+algebraic-complex constraint language $\cF$ whose values are given by exact
+encodings, there is a deterministic algorithm deciding whether the three
+tractability conditions hold on the full generated family
+$\WFdeg{\delta}$.  Writing these conditions as
+$\BO^\delta(\cF)$, $\TP^\delta(\cF)$, and $\Mal^\delta(\cF)$, we have
+\[
+  \BO^\delta(\cF)\wedge\TP^\delta(\cF)\wedge\Mal^\delta(\cF)
+  \quad\Longleftrightarrow\quad
+  \BO^\delta(\cF).
+\]
+Consequently, one can decide which side of the dichotomy theorem for
+$\CSPdeg{\delta}{\cF}$ proved by Lin~\cite[Theorem~3]{Lin2021} applies.
+\end{corollary}
+
+The proof of \cref{cor:degree-multiple-main} is given after the required
+degree-filtered identity oracle in
+\cref{subsec:degree-multiple-identities,sec:type-collapse}.
+
+\subsection{Proof sketch}
+\label{subsec:proof-sketch}
+
+The proof has an algorithmic part, which decides global Block Orthogonality,
+and a structural part, which derives Type Partition and the common Mal'tsev
+condition from Block Orthogonality.  We indicate below where each step is
+proved.
+All computations below take place in explicitly represented algebraic number
+fields; the required field constructions, conjugation, equality tests, and
+root-of-unity computations are standard~\cite{Cohen1993}.  The
+Skolem--Mahler--Lech theorem~\cite{Lech1953} establishes termination of two
+explicit exact searches by controlling the zero sets of the associated
+linear recurrences.
+
+\paragraph{Purification and external-arity compression.}
+The reduction to finitely many external arities is carried out in
+\cref{sec:purification-compression}.  First,
+\cref{lem:purification-invariance} proves that Block Orthogonality of a
+purified table is independent of the finite ambient family in which it is
+purified; \cref{cor:singleton-purification} therefore reduces the original
+joint-purification condition to singleton purification.  A violation is
+witnessed by two rows.  The diagonal-minor construction in
+\cref{lem:diagonal-minors} identifies row coordinates carrying the same
+ordered pair of values on the two witnessing rows and preserves those rows
+entry by entry.  Consequently, \cref{lem:bo-arity-bound} shows that every
+violation whose external arity exceeds $d^2+1$ can be compressed to a
+violation in $W_{\cF}$ of external arity at most $d^2+1$, where
+$d=\abs D$.  This bounds the external arity of the compressed
+counterexample, not that of the original violating table or the size of an
+instance presenting it.
+
+\paragraph{Finite algebraic tests at a fixed arity.}
+In \cref{sec:bo-certificates},
+\cref{thm:finite-bo-certificates} describes the singleton-purified
+block-orthogonal tables as an effectively enumerable finite union of
+algebraic sets; the certificate branches explicitly allow entries and
+support rectangles to disappear or purified magnitude blocks to merge.
+By \cref{cor:bo-product-identities}, universal membership of the generated
+$k$-ary tables in this union is equivalent to finitely many polynomial
+identities.
+
+The identity oracle is developed in \cref{sec:universal-identities}.
+By \cref{lem:pinned-realization}, generated $k$-ary tables are exactly the
+pinned partition vectors of finite $k$-labelled instances.
+\Cref{lem:tensor-character} realizes every monomial in a polynomial identity
+as a multiplicative character of the labelled-instance monoid.  The pinned
+form of Young's constraint-function isomorphism theorem, stated as
+\cref{thm:young-pinned}, compares the corresponding tensor
+targets~\cite[Corollary~35]{Young2025}.  Because
+tensorization may identify distinct
+input functions, \cref{lem:scalar-tags} adds common positive rational tags;
+\cref{lem:character-comparison} then decides equality of the monomial
+characters.  Their linear independence is supplied by
+\cref{lem:dedekind-independence}, yielding the universal identity oracle in
+\cref{thm:universal-identity}.  Combining this oracle with the arity bound
+gives \cref{proc:global-bo}, whose termination and correctness on the full
+unbounded family $W_{\cF}$ are proved in
+\cref{thm:global-bo-decidable}.
+
+\paragraph{From generated supports to one Mal'tsev operation.}
+The structural argument begins in \cref{sec:generated-supports}.
+\Cref{lem:simultaneous-power-sums,lem:equality-free-support-realization}
+use power amplification to realize every equality-free primitive-positive
+combination of finitely many generated supports as the support of a
+member of $W_{\cF}$, despite possible cancellation.  Assuming $\BO(\cF)$,
+the rectangularity argument in \cref{lem:finite-support-maltsev} produces a
+common Mal'tsev operation for each finite family of generated supports.
+Since the set of operations $D^3\to D$ is finite,
+\cref{thm:common-support-maltsev} extracts one operation preserving every
+generated support simultaneously.
+
+\paragraph{Realizing row equivalence and obtaining Type Partition.}
+Continue under the assumption $\BO(\cF)$.  The remaining structural step
+occupies
+\crefrange{sec:omega-realization}{sec:type-collapse}.  For a generated table
+$G$, \cref{lem:generated-entrywise-powers} realizes the required entrywise
+powers inside $W_{\cF}$, and \cref{lem:finite-row-phases} supplies uniform
+finite phase control.  Let $K$ be the number field generated by the input
+values and their conjugates, let $\mu(K)$ be its finite group of roots of
+unity, let $e_K$ be the exponent of $\mu(K)$, and put
+\[
+  K_\mu=\lcm(2,e_K),
+  \qquad L_D=\lcm(1,\ldots,d).
+\]
+For each fixed $G$, choose a single suitable $t\ge0$ and set
+$q=1+tL_D$.  These ingredients give the generated detector
+\begin{equation*}
+  C_q(\mathbf x,\mathbf y)
+  =\sum_{z\in D}
+      G(\mathbf x,z)^{(K_\mu-1)q}G(\mathbf y,z)^q.
+\end{equation*}
+Block Orthogonality keeps the detector zero on every pair outside
+$\RowEq G$, while \cref{lem:nondegenerate-exponential-sums} guarantees that
+one allowed exponent $q$ can be chosen so that the detector is nonzero on
+every dependent pair of nonzero rows.  Thus
+\cref{thm:omega-support-realization} proves
+$\SuppRel{C_q}=\RowEq G$, where $\SuppRel H$ denotes the support relation of
+$H$ and $\RowEq G$ the nonzero-row dependence relation of $G$.
+\Cref{cor:omega-reduces-to-supports} then transfers preservation by the common
+operation from generated supports to every generated row-equivalence
+relation.  Finally, \cref{lem:omega-implies-type} derives Type Partition by
+a coordinatewise Mal'tsev calculation, and
+\cref{thm:structural-collapse} concludes
+$\CC(\cF)\Longleftrightarrow\BO(\cF)$.
+
+\paragraph{The degree-multiple generated family.}
+The cyclic degree filter is proved in
+\cref{subsec:degree-multiple-identities}, culminating in
+\cref{lem:degree-filtered-character-comparison,thm:degree-multiple-universal-identity};
+the proof of \cref{cor:degree-multiple-main} then repeats the structural
+construction within $\WFdeg{\delta}$.  The pinned realization, support
+amplification, entrywise powers, and row detector are finite-instance
+constructions; see
+\cref{lem:pinned-realization,lem:equality-free-support-realization,lem:generated-entrywise-powers,thm:omega-support-realization}.
+These constructions remain in $\WFdeg{\delta}$: fresh variables retain
+occurrence degrees divisible by $\delta$, while identifying boundary
+variables replaces their degrees by sums of multiples of $\delta$.
+Marginalization changes only which variables are retained, not their
+occurrence degrees in the underlying instance.
+
+\subsection{Related work}
+
+\paragraph{Counting graph homomorphisms ($\#\mathrm{GH}$).}
+For a symmetric $q\times q$ matrix $A$, write $[q]=\{1,\ldots,q\}$.  On an
+input graph $G=(V,E)$, the problem $\#\mathrm{GH}(A)$ evaluates
+\[
+  Z_A(G)=\sum_{\sigma:V(G)\to[q]}
+    \prod_{\{u,v\}\in E(G)}A_{\sigma(u),\sigma(v)}.
+\]
+The problem $\#\mathrm{GH}(A)$ is the special case of $\#\mathrm{CSP}$ with
+one symmetric binary constraint and is therefore covered by the
+complex-weighted $\#\mathrm{CSP}$ dichotomy theorem of Cai and
+Chen~\cite{CaiChen2017}.  Dyer and Greenhill classified $\{0,1\}$-valued
+matrices, Bulatov and Grohe
+extended the dichotomy to nonnegative matrices, Goldberg, Grohe, Jerrum, and
+Thurley handled arbitrary real matrices, and Cai, Chen, and Lu completed the
+classification for algebraic complex matrices
+\cite{DyerGreenhill2000,DyerGreenhill2004,BulatovGrohe2005,
+GoldbergGroheJerrumThurley2010,CaiChenLu2013}.  For algebraic-complex
+matrices, the dichotomy theorem of Cai, Chen, and Lu also provides a
+polynomial-time recognition algorithm for its tractable
+case~\cite[Theorem~1.2]{CaiChenLu2013}.
+
+Restricting the input $G$ to be planar creates additional matchgate-tractable
+cases.  Cai and Maran proved a complete dichotomy for every real symmetric
+$3\times3$ matrix, with the genuinely planar tractable cases exactly those
+obtained by holographic algorithms using matchgates~\cite{CaiMaran2023}.
+They subsequently obtained the analogous classification for nonnegative
+full-rank $4\times4$ matrices, where tensor products of matchgates give new
+tractable families~\cite{CaiMaran2024}.  In a 2026 preprint, Cai, Maran, and
+Young proved a dichotomy for nonnegative matrices with pairwise distinct
+diagonal entries, and more generally whenever planar edge gadgets separate
+every pair of target vertices~\cite{CaiMaranYoung2026}.  Their characterization
+of this separation through quantum automorphism groups yields a sharp barrier
+to the usual interpolation approach, and a complete dichotomy for arbitrary
+nonnegative symmetric target matrices remains open~\cite{CaiMaranYoung2026}.
+
+\paragraph{Counting CSP.}
+For general constraint languages, Dyer, Goldberg, and Jerrum classified
+nonnegative weighted Boolean $\#\mathrm{CSP}$
+\cite{DyerGoldbergJerrum2009}; Bulatov proved the finite-domain unweighted
+dichotomy, and Dyer and Richerby subsequently gave an elementary effective
+criterion
+\cite{Bulatov2013,DyerRicherby2013}.  For algebraic weights, Cai, Chen, and
+Lu obtained an effective dichotomy in the nonnegative setting; Cai, Lu, and
+Xia classified complex-weighted Boolean languages, and Cai and Chen
+established the fixed-language dichotomy over arbitrary finite domains with
+algebraic complex weights
+\cite{CaiChenLu2016,CaiLuXia2014,CaiChen2017}.  Lin proved a dichotomy
+theorem for the degree-divisibility restriction $\#\mathrm{CSP}^{\delta}$
+whose tractable side is characterized by the corresponding three infinitary
+conditions on $\WFdeg{\delta}$~\cite[Theorem~3]{Lin2021}.  That work left
+their uniform recognition open~\cite[p.~40:3]{Lin2021};
+\cref{cor:degree-multiple-main} resolves this question as well.  Existing
+effective criteria either exclude complex cancellation,
+restrict the domain to Boolean, or restrict the language to a single symmetric
+binary constraint; none provides, from an arbitrary finite-domain
+algebraic-complex input, a uniform decision procedure for the three
+infinitary tractability conditions in the complex-weighted $\#\mathrm{CSP}$
+dichotomy theorem of Cai and Chen~\cite[Section~3.1]{CaiChen2017}.  This is
+the recognition gap closed here.  Young's constraint-function isomorphism
+result for labelled instances~\cite[Corollary~35]{Young2025} supplies our
+exact comparison of tensor characters.
+
+\paragraph{Holant.}
+Valiant's holographic algorithms introduced basis transformations for
+tensor-network partition functions~\cite{Valiant2008}, and Cai, Lu, and Xia
+formulated Holant as a general counting framework containing $\#\mathrm{CSP}$
+and graph homomorphisms~\cite{CaiLuXia2009}.  On the Boolean domain, a
+sequence of dichotomies progressed from symmetric and auxiliary-signature
+settings to arbitrary nonnegative signatures, complex-valued
+$\operatorname{Holant}^{c}$, and finally
+arbitrary real-valued signatures
+\cite{CaiGuoWilliams2016,LinWang2018,
+Backens2021,Backens2025,ShaoCai2020}.  The full complex-valued Boolean
+classification remains open~\cite{MengWangXiaZheng2025,GuanShaoShi2026}.
+Meng, Wang, Xia, and Zheng obtained an
+$\mathsf{FP}^{\mathsf{NP}}$-versus-$\#\mathsf P$-hard classification in the
+presence of a nontrivial odd-arity signature~\cite{MengWangXiaZheng2025}.
+Guan, Shao, and Shi subsequently gave polynomial-time algorithms for every
+case on the $\mathsf{FP}^{\mathsf{NP}}$ side, yielding a genuine
+$\mathsf{FP}$-versus-$\#\mathsf P$-hard dichotomy in this
+regime~\cite{GuanShaoShi2026}.  Hence any remaining open case may be taken to
+have only even-arity nonzero signatures.
+
+Beyond the Boolean domain, Cai, Lu, and Xia classified
+$\operatorname{Holant}^{*}(f)$ for a single complex-valued symmetric ternary
+signature on domain size three~\cite{CaiLuXia2013}, while Cai, Guo, and
+Williams obtained dichotomies for counting edge colorings and certain
+associated higher-domain Holant problems~\cite{CaiGuoWilliams2014}.  Liu,
+Fan, and Cai later obtained
+single-signature dichotomies for real-valued symmetric ternary signatures on
+domain size three and $\{0,1\}$-valued symmetric ternary signatures on domain
+size four~\cite{LiuFanCai2025}.  Cai and Ihm proved a
+dichotomy for $\operatorname{Holant}^{*}_{3}(\mathcal F)$, where all unary
+signatures are freely available and $\mathcal F$ is an arbitrary set of
+symmetric real-valued signatures~\cite{CaiIhm2025}.
+Despite these advances, a general finite-domain Holant dichotomy remains
+unknown~\cite{CaiIhm2025}.
+
+\paragraph{Decision CSP.}
+For the decision problem, Schaefer established the Boolean dichotomy
+\cite{Schaefer1978}.  Feder and Vardi placed finite-domain CSP in a broad
+logical framework and formulated the dichotomy conjecture that every fixed
+finite constraint language yields either a polynomial-time problem or an
+$\mathsf{NP}$-complete one~\cite{FederVardi1998}.  The universal-algebraic
+approach relates CSP complexity to polymorphisms
+\cite{BulatovJeavonsKrokhin2005}; Mal'tsev polymorphisms also underlie
+effective counting-CSP algorithms~\cite{DyerRicherby2013}.  Bulatov and Zhuk
+independently proved the full finite-domain dichotomy in
+2017~\cite{Bulatov2017,Zhuk2017}; see also Zhuk's
+full journal account~\cite{Zhuk2020}.  Those decision results concern
+supports alone; the present recognition problem must additionally control
+magnitudes, phases, and zeros created by complex cancellation.
+
+
+
+
+\subsection{Organization}
+
+\Cref{sec:preliminaries} formalizes the three tractability conditions in the
+complex-weighted $\#\mathrm{CSP}$ dichotomy theorem of Cai and
+Chen~\cite[Section~3.1]{CaiChen2017} and specifies the exact input model,
+including the group-theoretic notation used later.
+\Crefrange{sec:purification-compression}{sec:bo-algorithm} develops the
+decision procedure for global Block Orthogonality; the degree filter for
+$\#\mathrm{CSP}^{\delta}$ appears in
+\cref{subsec:degree-multiple-identities}.
+\Crefrange{sec:generated-supports}{sec:type-collapse} proves the structural
+implication in~\eqref{eq:main-equivalence}.  \Cref{sec:conclusion} summarizes
+the results.
+
+
+
+
+\section{Preliminaries and the Three Tractability Conditions}
+\label{sec:preliminaries}
+
+This section formalizes the three tractability conditions in the
+complex-weighted $\#\mathrm{CSP}$ dichotomy theorem of Cai and
+Chen~\cite[Sections~2.8--2.9 and~3.1]{CaiChen2017}.
+
+\subsection{Algebraic, group-theoretic, and character notation}
+
+For an integer $n\ge 1$, let $[n]=\{1,\ldots,n\}$; set
+$[0]=\varnothing$ and $D^0=\{\emptytuple\}$, where $\emptytuple$ is the empty
+tuple.  Throughout, $D$ is a nonempty finite domain and $d=\abs D$.
+We write $\AlgNums\subseteq\mathbb C$ for the field of algebraic complex
+numbers.  Each input value has an exact encoding that includes its selected
+embedding into $\mathbb C$, for example a square-free polynomial over
+$\mathbb Z$ and a rational isolating rectangle.  Standard number-field
+algorithms can therefore perform arithmetic, conjugation, equality tests,
+and zero tests exactly~\cite{Cohen1993}.
+
+We collect the elementary group notation used below.  If $L$ is a field,
+then
+\[
+  L^\times=L\setminus\{0\}
+\]
+is its multiplicative group.  For $S\subseteq L^\times$, the subgroup
+generated by $S$ is
+\[
+  \begin{aligned}
+  \langle S\rangle
+  =\biggl\{&\prod_{a\in T}a^{n_a}:
+      T\subseteq S\text{ is finite},\\
+      &n_a\in\mathbb Z\text{ for every }a\in T\biggr\}.
+  \end{aligned}
+\]
+We write $H\le\Gamma$ when $H$ is a subgroup of the abelian group
+$\Gamma$.  A group homomorphism from a multiplicative group to an additive
+group satisfies $e(xy)=e(x)+e(y)$; its kernel is
+$\ker e=\{x:e(x)=0\}$.  The additive group $\mathbb Z^m$ is torsion-free:
+$N\mathbf v=0$ with $N\ge1$ implies $\mathbf v=0$.
+
+An element $x$ of a group is \emph{torsion} if $x^N=1$ for some $N\ge1$.
+For an abelian group $\Gamma$, its torsion elements form the subgroup
+\[
+  \Tor(\Gamma)=\{x\in\Gamma:x^N=1\text{ for some }N\ge1\}.
+\]
+If $\psi:\Gamma\to\mathbb C^\times$ is a homomorphism, we say that
+$\psi$ \emph{fixes torsion pointwise} if
+\begin{equation}
+  \psi(\xi)=\xi
+  \qquad\text{for every }\xi\in\Tor(\Gamma).
+  \label{eq:fixes-torsion-definition}
+\end{equation}
+This differs from two other phrases used below.  An additive homomorphism
+$e:\Gamma\to\mathbb Z^m$ \emph{annihilates torsion} when
+$e(\xi)=0$ for every $\xi\in\Tor(\Gamma)$, whereas an integer $N$
+\emph{kills torsion} in a finite subgroup $T$ when $\xi^N=1$ for every
+$\xi\in T$.
+Let $\mu_\infty\le\AlgNums^\times$ be the group of all algebraic roots of
+unity.  Thus, for $\Gamma\le\AlgNums^\times$,
+\begin{equation*}
+  \Tor(\Gamma)=\Gamma\cap\mu_\infty.
+\end{equation*}
+If $K$ is a number field, then
+$\mu(K)=K^\times\cap\mu_\infty$ is a finite cyclic group.  The
+\emph{exponent} of a finite group is the least positive integer $e$ such
+that $x^e=1$ for every group element $x$; equivalently, it is the least
+common multiple of the element orders.  We write $\lcm$ for least common
+multiple.
+
+Because every group here is abelian, $\Tor(\Gamma)$ is normal and the
+quotient $\Gamma/\Tor(\Gamma)$ is defined.  Its elements are cosets
+$[x]=x\Tor(\Gamma)$; two elements determine the same coset exactly when
+their quotient is torsion.  If a homomorphism
+$e:\Gamma\to\mathbb Z^m$ has kernel $\Tor(\Gamma)$, it induces the
+injective homomorphism
+\[
+  \Gamma/\Tor(\Gamma)\hookrightarrow\mathbb Z^m,
+  \qquad [x]\longmapsto e(x).
+\]
+
+A \emph{monoid} is a set with an associative multiplication and an identity
+element.  All monoids below are commutative; unless displayed explicitly in
+additive notation, they are written multiplicatively.
+A unital multiplicative \emph{character} from a monoid $M$ to a field $L$ is
+a map
+\[
+  \chi:M\to L,
+  \qquad
+  \chi(1)=1,
+  \qquad
+  \chi(xy)=\chi(x)\chi(y).
+\]
+Thus a character is a numerical observable that turns multiplication in the
+monoid into multiplication in the field.  Two characters are \emph{equal}
+when they agree on every element of $M$; syntactically different formulas
+may therefore define the same character.  Pointwise products of characters
+are again characters, and the complex conjugate of a complex-valued
+character is again a character.  A character on a monoid may take the value
+zero.  For example, on the additive monoid $\mathbb Z_{\ge0}$, the map that sends
+$0$ to $1$ and every positive integer to $0$ is a character.  By contrast,
+a character on a group cannot vanish, because
+$\chi(x)\chi(x^{-1})=\chi(1)=1$.
+
+As a basic example, let $M=(\mathbb Z_{\ge0}^r,+,\mathbf 0)$ and choose
+$\boldsymbol\lambda=(\lambda_1,\ldots,\lambda_r)\in(L^\times)^r$.  Then
+\begin{equation*}
+  \chi_{\boldsymbol\lambda}(\mathbf n)
+  =\prod_{j=1}^r\lambda_j^{n_j}
+\end{equation*}
+is a character: addition of exponent vectors multiplies the displayed
+values.  The coordinate functions of the pinned partition vectors introduced
+in \cref{subsec:labelled-instances} may vanish, but they satisfy the same
+multiplicativity law and hence are characters.  Their complex conjugates and
+finite pointwise products are characters as well.
+
+We will also use the following elementary principle, stated formally and
+proved in \cref{lem:dedekind-independence}: distinct unital multiplicative
+characters from a monoid to a characteristic-zero field are linearly
+independent as functions on that monoid.  Hence, for a finite expression
+\[
+  \sum_i c_i\chi_i,
+\]
+one first partitions the $\chi_i$ into classes of equal characters.  The
+expression vanishes on every monoid element if and only if, in each class,
+the sum of its coefficients $c_i$ is zero.  This distinction between a
+formal expression and the function it induces is the basis of the universal
+identity test in \cref{thm:universal-identity}.
+
+Finally, for an integer $\delta\ge1$, write
+$C_\delta=\mathbb Z/\delta\mathbb Z$ and choose a primitive
+$\delta$th root of unity $\omega_\delta$ (with $\omega_1=1$).  For fixed
+$n\in\mathbb Z$, the map $s\mapsto\omega_\delta^{sn}$ is a character of the
+additive group $C_\delta$.  It is the constant-one character exactly when
+$\delta\mid n$; otherwise its values form a nontrivial geometric progression
+whose sum is zero.  Thus
+\begin{equation}
+  \sum_{s\in C_\delta}\omega_\delta^{sn}
+  =
+  \begin{cases}
+    \delta,&\delta\mid n,\\
+    0,&\delta\nmid n.
+  \end{cases}
+  \label{eq:cyclic-character-filter}
+\end{equation}
+
+\subsection{Constraint instances and generated tables}
+
+A weighted constraint language $\cF$ over $D$ is a finite set of typed
+functions $f:D^{r_f}\to\AlgNums$ with $r_f\ge1$.  If the input
+is presented as a list, we identify exact duplicate typed tables; the
+generated family is unchanged.  An instance $I$ of
+$\CSP{\cF}$ consists of a variable set
+$V(I)=\{x_1,\ldots,x_n\}$, where $n(I)=\abs{V(I)}=n\ge1$, and a finite
+multiset $\mathcal C_I$ of constraints $(f;i_1,\ldots,i_{r_f})$, where
+$f\in\cF$ and $i_1,\ldots,i_{r_f}\in[n]$.  A scope is ordered and its
+indices need not be distinct.  The instance function $F_I:D^n\to\AlgNums$
+is
+\begin{equation}
+  F_I(a_1,\ldots,a_n)
+  =\prod_{(f;i_1,\ldots,i_{r_f})\in\mathcal C_I}
+      f(a_{i_1},\ldots,a_{i_{r_f}}),
+  \label{eq:instance-function}
+\end{equation}
+where multiplicities are retained and the empty product equals $1$.
+For $t\in[n]$, define
+\begin{equation}
+  F_I^{[t]}(a_1,\ldots,a_t)
+  =\sum_{(a_{t+1},\ldots,a_n)\in D^{n-t}}
+      F_I(a_1,\ldots,a_n).
+  \label{eq:partial-marginal}
+\end{equation}
+Following Cai and Chen~\cite{CaiChen2017}, the generated family is
+\begin{equation*}
+  W_{\cF}
+  =\left\{F_I^{[t]}:
+    \begin{array}{l}
+      I\text{ is a finite }\CSP{\cF}\text{ instance},\\
+      t\in[n(I)]
+    \end{array}
+    \right\}.
+\end{equation*}
+The variable ordering in an instance is arbitrary, so
+\eqref{eq:partial-marginal} retains any prescribed ordered subset after
+relabeling.  Repeated scope indices permit diagonal minors and arbitrary
+identifications.  Instances may contain arbitrarily many variables,
+constraints, hidden variables, and retained variables.
+
+For $\delta\ge1$, the \emph{occurrence degree} of a variable is the number
+of positions in all constraint scopes occupied by that variable, counting
+constraint multiplicity and repeated positions.  Following
+Lin~\cite{Lin2021}, $\CSPdeg{\delta}{\cF}$ denotes the restriction of
+$\CSP{\cF}$ to instances in which every variable has occurrence degree
+divisible by $\delta$.  Its
+generated family is
+\begin{equation*}
+  \WFdeg{\delta}
+  =\left\{F_I^{[t]}:
+    \begin{array}{l}
+      I\text{ is a finite }\CSPdeg{\delta}{\cF}\text{ instance},\\
+      t\in[n(I)]
+    \end{array}
+    \right\}.
+\end{equation*}
+For $\delta=1$ this is $W_{\cF}$.  Isolated variables have degree zero and
+are permitted.  We allow $\cF$ to be empty; its degenerate case is handled
+after \cref{def:type-maltsev}, once all three conditions and the relations
+they use have been defined.
+
+\subsection{Rows and Block Orthogonality}
+
+For every table $G:D^r\to\AlgNums$, write $\arity(G)=r$.  Following Cai and
+Chen~\cite[Sections~2.3 and~2.5]{CaiChen2017}, suppose $r\ge2$ and regard
+$G$ as the
+$d^{r-1}\times d$ matrix whose row indexed by
+$\mathbf x\in D^{r-1}$ is
+\[
+  G(\mathbf x,\ast)=\bigl(G(\mathbf x,z)\bigr)_{z\in D}.
+\]
+The nonzero row indices carry the equivalence relation
+\begin{equation}
+  \mathbf x\sim_G\mathbf y
+  \quad\Longleftrightarrow\quad
+  \begin{gathered}
+    G(\mathbf x,\ast)\text{ and }G(\mathbf y,\ast)\text{ are}\\
+    \text{linearly dependent over }\mathbb C.
+  \end{gathered}
+  \label{eq:complex-row-equivalence}
+\end{equation}
+Let $S_1,\ldots,S_s$ be its equivalence classes.  For each $j\in[s]$,
+let $\mathbf v_j$ be the unique vector proportional to the rows in $S_j$
+whose first nonzero entry, with respect to a fixed ordering of $D$, is $1$.
+The family
+\begin{equation*}
+  \Row(G)=\{(S_1,\mathbf v_1),\ldots,(S_s,\mathbf v_s)\}
+\end{equation*}
+is the \emph{row representation} of $G$.  Distinct representatives are
+pairwise nonproportional, although they may be linearly dependent as a
+family.  If
+$G$ is the zero table, then $s=0$ and $\Row(G)=\varnothing$.
+
+For a table or vector $H$, write $\abs H$ for its entrywise absolute value.
+For a vector $\mathbf u\in\mathbb C^D$, write
+$\supp(\mathbf u)=\{z\in D:u_z\ne0\}$.  The complex
+relation~\eqref{eq:complex-row-equivalence} must be distinguished from the
+magnitude-row relation.  The function $G$ is \emph{block-rank one} if the
+nonnegative matrix $\abs G$ is block-rank one: for every two nonzero rows,
+their magnitude vectors are positively proportional or their supports are
+disjoint.  Equivalently, the nonzero support is a disjoint union of complete
+row-by-column rectangles, and within each rectangle the magnitude rows are
+proportional.
+
+Let $\mathbf u,\mathbf v\in\mathbb C^D$ be nonzero and suppose that
+$\abs{\mathbf u}$ and $\abs{\mathbf v}$ are proportional.  Their supports
+coincide; call the common support $T$.  Let
+$\mu_1>\cdots>\mu_h>0$ be the distinct values of $\abs{u_z}$ on $T$, and
+put
+\[
+  T_i=\{z\in T:\abs{u_z}=\mu_i\},\qquad i\in[h].
+\]
+The same partition is obtained from $\mathbf v$.  The two vectors are
+\emph{block-orthogonal}, written
+$\mathbf u\perp_{\mathrm B}\mathbf v$, if
+\begin{equation}
+  \sum_{z\in T_i}u_z\overline{v_z}=0
+  \qquad\text{for every }i\in[h].
+  \label{eq:vector-block-orthogonality}
+\end{equation}
+
+\begin{definition}[Block-orthogonal function]
+\label{def:block-orthogonal-function}
+A function $G:D^r\to\AlgNums$, $r\ge2$, is \emph{block-orthogonal} if it
+is block-rank one and, whenever two nonzero complex rows have proportional
+magnitude vectors, those rows are either linearly dependent or
+block-orthogonal in the sense of~\eqref{eq:vector-block-orthogonality}.
+\end{definition}
+
+\paragraph{A generated block-rank-one example.}
+Let $D=\{0,1,2,3\}$ and let the binary function $A$ be
+\[
+\begin{array}{c|rrrr}
+  x\backslash z&0&1&2&3\\ \hline
+  0&1&2&0&0\\
+  1&3&6&0&0\\
+  2&0&0&1&4\\
+  3&0&0&2&8
+\end{array}.
+\]
+For the language $\cF_A=\{A\}$, the instance consisting of the single
+constraint $A(x,z)$ has $F_I^{[2]}=A$, so $A\in W_{\cF_A}$.  The first two
+magnitude rows are proportional, as are the last two, while rows from
+different pairs have disjoint supports.  Equivalently, the support is the
+disjoint union of the rectangles
+\[
+  \{0,1\}\times\{0,1\}
+  \qquad\text{and}\qquad
+  \{2,3\}\times\{2,3\}.
+\]
+Thus $A$ is block-rank one.  In this example every pair of
+magnitude-proportional complex rows is already linearly dependent, which
+establishes Block Orthogonality directly.
+
+\paragraph{A generated block-orthogonality example.}
+On the same domain, let
+\[
+B=
+\begin{array}{c|rrrr}
+  x\backslash z&0&1&2&3\\ \hline
+  0&2&2&1&1\\
+  1&2&-2&1&-1\\
+  2&0&0&0&0\\
+  3&0&0&0&0
+\end{array}.
+\]
+Again $B\in W_{\{B\}}$ by the one-constraint instance.  Its two nonzero
+rows
+\[
+  \mathbf u=(2,2,1,1),\qquad
+  \mathbf v=(2,-2,1,-1)
+\]
+are not linearly dependent, but
+$\abs{\mathbf u}=\abs{\mathbf v}=(2,2,1,1)$.  Their equal-magnitude blocks
+are $T_1=\{0,1\}$ and $T_2=\{2,3\}$, and cancellation holds separately on
+both blocks:
+\[
+  \sum_{z\in T_1}u_z\overline{v_z}=4-4=0,
+  \qquad
+  \sum_{z\in T_2}u_z\overline{v_z}=1-1=0.
+\]
+Thus $\mathbf u\perp_{\mathrm B}\mathbf v$ and $B$ is block-orthogonal.
+The displayed table is already pure, and the legal one-element generating
+set $g_1=2$, assigned to $p_1=2$, leaves it unchanged under singleton
+purification.
+
+\subsection{Joint purification}
+
+A function is
+\emph{pure} if each of its values is a nonnegative integer times a root of
+unity.  We use the notions of pure functions and generating sets, together
+with the Purification Lemma, from Cai and
+Chen~\cite[Definitions~2--3 and Lemma~7]{CaiChen2017}.  Given a finite tuple
+$\mathbf G=(G_1,\ldots,G_h)$ with $h\ge1$, let $A(\mathbf G)$ be the set of
+its nonzero values.  A \emph{generating set} for $A(\mathbf G)$ is a tuple
+$g_1,\ldots,g_m$, where $m\ge0$, satisfying the following three conditions:
+\begin{enumerate}
+  \item $g_i\in\mathbb Q(A(\mathbf G))^\times$ for every $i\in[m]$;
+  \item for every nonzero
+        $\mathbf k=(k_1,\ldots,k_m)\in\mathbb Z^m$,
+        \[
+          \prod_{i=1}^m g_i^{k_i}\notin\mu_\infty;
+        \]
+  \item every $a\in A(\mathbf G)$ has a unique exponent vector
+        $e(a)=(e_1(a),\ldots,e_m(a))\in\mathbb Z^m$ such that
+\begin{equation}
+  a=\vartheta(a)\prod_{i=1}^m g_i^{e_i(a)},
+  \qquad \vartheta(a)\in\mu_\infty.
+  \label{eq:multiplicative-decomposition}
+\end{equation}
+\end{enumerate}
+Here $\mathbb Q(A(\mathbf G))$ is the smallest subfield of $\AlgNums$
+containing $\mathbb Q$ and all elements of $A(\mathbf G)$, and
+$\mathbb Q(A(\mathbf G))^\times
+=\mathbb Q(A(\mathbf G))\setminus\{0\}$ is its multiplicative group.
+When $A(\mathbf G)$ is nonempty, such a generating set
+exists~\cite[Lemma~7.2]{CaiChenLu2013}; see
+also~\cite[Lemma~8]{CaiChen2017}.  Let $p_1,\ldots,p_m$ be the first $m$
+positive primes.
+For every nonzero value $a$, put
+\[
+  q(a)=\prod_{i=1}^m p_i^{e_i(a)}\in\mathbb Q_{>0}.
+\]
+The transformation displayed in the proof of the Purification
+Lemma~\cite[Lemma~7]{CaiChen2017} replaces each nonzero $a$ by
+$\vartheta(a)q(a)$; zeros remain zero.  Write $P_i^0$ for the resulting table
+corresponding to $G_i$.
+Let $N_i$ be the least positive integer such that
+$N_iq(a)\in\mathbb Z_{>0}$ for every nonzero value $a$ of $G_i$, taking
+$N_i=1$ when $G_i$ is zero, and put $P_i=N_iP_i^0$.  The latter table-wide
+normalization clears the denominators introduced by negative exponents and
+makes $P_i$ pure.  Positive table-wide scaling
+changes neither support nor any clause of Block Orthogonality, so the printed
+and normalized forms define the same global condition.
+
+Fix one legal generating-set choice whenever $A(\mathbf G)$ is nonempty and
+define
+\[
+  \Pure(\mathbf G)=(P_1,\ldots,P_h),
+\]
+using the pure, table-wise normalized outputs.  If every nonzero value is a
+root of unity, the empty generating list is legal, and the fixed mapping uses
+it.  If $A(\mathbf G)=\varnothing$, define $\Pure(\mathbf G)$ to be the
+all-zero tuple.  We call any printed or normalized output obtained from a
+legal generating-set choice a \emph{legal purification}.
+\Cref{lem:purification-invariance} proves that the relevant structure is
+independent of these choices.
+
+\begin{definition}[Global Block Orthogonality]
+\label{def:global-bo}
+The language $\cF$ satisfies the \emph{Block Orthogonality condition} of Cai
+and Chen~\cite[Section~3.1]{CaiChen2017}, denoted $\BO(\cF)$, if for every
+nonempty finite tuple
+$(G_1,\ldots,G_h)$ of pairwise distinct members of $W_{\cF}$, writing
+\[
+  \Pure(G_1,\ldots,G_h)=(P_1,\ldots,P_h),
+\]
+the table $P_i$ is block-orthogonal for every $i$ with
+$\arity(G_i)\ge2$.
+\end{definition}
+
+The quantifier in \cref{def:global-bo} is joint.
+\Cref{cor:singleton-purification} proves its equivalence with the
+corresponding singleton condition.
+
+\subsection{Types and derived relations}
+
+Following Cai and Chen~\cite[Sections~2.8--2.9 and~3.1]{CaiChen2017}, let
+$G:D^r\to\AlgNums$, $r\ge2$, have row representation
+$\{(S_j,\mathbf v_j):j\in[s]\}$.  For $\ell\in[r-1]$ and
+$\boldsymbol\alpha\in D^\ell$, define
+\begin{equation*}
+  \typeop_G(\boldsymbol\alpha)
+  =\left\{j\in[s]:
+       \text{some }\mathbf x\in S_j\text{ has prefix }
+       \boldsymbol\alpha\right\}.
+\end{equation*}
+The map is a \emph{type-partition map} if
+\begin{equation*}
+  \begin{aligned}
+  &\forall \ell\in[r-1]\ \forall
+    \boldsymbol\alpha,\boldsymbol\beta\in D^\ell,\\
+  &\qquad
+    \typeop_G(\boldsymbol\alpha)=\typeop_G(\boldsymbol\beta),\\[-2pt]
+  &\qquad\text{or}\qquad
+    \typeop_G(\boldsymbol\alpha)
+      \cap\typeop_G(\boldsymbol\beta)=\varnothing.
+  \end{aligned}
+\end{equation*}
+Set $\typeop_G(\emptytuple)=[s]$.  If $G$ is the zero table, then $s=0$, so
+every type is empty and Type Partition holds.
+
+\paragraph{A generated Type Partition example.}
+Regard $D=\{0,1,2\}$ as the additive group $\mathbb Z_3$, and define
+$G:D^3\to\AlgNums$ by
+\[
+\begin{array}{c|rrr}
+  (x_1,x_2)\backslash z&0&1&2\\ \hline
+  (0,0)&1&0&0\\
+  (0,1)&0&1&0\\
+  (0,2)&0&0&1\\
+  (1,0)&0&2&0\\
+  (1,1)&0&0&2\\
+  (1,2)&2&0&0\\
+  (2,0)&0&0&4\\
+  (2,1)&4&0&0\\
+  (2,2)&0&4&0
+\end{array}.
+\]
+Equivalently,
+\begin{equation}
+  G(x_1,x_2,z)\ne0
+  \quad\Longleftrightarrow\quad
+  z\equiv x_1+x_2\pmod 3,
+  \label{eq:type-example-modular-support}
+\end{equation}
+and the unique nonzero entry in a row has value $2^{x_1}$.
+The one-constraint instance gives $G\in W_{\{G\}}$.  Its three nonzero
+complex row classes are
+\[
+\begin{aligned}
+  S_1&=\{(0,0),(1,2),(2,1)\},& \mathbf v_1&=(1,0,0),\\
+  S_2&=\{(0,1),(1,0),(2,2)\},& \mathbf v_2&=(0,1,0),\\
+  S_3&=\{(0,2),(1,1),(2,0)\},& \mathbf v_3&=(0,0,1).
+\end{aligned}
+\]
+For prefixes of length one,
+\[
+  \typeop_G(0)=\typeop_G(1)=\typeop_G(2)=\{1,2,3\}.
+\]
+Thus one type contains three row-class labels and occurs at all three
+prefixes.  For prefixes of length two, if $a+b\equiv j\pmod3$ with
+$j\in\{0,1,2\}$, then
+\[
+  \typeop_G(a,b)=\{j+1\}.
+\]
+Hence, at each fixed prefix length, any two types are equal or disjoint.
+Thus a type records row-class labels; domain values and individual rows enter
+through the labels they realize.  The modular form of this example will also let
+the same table illustrate the Mal'tsev condition below.
+
+For every $G:D^r\to\AlgNums$, define its support relation
+\begin{equation*}
+  \SuppRel G=\{\mathbf a\in D^r:G(\mathbf a)\ne0\}.
+\end{equation*}
+For $r\ge2$, define the $2(r-1)$-ary row-equivalence relation
+\begin{equation*}
+  \begin{aligned}
+    \RowEq G
+    &=\bigcup_{j=1}^s(S_j\times S_j)\\
+    &=\left\{(\mathbf x,\mathbf y)\in D^{r-1}\times D^{r-1}:
+      \begin{array}{l}
+        G(\mathbf x,\ast),G(\mathbf y,\ast)\text{ are nonzero}\\
+        \text{and linearly dependent}
+      \end{array}
+      \right\}.
+  \end{aligned}
+\end{equation*}
+Both types and $\RowEq G$ are defined from the complex row classes of the
+original table $G$.
+
+An operation $m:D^3\to D$ \emph{preserves} a relation $R\subseteq D^q$ if
+coordinatewise application of $m$ to any three tuples of $R$ returns a tuple
+of $R$.  It is a \emph{Mal'tsev operation} if
+\begin{equation*}
+  m(a,b,b)=m(b,b,a)=a
+  \qquad\text{for all }a,b\in D.
+\end{equation*}
+Set
+\begin{equation*}
+  \begin{aligned}
+  \Lambda_{\cF}
+  ={}&\{\SuppRel G:G\in W_{\cF}\}\\
+     &{}\cup
+       \{\RowEq G:G\in W_{\cF},\ \arity(G)\ge2\}.
+  \end{aligned}
+\end{equation*}
+$\Lambda_{\cF}$ is a family of relations of varying arities, and preservation
+is required separately for every $\SuppRel G$ and every applicable
+$\RowEq G$.
+
+\begin{definition}[Type Partition and the common Mal'tsev condition]
+\label{def:type-maltsev}
+The language $\cF$ satisfies $\TP(\cF)$ if every generated table of arity at
+least two has a type-partition map.  It satisfies $\Mal(\cF)$ if
+\begin{equation*}
+  \begin{aligned}
+  \exists m:D^3\to D\quad &m\text{ is a Mal'tsev operation},\\
+  &\forall R\in\Lambda_{\cF},\quad m\text{ preserves }R.
+  \end{aligned}
+\end{equation*}
+The order of these quantifiers is essential: one operation must preserve the
+entire family.
+\end{definition}
+
+\paragraph{The Type Partition table as a Mal'tsev-preservation example.}
+Continue with the same $D=\mathbb Z_3$ and the same generated table $G$
+from the preceding Type Partition example.  Consider the affine operation
+\[
+  m(a,b,c)=a-b+c\pmod3.
+\]
+It is Mal'tsev because
+\[
+  m(a,b,b)=a-b+b=a,
+  \qquad
+  m(b,b,a)=b-b+a=a.
+\]
+By~\eqref{eq:type-example-modular-support}, the support relation is the
+nontrivial affine relation
+\[
+  \SuppRel G
+  =\{(x_1,x_2,z)\in D^3:z\equiv x_1+x_2\pmod3\}.
+\]
+Take any three tuples
+$\mathbf u^{(i)}=(x_1^{(i)},x_2^{(i)},z^{(i)})\in\SuppRel G$,
+$i\in\{1,2,3\}$, and let
+$\mathbf u=(u_1,u_2,u_3)$ be their coordinatewise image under $m$.  Then
+\[
+\begin{aligned}
+  u_3
+  &\equiv z^{(1)}-z^{(2)}+z^{(3)}\\
+  &\equiv
+    \bigl(x_1^{(1)}-x_1^{(2)}+x_1^{(3)}\bigr)
+    +\bigl(x_2^{(1)}-x_2^{(2)}+x_2^{(3)}\bigr)\\
+  &\equiv u_1+u_2\pmod3.
+\end{aligned}
+\]
+Thus $\mathbf u\in\SuppRel G$, so $m$ preserves the support.
+
+The row classes displayed above also give the direct description
+\[
+  \RowEq G
+  =
+  \left\{
+  \begin{array}{l}
+    (x_1,x_2,y_1,y_2)\in D^4:\\
+    x_1+x_2\equiv y_1+y_2\pmod3
+  \end{array}
+  \right\}.
+\]
+Indeed, two rows are proportional exactly when their unique nonzero entries
+occur in the same column.  Take three tuples
+\[
+  \mathbf r^{(i)}
+  =(x_1^{(i)},x_2^{(i)},y_1^{(i)},y_2^{(i)})\in\RowEq G,
+  \qquad i\in\{1,2,3\}.
+\]
+Put
+\[
+  s_x^{(i)}=x_1^{(i)}+x_2^{(i)},
+  \qquad
+  s_y^{(i)}=y_1^{(i)}+y_2^{(i)}.
+\]
+Then $s_x^{(i)}\equiv s_y^{(i)}\pmod3$ for each $i$.  If the coordinatewise
+image of the three tuples is $(X_1,X_2,Y_1,Y_2)$, linearity modulo three
+gives
+\[
+\begin{aligned}
+  X_1+X_2
+  &\equiv s_x^{(1)}-s_x^{(2)}+s_x^{(3)}\\
+  &\equiv s_y^{(1)}-s_y^{(2)}+s_y^{(3)}\\
+  &\equiv Y_1+Y_2\pmod3.
+\end{aligned}
+\]
+Therefore $(X_1,X_2,Y_1,Y_2)\in\RowEq G$.  The same operation $m$
+preserves $\SuppRel G$ and $\RowEq G$ \emph{separately}, so this one table
+simultaneously illustrates Type Partition and the single-table content of
+the Mal'tsev condition.  The global predicates $\TP(\cF)$ and $\Mal(\cF)$
+still quantify over all applicable tables and relations in $W_{\cF}$.
+
+For $\delta\ge1$, define $\BO^\delta(\cF)$,
+$\TP^\delta(\cF)$, and $\Mal^\delta(\cF)$ by the same definitions with
+$W_{\cF}$ replaced throughout by $\WFdeg{\delta}$, and put
+\[
+  \CC^\delta(\cF)
+  =\BO^\delta(\cF)\wedge\TP^\delta(\cF)\wedge\Mal^\delta(\cF).
+\]
+
+In both the ordinary and degree-$\delta$ settings, Type Partition and the
+Mal'tsev condition are considered under the corresponding Block Orthogonality
+condition.  Types, $\SuppRel G$, and $\RowEq G$ are formed from the original
+generated table; purification occurs only in the corresponding Block
+Orthogonality condition.  If $G:D^r\to\AlgNums$ is the zero table, then
+$\SuppRel G=\varnothing$ and, when $r\ge2$,
+$\RowEq G=\varnothing$; every operation preserves these empty relations
+vacuously.
+
+We now discharge the empty-language case.  If $\cF=\varnothing$, then
+$F_I\equiv1$, and every generated table $G=F_I^{[t]}$ is the positive
+constant table
+\[
+  G(a_1,\ldots,a_t)=d^{n(I)-t}.
+\]
+Consequently $\SuppRel G=D^t$.  When $t\ge2$, all rows are nonzero and
+proportional, there is exactly one complex row class, and
+$\RowEq G=D^{2(t-1)}$.  Every legal purification is again a nonzero constant
+table, so Block Orthogonality holds; since $G$ itself is constant, Type
+Partition holds as well.  The operation
+\[
+  m_0(a,b,c)=
+  \begin{cases}
+    c,&a=b,\\
+    a,&a\ne b
+  \end{cases}
+\]
+is Mal'tsev and preserves every full relation.  Thus $\CC(\cF)$ holds; the
+same argument applies to every $\CC^\delta(\cF)$ because constraint-free
+instances have degree zero.  The decision procedures accept this case
+immediately, and henceforth we may assume $\cF\ne\varnothing$.
+
+\section{Purification Invariance and Arity Compression}
+\label{sec:purification-compression}
+
+We first remove the ambient-family dependence of purification.
+
+\begin{lemma}[Ambient invariance of purification]
+\label{lem:purification-invariance}
+Let $A:D^r\to\AlgNums$, where $r\ge2$, be a table that occurs as a
+distinguished component of each of two finite ambient tuples.  Legally purify
+the two tuples, and let $P$ and $Q$ be the two purified tables occupying the
+distinguished position formerly occupied by $A$.  Either printed
+purifications or their positive table-wide normalizations may be used.  Then:
+\begin{enumerate}
+  \item the two purified tables have the same support;
+  \item disjointness and positive proportionality of every pair of magnitude
+        rows agree under $P$ and $Q$;
+  \item complex linear dependence of every pair of nonzero rows agrees under
+        $P$ and $Q$; and
+  \item for proportional magnitude rows, the two purifications induce the
+        same equal-magnitude blocks, and the Hermitian sum on each such block
+        vanishes under $P$ if and only if it vanishes under $Q$.
+\end{enumerate}
+In particular, $P$ is block-orthogonal if and only if $Q$ is
+block-orthogonal.
+\end{lemma}
+
+\begin{proof}
+If $A$ is the zero table, both $P$ and $Q$ are zero tables and every assertion
+is immediate.  Assume henceforth that $A$ has a nonzero entry.
+Let
+\[
+  \Gamma=\langle a:a\text{ is a nonzero entry of }A\rangle
+  \le\AlgNums^\times.
+\]
+Thus $\Tor(\Gamma)=\Gamma\cap\mu_\infty$ consists exactly of those
+multiplicative combinations of entries of $A$ that are roots of unity.
+Fix one of the two ambient purifications, with
+nonzero ambient values $c_1,\ldots,c_t$, legal generators
+$g_1,\ldots,g_m$, and exponent vectors
+$e(c_j)=(e_1(c_j),\ldots,e_m(c_j))$.  Put
+\[
+  H=\langle c_1,\ldots,c_t\rangle.
+\]
+Every nonzero entry of $A$ is one of the ambient values, so $\Gamma\le H$.
+We claim that the prescribed exponent vectors define
+\begin{equation}
+  e\left(\prod_{j=1}^t c_j^{n_j}\right)
+  =\sum_{j=1}^t n_j e(c_j)
+  \qquad(n_1,\ldots,n_t\in\mathbb Z).
+  \label{eq:extended-exponent-map}
+\end{equation}
+The point requiring proof is that this value is independent of the chosen
+representation.  If
+\[
+  \prod_{j=1}^t c_j^{n_j}=1,
+\]
+then~\eqref{eq:multiplicative-decomposition} gives
+\begin{equation}
+  \prod_{i=1}^m
+       g_i^{\sum_{j=1}^t n_j e_i(c_j)}
+  =\prod_{j=1}^t\vartheta(c_j)^{-n_j}\in\mu_\infty.
+  \label{eq:ambient-exponent-relation}
+\end{equation}
+Condition~2 in the generating-set definition above forces
+\[
+  \sum_{j=1}^t n_j e_i(c_j)=0
+  \qquad\text{for every }i\in[m].
+\]
+More generally, if two products in the $c_j$ represent the same element of
+$H$, their quotient represents $1$, and the same calculation shows that the
+two sums in~\eqref{eq:extended-exponent-map} agree.  Hence the displayed rule
+is well-defined.  It is a homomorphism because multiplication of products
+adds exponent vectors, and it is the unique homomorphism taking each $c_j$
+to the prescribed $e(c_j)$.  Restricting this homomorphism to $\Gamma$ gives
+$e:\Gamma\to\mathbb Z^m$.
+
+Its kernel is exactly $\Tor(\Gamma)$.  Indeed, write
+$x=\prod_j c_j^{n_j}$.  If $e(x)=0$, then the decompositions of the $c_j$
+give
+\[
+  x=\prod_{j=1}^t\vartheta(c_j)^{n_j}\in\mu_\infty.
+\]
+Conversely, if
+$x^N=1$ for some $N\ge1$, then $N e(x)=e(x^N)=0$, and the torsion-free group
+$\mathbb Z^m$ gives $e(x)=0$.  The exponent map therefore descends to an
+injective homomorphism
+\[
+  \nu:\Gamma/\Tor(\Gamma)\hookrightarrow\mathbb Z^m,
+  \qquad \nu([x])=e(x).
+\]
+Define, for $x\in\Gamma$,
+\[
+  \vartheta(x)=x\prod_{i=1}^m g_i^{-e_i(x)}.
+\]
+The preceding well-definedness argument shows that $\vartheta$ is a
+homomorphism into $\mu_\infty$.  It fixes torsion pointwise in the sense of
+\eqref{eq:fixes-torsion-definition}: if $\xi\in\Tor(\Gamma)$, then the
+exponent map annihilates $\xi$, so
+\[
+  e(\xi)=0,
+  \qquad
+  \vartheta(\xi)=\xi.
+\]
+Thus
+\[
+  \psi(x)=\vartheta(x)\prod_{i=1}^m p_i^{e_i(x)}
+\]
+is an injective homomorphism $\Gamma\to\mathbb C^\times$ that also fixes
+torsion pointwise, because $\psi(\xi)=\vartheta(\xi)=\xi$ whenever
+$e(\xi)=0$.  Here the \emph{multiplicative independence} of the distinct
+positive primes means
+\[
+  \begin{gathered}
+    \prod_{i=1}^m p_i^{k_i}=1,
+    \qquad k_i\in\mathbb Z,\\
+    \Longrightarrow\qquad k_1=\cdots=k_m=0;
+  \end{gathered}
+\]
+this is unique factorization in $\mathbb Q_{>0}$.  It implies injectivity:
+if $\psi(x)=1$, taking absolute values forces $e(x)=0$, after which
+$x\in\Tor(\Gamma)$ and $\psi(x)=\vartheta(x)=x$, so $x=1$.
+
+We now make the denominator-clearing step explicit.  The printed
+purification replaces each nonzero original value $a$ by $\psi(a)$.  If some
+$e_i(a)$ is negative, the positive rational number
+$\prod_i p_i^{e_i(a)}$ can have a denominator.  Since $A$ has only finitely
+many values, one can choose a positive integer $N_A$ such that
+\[
+  \begin{gathered}
+    N_A\prod_{i=1}^m p_i^{e_i(a)}\in\mathbb Z_{>0}\\
+    \text{for every nonzero entry }a\text{ of }A.
+  \end{gathered}
+\]
+The normalized purified entry is then $N_A\psi(a)$.  Thus $\psi$ is the
+homomorphism \emph{before denominator clearing}; multiplying its values on
+one table by $N_A$ produces the pure table.  The normalized entry map need
+not be multiplicative.  Every product comparison and Hermitian sum used
+below nevertheless acquires the same nonzero factor $N_A^2$, so equality and
+vanishing are preserved.
+
+The crucial consequence is
+\begin{equation}
+  \abs{\psi(x)}=1
+  \quad\Longleftrightarrow\quad
+  e(x)=0
+  \quad\Longleftrightarrow\quad
+  x\in\Tor(\Gamma).
+  \label{eq:purification-unit-modulus}
+\end{equation}
+Indeed, $\vartheta(x)$ has modulus one, and unique factorization in
+$\mathbb Q_{>0}$ gives $\prod_i p_i^{e_i(x)}=1$ exactly when every exponent
+vanishes.
+
+Applying this construction to the two ambient purifications gives
+homomorphisms $\psi_P$ and $\psi_Q$ and positive denominator-clearing factors
+$N_P$ and $N_Q$, where the factor is $1$ if the printed form is retained.
+For a nonzero original value $a$ of $A$, write
+\[
+  P(a)=N_P\psi_P(a),
+  \qquad
+  Q(a)=N_Q\psi_Q(a).
+\]
+This notation means the entry replacing the original value $a$ in the
+distinguished purified table.  The factors $N_P$ and $N_Q$ cancel from every
+comparison below.
+
+Fixing torsion survives denominator clearing in the precise covariance form
+needed later.  For $\xi\in\Tor(\Gamma)$ and $x\in\Gamma$,
+\begin{equation}
+  \psi_P(\xi x)=\xi\psi_P(x),
+  \qquad
+  \psi_Q(\xi x)=\xi\psi_Q(x).
+  \label{eq:purification-torsion-covariance}
+\end{equation}
+Consequently, if both $a$ and $\xi a$ occur as entries of $A$, then
+\[
+  P(\xi a)=\xi P(a),
+  \qquad
+  Q(\xi a)=\xi Q(a).
+\]
+Thus denominator clearing preserves every root-of-unity ratio between
+entries, while representing a torsion entry $\xi$ itself by $N_P\xi$ or
+$N_Q\xi$.
+
+For nonzero entries $a,b,c,u$ of $A$, applying
+\eqref{eq:purification-unit-modulus} to the ratios $a/b$ and $au/(bc)$ gives
+\begin{equation}
+  \begin{gathered}
+  \abs{P(a)}=\abs{P(b)}\\
+  \Longleftrightarrow\quad a/b\in\Tor(\Gamma)\\
+  \Longleftrightarrow\quad \abs{Q(a)}=\abs{Q(b)}.
+  \end{gathered}
+  \label{eq:pure-equal-magnitude}
+\end{equation}
+Moreover,
+\begin{equation*}
+  \begin{gathered}
+  \abs{P(a)P(u)}=\abs{P(b)P(c)}\\
+  \Longleftrightarrow\quad au/(bc)\in\Tor(\Gamma)\\
+  \Longleftrightarrow\quad \abs{Q(a)Q(u)}=\abs{Q(b)Q(c)}.
+  \end{gathered}
+\end{equation*}
+Zeros remain zero, so support is invariant.  The second equivalence, with
+the usual separate treatment of zero entries, gives disjointness and
+positive proportionality of magnitude rows.  The first gives the common
+partition into equal-magnitude blocks.
+
+Ordinary complex row dependence is determined by vanishing $2\times2$
+minors.
+Write the two rows under comparison as
+$\mathbf a=(a_z)_{z\in D}$ and $\mathbf b=(b_z)_{z\in D}$.
+For every $z,w\in D$, the corresponding original minor is
+\[
+  \det\begin{pmatrix}a_z&a_w\\ b_z&b_w\end{pmatrix}
+  =a_zb_w-a_wb_z.
+\]
+For nonzero corners, injectivity and multiplicativity give
+\[
+  \begin{gathered}
+  P(a_z)P(b_w)=P(a_w)P(b_z)\\
+  \Longleftrightarrow\quad a_z b_w=a_w b_z\\
+  \Longleftrightarrow\quad Q(a_z)Q(b_w)=Q(a_w)Q(b_z).
+  \end{gathered}
+\]
+The equivalence is immediate as well when a corner is zero.  Thus all minors
+of a row pair vanish under $P$ exactly when they vanish under $Q$.
+
+It remains to compare a Hermitian block sum.  By this we mean the restriction
+of the usual complex inner product to an equal-magnitude block $T$:
+\[
+  \sum_{z\in T}P(a_z)\overline{P(b_z)}.
+\]
+Suppose the two magnitude rows are proportional, let $T$ be one of their
+common equal-magnitude blocks, and fix $z_0\in T$.  By
+\eqref{eq:pure-equal-magnitude}, there are roots of unity
+$\xi_z,\eta_z\in\Tor(\Gamma)$ such that
+\[
+  a_z=\xi_z a_{z_0},\qquad b_z=\eta_z b_{z_0}
+  \qquad(z\in T).
+\]
+By \eqref{eq:purification-torsion-covariance}, the underlying homomorphisms
+$\psi_P$ and $\psi_Q$ preserve the displayed root-of-unity ratios; each
+purified table is one common positive scalar times its underlying image.
+Consequently,
+\begin{align*}
+  \sum_{z\in T}P(a_z)\overline{P(b_z)}
+  &=P(a_{z_0})\overline{P(b_{z_0})}
+    \sum_{z\in T}\xi_z\overline{\eta_z},\\
+  \sum_{z\in T}Q(a_z)\overline{Q(b_z)}
+  &=Q(a_{z_0})\overline{Q(b_{z_0})}
+    \sum_{z\in T}\xi_z\overline{\eta_z}.
+\end{align*}
+The two prefactors are nonzero, so the two block sums vanish simultaneously.
+This proves all four assertions.
+\end{proof}
+
+\begin{corollary}[Singleton purification suffices]
+\label{cor:singleton-purification}
+The joint condition $\BO(\cF)$ holds if and only if every
+$G\in W_{\cF}$ of arity at least two has a block-orthogonal singleton
+purification.
+\end{corollary}
+
+\begin{proof}
+If the joint condition holds, apply it to the one-element tuple $(G)$ for
+each $G\in W_{\cF}$.
+
+Conversely, assume every $G\in W_{\cF}$ of arity at least two has a
+block-orthogonal singleton purification.  Fix an arbitrary nonempty finite
+tuple
+\[
+  \mathbf G=(G_1,\ldots,G_h)
+\]
+from $W_{\cF}$ and legally purify it jointly:
+\[
+  \Pure(\mathbf G)=(J_1,\ldots,J_h).
+\]
+For each $i$ with $\arity(G_i)\ge2$, also let $S_i$ be a legal singleton
+purification of $G_i$.  Apply \cref{lem:purification-invariance} with
+distinguished table $A=G_i$ and with the two ambient tuples
+\[
+  (G_i)
+  \qquad\text{and}\qquad
+  (G_1,\ldots,G_h).
+\]
+The two distinguished outputs in that lemma are precisely $S_i$ and $J_i$.
+The nonzero values in the other tables may enlarge the ambient multiplicative
+group and change the exponent coordinates, the assigned primes, and hence the
+numerical entries of $J_i$.  The intrinsic subgroup remains
+\[
+  \Tor(\Gamma_i),
+  \qquad
+  \Gamma_i=\langle a:a\text{ is a nonzero entry of }G_i\rangle,
+\]
+because, if $H$ is the larger ambient group, then
+$\Tor(H)\cap\Gamma_i=\Tor(\Gamma_i)$.  Hence
+\cref{lem:purification-invariance} applies to the two ambient tuples and gives
+that $S_i$ is block-orthogonal if and only if $J_i$ is
+block-orthogonal.
+By assumption the left side holds, so every jointly purified component of
+arity at least two is block-orthogonal.  As $\mathbf G$ was arbitrary, the
+joint condition $\BO(\cF)$ holds.
+\end{proof}
+
+We next establish a bound on the external arity of a counterexample.
+
+\begin{lemma}[External diagonal minors]
+\label{lem:diagonal-minors}
+Let $G\in W_{\cF}$ have arity $r$, let $1\le s\le r$, and let
+$\pi:[r]\twoheadrightarrow[s]$ be a surjection.  Then
+\[
+  H(y_1,\ldots,y_s)
+  =G(y_{\pi(1)},\ldots,y_{\pi(r)})
+\]
+belongs to $W_{\cF}$.
+\end{lemma}
+
+\begin{proof}
+Choose a base-language instance presenting $G$ as a partial marginal.
+Replace its retained variable in position $i$ by $y_{\pi(i)}$, while keeping
+all previously marginalized variables distinct and retaining the same sum.
+Repeated variables in scopes are legal, so the modified object is again an
+instance.  Its marginal is exactly $H$, including every cancellation already
+present in $G$.
+\end{proof}
+
+To see the instance construction explicitly, suppose a presentation of a
+five-ary $G$ has retained variables $x_1,\ldots,x_5$, hidden variables
+$z_1,z_2$, and constraint multiset
+\begin{equation*}
+\begin{aligned}
+  \mathcal C_I=\{&f(x_1,z_1,x_3),
+                  g(z_1,x_2,x_5),\\
+                 &h(x_4,z_2,x_3),
+                  \ell(z_2,x_5)\}.
+\end{aligned}
+\end{equation*}
+For $\pi=(1,2,1,3,2)$, construct $I_\pi$ by keeping every constraint and
+hidden variable and replacing only retained-variable incidences:
+\[
+\begin{aligned}
+  \mathcal C_{I_\pi}=\{&f(y_1,z_1,y_1),
+                        g(z_1,y_2,y_2),\\
+                       &h(y_3,z_2,y_1),
+                        \ell(z_2,y_2)\}.
+\end{aligned}
+\]
+
+\begin{figure}[!htbp]
+  \centering
+  \resizebox{0.94\linewidth}{!}{%
+  \begin{tikzpicture}[
+      x=1cm,y=1cm,
+      var/.style={circle,draw,minimum size=5.8mm,inner sep=0pt,
+                  font=\scriptsize},
+      hidden/.style={var,dashed},
+      factor/.style={draw,rounded corners=1pt,minimum width=6mm,
+                     minimum height=5.5mm,inner sep=1pt,
+                     double,double distance=.45pt,font=\scriptsize},
+      edge/.style={line width=.42pt},
+      title/.style={font=\small\bfseries},
+      scopes/.style={font=\scriptsize,align=center}
+    ]
+    \begin{scope}[shift={(2.1,0)}]
+      \node[title] at (1.2,2.2) {original instance $I$};
+      \node[factor] (f) at (0,1) {$f$};
+      \node[factor] (g) at (2.4,1) {$g$};
+      \node[factor] (h) at (0,-1) {$h$};
+      \node[factor] (l) at (2.4,-1) {$\ell$};
+
+      \node[hidden] (z1) at (1.2,1) {$z_1$};
+      \node[hidden] (z2) at (1.2,-1) {$z_2$};
+      \node[var] (x3) at (0,0) {$x_3$};
+      \node[var] (x5) at (2.4,0) {$x_5$};
+      \node[var] (x1) at (-1.15,1.62) {$x_1$};
+      \node[var] (x2) at (3.55,1.62) {$x_2$};
+      \node[var] (x4) at (-1.15,-1.62) {$x_4$};
+
+      \draw[edge] (f)--(x1) (f)--(z1) (f)--(x3);
+      \draw[edge] (g)--(z1) (g)--(x2) (g)--(x5);
+      \draw[edge] (h)--(x4) (h)--(z2) (h)--(x3);
+      \draw[edge] (l)--(z2) (l)--(x5);
+
+      \node[scopes] at (1.2,-2.25)
+        {$f(x_1,z_1,x_3),\ g(z_1,x_2,x_5)$\\
+         $h(x_4,z_2,x_3),\ \ell(z_2,x_5)$};
+    \end{scope}
+
+    \draw[-{Latex[length=2mm]},line width=.55pt]
+      (6.05,0)--(7.65,0)
+      node[midway,above=2pt,font=\scriptsize,align=center]
+      {$x_1,x_3\mapsto y_1$\\$x_2,x_5\mapsto y_2$\\$x_4\mapsto y_3$};
+
+    \begin{scope}[shift={(9.5,0)}]
+      \node[title] at (1.2,2.2) {constructed instance $I_\pi$};
+      \node[factor] (fp) at (0,1) {$f$};
+      \node[factor] (gp) at (2.4,1) {$g$};
+      \node[factor] (hp) at (0,-1) {$h$};
+      \node[factor] (lp) at (2.4,-1) {$\ell$};
+
+      \node[hidden] (z1p) at (1.2,1) {$z_1$};
+      \node[hidden] (z2p) at (1.2,-1) {$z_2$};
+      \node[var] (y1) at (0,0) {$y_1$};
+      \node[var] (y2) at (2.4,0) {$y_2$};
+      \node[var] (y3) at (-1.15,-1.62) {$y_3$};
+
+      \draw[edge] (fp)--(z1p);
+      \draw[edge] (gp)--(z1p);
+      \draw[edge] (hp)--(z2p);
+      \draw[edge] (lp)--(z2p);
+      \draw[edge] (fp) to[bend left=17] (y1);
+      \draw[edge] (fp) to[bend right=17] (y1);
+      \draw[edge] (hp)--(y1);
+      \draw[edge] (gp) to[bend left=17] (y2);
+      \draw[edge] (gp) to[bend right=17] (y2);
+      \draw[edge] (lp)--(y2);
+      \draw[edge] (hp)--(y3);
+
+      \node[scopes] at (1.2,-2.25)
+        {$f(y_1,z_1,y_1),\ g(z_1,y_2,y_2)$\\
+         $h(y_3,z_2,y_1),\ \ell(z_2,y_2)$};
+    \end{scope}
+  \end{tikzpicture}%
+  }
+  \caption{Construction in \cref{lem:diagonal-minors}.  Circles are
+  variables, boxes are constraints, and dashed circles are hidden variables.
+  Constraint nodes and hidden variables are unchanged; only incidences of
+  retained variables are relabelled.  The parallel edges at $f$ and $g$ in
+  $I_\pi$ record repeated occurrences created by identification.  Summing
+  over the unchanged $z_1,z_2$ gives
+  $F_{I_\pi}^{[3]}(y_1,y_2,y_3)
+   =G(y_1,y_2,y_1,y_3,y_2)=H(y_1,y_2,y_3)$.}
+  \label{fig:diagonal-minor-example}
+\end{figure}
+
+\begin{lemma}[Bounded external arity]
+\label{lem:bo-arity-bound}
+If the singleton Block Orthogonality condition fails on $W_{\cF}$, then it
+fails for some member of $W_{\cF}$ of arity at most
+\[
+  R_{\mathrm{BO}}=d^2+1.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $G:D^r\to\AlgNums$, where $r\ge2$, be a counterexample.  Its failure is
+witnessed by two
+row indices $\mathbf x,\mathbf y\in D^{r-1}$: their purified magnitude rows
+overlap but are not proportional, or they are proportional while the complex
+rows are neither dependent nor block-orthogonal.  On the row-coordinate
+positions $[r-1]$, put
+\[
+  i\equiv j
+  \quad\Longleftrightarrow\quad
+  (x_i,y_i)=(x_j,y_j).
+\]
+There are at most $d^2$ equivalence classes, one for each possible ordered
+pair in $D^2$.  For a concrete example with $D=\{0,1\}$ (so $d=2$), take
+\[
+\begin{aligned}
+  \mathbf x&=(0,0,1,0,1,1,0,1),\\
+  \mathbf y&=(0,1,0,0,1,0,1,1).
+\end{aligned}
+\]
+\Cref{tab:pair-class-example} displays the four equivalence classes.  Identify
+positions in each class and keep the final column variable separate.  By
+\cref{lem:diagonal-minors}, the resulting table $H$ belongs to $W_{\cF}$ and
+has arity at most $d^2+1$.
+
+\begin{table}[!htbp]
+  \centering
+  \small
+  \setlength{\tabcolsep}{3.6pt}
+  \renewcommand{\arraystretch}{1.18}
+  \begin{tabular}{c|cccc}
+    class
+      &$C_{00}\,(\bullet)$
+      &$C_{01}\,(\circ)$
+      &$C_{10}\,(\blacktriangle)$
+      &$C_{11}\,(\diamond)$\\ \hline
+    positions &$\{1,4\}$&$\{2,7\}$&$\{3,6\}$&$\{5,8\}$\\
+    new variable &$u_{00}$&$u_{01}$&$u_{10}$&$u_{11}$\\
+    $\mathbf x$-value &$0$&$0$&$1$&$1$\\
+    $\mathbf y$-value &$0$&$1$&$0$&$1$
+  \end{tabular}
+  \caption{The position classes for the displayed Boolean rows.  Each
+  black-and-white marker identifies one class of positions carrying the same
+  ordered pair $(x_i,y_i)$.}
+  \label{tab:pair-class-example}
+\end{table}
+
+In this example the identified table is
+\[
+\begin{aligned}
+  H(u_{00},u_{01},u_{10},u_{11},z)
+   =G(&u_{00},u_{01},u_{10},u_{00},\\[-2pt]
+      &u_{11},u_{10},u_{01},u_{11},z).
+\end{aligned}
+\]
+Its two selected row assignments are respectively
+\[
+  (u_{00},u_{01},u_{10},u_{11})=(0,0,1,1)
+  \quad\text{and}\quad
+  (0,1,0,1),
+\]
+which expand back to $\mathbf x$ and $\mathbf y$.  There are four identified
+row variables and one separate column variable, so the resulting arity is
+$4+1=d^2+1=5$.
+
+Assign to each new row variable the first component of its defining ordered
+pair to obtain one row, and the second component to obtain the other.  The two
+resulting rows of $H$ are entry-for-entry the selected rows of $G$.  Take a
+legal joint printed purification
+$(\widetilde G,\widetilde H)$ of $(G,H)$.  By
+\cref{lem:purification-invariance}, the failed singleton test for $G$ is
+preserved in $\widetilde G$.  A joint printed purification applies the same
+map to equal original entries, so the selected rows of $\widetilde G$ agree
+entry-for-entry with the corresponding rows of $\widetilde H$.  The same
+test therefore fails in $\widetilde H$.  Applying
+\cref{lem:purification-invariance} to $H$ transfers this failure to every
+legal singleton purification of $H$.  Hence $H$ is also a counterexample.
+\end{proof}
+
+\section{Algebraic Certificates for Block Orthogonality}
+\label{sec:bo-certificates}
+
+This section expresses Block Orthogonality of a singleton purification $P$
+directly in the original coordinates of its table $A$.
+\Cref{lem:intrinsic-purification-tests} leaves support and ordinary minors
+unchanged and converts purified magnitude comparisons and Hermitian block
+cancellations into root-of-unity equations among the entries of $A$.
+Consequently, both the certificates and the identity oracle operate directly
+on the original table.
+
+Fix the computable conjugation-stable number field
+\begin{equation}
+  K=\mathbb Q\left(
+      \{f(\mathbf a),\overline{f(\mathbf a)}:
+        f\in\cF,\ \mathbf a\in D^{r_f}\}
+    \right),
+  \label{eq:working-field}
+\end{equation}
+and let $\mu(K)$ be its finite, effectively computable group of roots of
+unity~\cite{Cohen1993}.  By definition, every input value
+$f(\mathbf a)$ belongs to $K$.  Equations~\eqref{eq:instance-function}
+and~\eqref{eq:partial-marginal} express each entry of every
+$G\in W_{\cF}$ as a finite sum of finite products of such values.  Since
+$K$ is a field, every entry of every generated table therefore belongs to
+$K$.  We now give an effective description of the $K$-valued tables whose
+singleton purifications are block-orthogonal; all relevant torsion choices
+lie in the computable finite group $\mu(K)$.
+
+\subsection{Intrinsic torsion tests}
+
+The following consequences of purification convert every magnitude
+comparison needed by Block Orthogonality into a finite root-of-unity choice.
+
+\Needspace{8\baselineskip}
+\begin{lemma}[Intrinsic purification tests]
+\label{lem:intrinsic-purification-tests}
+Let $A$ be a finite $K$-valued table, let $P$ be any legal singleton
+purification of $A$, and, for every nonzero value $a$ occurring in $A$,
+write $\widehat a$ for its purified value.  For nonzero values $a,b,c,u$
+occurring in $A$,
+\begin{align}
+  \abs{\widehat a}=\abs{\widehat b}
+  &\quad\Longleftrightarrow\quad
+  a/b\in\mu(K),
+  \label{eq:intrinsic-equal-magnitude}\\
+  \abs{\widehat a}\abs{\widehat u}
+     =\abs{\widehat b}\abs{\widehat c}
+  &\quad\Longleftrightarrow\quad
+  au/(bc)\in\mu(K)\notag\\
+  &\quad\Longleftrightarrow\quad
+  au=\zeta bc
+  \text{ for some }\zeta\in\mu(K),
+  \label{eq:intrinsic-magnitude-minor}\\
+  \widehat a\,\widehat u=\widehat b\,\widehat c
+  &\quad\Longleftrightarrow\quad
+  au=bc.
+  \label{eq:intrinsic-ordinary-minor}
+\end{align}
+Moreover, if $a=\rho b$ for $\rho\in\mu(K)$, then
+\begin{equation}
+  \widehat a=\rho\,\widehat b.
+  \label{eq:purification-root-covariance}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+If $A$ is the zero table, the assertions are vacuous.  Assume that $A$ has a
+nonzero entry.
+Let $\Gamma\le K^\times$ be the multiplicative group generated by the
+nonzero entries of $A$.  As in the proof of
+\cref{lem:purification-invariance}, equation
+\eqref{eq:ambient-exponent-relation} shows that the legal generating set
+induces homomorphisms
+\[
+  \nu:\Gamma/\Tor(\Gamma)\hookrightarrow\mathbb Z^m,
+  \qquad
+  \vartheta:\Gamma\longrightarrow\mu(K),
+\]
+where $\vartheta$ records the residual root of unity and restricts to the
+identity on $\Tor(\Gamma)$.  Here $\vartheta(\Gamma)\subseteq\mu(K)$ because
+this is a singleton purification of a $K$-valued table and every generator
+lies in the field generated over $\mathbb Q$ by the nonzero entries of $A$,
+which is a subfield of $K$.  Before denominator clearing, the purification
+map is the injective homomorphism
+\[
+  \varphi(x)=\vartheta(x)
+      \prod_{i=1}^m p_i^{\nu_i([x])}
+  \qquad(x\in\Gamma).
+\]
+There is one positive integer $N$, independent of the entry, such that
+$\widehat a=N\varphi(a)$ for every nonzero entry $a$.
+
+Multiplicative independence of the primes gives
+\[
+  \abs{\varphi(a/b)}=1
+  \quad\Longleftrightarrow\quad
+  a/b\in\Tor(\Gamma)=\Gamma\cap\mu(K).
+\]
+This proves~\eqref{eq:intrinsic-equal-magnitude}; applying the same argument
+to $au/(bc)$ proves~\eqref{eq:intrinsic-magnitude-minor}.  The common factor
+$N^2$ cancels in~\eqref{eq:intrinsic-ordinary-minor}, after which the claim
+follows from injectivity of $\varphi$.  Finally, $\varphi$ fixes torsion
+pointwise as in \eqref{eq:fixes-torsion-definition}; the common
+denominator-clearing factor then gives
+\eqref{eq:purification-root-covariance}.
+\end{proof}
+
+In particular, ordinary row dependence is preserved by purification: all
+ordinary $2\times2$ minors of two original rows vanish if and only if all
+corresponding minors of their purified rows vanish.
+
+\subsection{Finite certificate branches}
+
+Fix an external arity $k\ge2$, put
+\[
+  \mathcal R_k=D^{k-1},
+\]
+and regard a $k$-ary table as a matrix
+\[
+  A=(a_{\mathbf x,c})_{\mathbf x\in\mathcal R_k,\ c\in D}.
+\]
+Let
+\[
+  \mathbf X=\{X_{\mathbf x,c}:
+      \mathbf x\in\mathcal R_k,\ c\in D\}
+\]
+be the corresponding coordinate variables.  Fix arbitrary total orders on
+$\mathcal R_k$ and $D$.
+
+A \emph{Block Orthogonality certificate} of arity $k$ consists of the
+following finite discrete data.  First choose a rectangle system
+\[
+  (R_1,C_1),\ldots,(R_t,C_t),
+\]
+where every $R_i\subseteq\mathcal R_k$ and $C_i\subseteq D$ is nonempty,
+the row sets $R_i$ are pairwise disjoint, and the column sets $C_i$ are
+pairwise disjoint.  The empty system $t=0$ is allowed.  Impose the support
+equations
+\begin{equation}
+  X_{\mathbf x,c}=0
+  \qquad
+  \text{whenever }
+  (\mathbf x,c)\notin
+  \bigcup_{i=1}^t(R_i\times C_i).
+  \label{eq:bo-certificate-support}
+\end{equation}
+
+For every $i$, every two distinct rows
+$\mathbf x,\mathbf y\in R_i$, and every two distinct columns
+$c,e\in C_i$, choose
+$\tau_{\mathbf x,\mathbf y;c,e}\in\mu(K)$ and impose the twisted minor
+\begin{equation}
+  X_{\mathbf x,c}X_{\mathbf y,e}
+  -\tau_{\mathbf x,\mathbf y;c,e}
+   X_{\mathbf x,e}X_{\mathbf y,c}=0.
+  \label{eq:bo-certificate-twisted-minor}
+\end{equation}
+For every unordered pair $\mathbf x<\mathbf y$ in one $R_i$, choose one of
+the following two modes.
+
+\paragraph{Dependent mode.}
+Impose every ordinary minor
+\begin{equation}
+  X_{\mathbf x,c}X_{\mathbf y,e}
+  -X_{\mathbf x,e}X_{\mathbf y,c}=0
+  \qquad(c,e\in C_i).
+  \label{eq:bo-certificate-dependent}
+\end{equation}
+
+\paragraph{Orthogonal mode.}
+Choose a set partition $\mathcal T_{\mathbf x,\mathbf y}$ of $C_i$.  For
+every $T\in\mathcal T_{\mathbf x,\mathbf y}$, choose an anchor $c_T\in T$
+and roots
+\[
+  \rho_{T,c},\sigma_{T,c}\in\mu(K)
+  \qquad(c\in T),
+\]
+with $\rho_{T,c_T}=\sigma_{T,c_T}=1$.  Retain this discrete choice only if
+\begin{equation}
+  \sum_{c\in T}\rho_{T,c}\overline{\sigma_{T,c}}=0
+  \qquad
+  \text{for every }T\in\mathcal T_{\mathbf x,\mathbf y}.
+  \label{eq:bo-certificate-root-sum}
+\end{equation}
+For every $T\in\mathcal T_{\mathbf x,\mathbf y}$ and every
+$c\in T\setminus\{c_T\}$, impose the anchor equations
+\begin{align}
+  X_{\mathbf x,c}-\rho_{T,c}X_{\mathbf x,c_T}&=0,
+  \label{eq:bo-certificate-first-anchor}\\
+  X_{\mathbf y,c}-\sigma_{T,c}X_{\mathbf y,c_T}&=0.
+  \label{eq:bo-certificate-second-anchor}
+\end{align}
+
+For a retained certificate $\mathfrak c$, rewrite every coordinate equation
+imposed above as $p(\mathbf X)=0$ and put the polynomial
+$p(\mathbf X)$ into $E_{\mathfrak c}\subseteq K[\mathbf X]$.  Explicitly,
+$E_{\mathfrak c}$ consists of all applicable polynomials of the following
+types, with the indices and discrete choices specified by
+$\mathfrak c$:
+\begin{align*}
+  &X_{\mathbf x,c},\\
+  &X_{\mathbf x,c}X_{\mathbf y,e}
+    -\tau_{\mathbf x,\mathbf y;c,e}
+     X_{\mathbf x,e}X_{\mathbf y,c},\\
+  &X_{\mathbf x,c}X_{\mathbf y,e}
+    -X_{\mathbf x,e}X_{\mathbf y,c},\\
+  &X_{\mathbf x,c}-\rho_{T,c}X_{\mathbf x,c_T},\\
+  &X_{\mathbf y,c}-\sigma_{T,c}X_{\mathbf y,c_T}.
+\end{align*}
+The third type is imposed only in dependent mode, and the last two only in
+orthogonal mode.
+Thus ``left-hand side'' means precisely the polynomial before $=0$ in one
+of~\eqref{eq:bo-certificate-support},
+\eqref{eq:bo-certificate-twisted-minor},
+\eqref{eq:bo-certificate-dependent}, or
+\cref{eq:bo-certificate-first-anchor,eq:bo-certificate-second-anchor}.
+Certificate enumeration retains exactly the discrete root choices satisfying
+\eqref{eq:bo-certificate-root-sum}.  For each retained choice,
+$E_{\mathfrak c}$ consists of homogeneous polynomials in the unbarred
+coordinate variables: degree one for support and anchor equations, and degree
+two for minor equations.  Conjugation is confined to the finite
+precomputation over $\mu(K)$.
+
+The certificate family is finite and effectively enumerable because the row
+and column sets, their partitions, and $\mu(K)$ are finite.  Retention is
+decided by exact number-field equality tests, and homogeneity makes the zero
+table a solution of every retained branch.  Let $\mathfrak C_k$ denote the
+family of retained Block Orthogonality certificates of arity $k$.
+
+For $E\subseteq K[\mathbf X]$, write
+\[
+  V_K(E)=\{A\in K^{D^k}:e(A)=0\text{ for every }e\in E\}.
+\]
+Let $\mathcal B_k$ denote the set of $K$-valued $k$-ary tables whose
+singleton purifications are block-orthogonal.  This is well-defined by
+\cref{lem:purification-invariance}: whether the purification is
+block-orthogonal is independent of the legal singleton purification chosen.
+Although $\mathcal B_k$ is defined through a purification $P$ of an original
+table $A$, every coordinate variable $X_{\mathbf x,c}$ in
+$E_{\mathfrak c}$ represents $a_{\mathbf x,c}$, not
+$p_{\mathbf x,c}$.  The passage from $P$ back to $A$ uses exactly
+\cref{lem:intrinsic-purification-tests}:
+\eqref{eq:intrinsic-magnitude-minor} gives the twisted-minor equations,
+\eqref{eq:intrinsic-ordinary-minor} gives the ordinary-minor equations, and
+\cref{eq:intrinsic-equal-magnitude,eq:purification-root-covariance} give
+the anchor equations and translate each purified Hermitian block sum into
+the prechecked root sum.  Support is unchanged by purification.  Hence the
+sets $V_K(E_{\mathfrak c})$ below are loci of original tables even though
+they characterize Block Orthogonality after purification.
+
+\begin{theorem}[Algebraic description of the BO locus]
+\label{thm:finite-bo-certificates}
+For every $k\ge2$, the effectively enumerable certificate family
+$\mathfrak C_k$ satisfies
+\begin{equation}
+  \mathcal B_k
+  =\bigcup_{\mathfrak c\in\mathfrak C_k}V_K(E_{\mathfrak c}).
+  \label{eq:bo-certificate-union}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+We prove the two inclusions separately.
+
+\paragraph{Every block-orthogonal table has a certificate.}
+Let $A\in\mathcal B_k$, and fix a singleton purification
+$P=(p_{\mathbf x,c})$ of $A$.  The support of $P$ equals that of $A$.
+Because $\abs P$ is block-rank one, the nonempty connected components of its
+bipartite support graph are complete bipartite graphs
+\[
+  R_1\times C_1,\ldots,R_t\times C_t,
+\]
+with pairwise disjoint row sets and pairwise disjoint column sets.  Choose
+these components as the certificate rectangles.  This gives
+\eqref{eq:bo-certificate-support}.
+
+Within one rectangle, purified magnitude rows are proportional.  Hence, for
+$\mathbf x,\mathbf y\in R_i$ and $c,e\in C_i$,
+\[
+  \abs{p_{\mathbf x,c}}\abs{p_{\mathbf y,e}}
+  =\abs{p_{\mathbf x,e}}\abs{p_{\mathbf y,c}}.
+\]
+All four original entries are nonzero.  By
+\eqref{eq:intrinsic-magnitude-minor}, there is a root
+$\tau_{\mathbf x,\mathbf y;c,e}\in\mu(K)$ for which the corresponding
+twisted minor vanishes.
+
+Fix $\mathbf x<\mathbf y$ in $R_i$.  If their purified rows are linearly
+dependent, then~\eqref{eq:intrinsic-ordinary-minor} shows that every ordinary
+minor of the original rows vanishes.  We choose dependent mode.
+
+Otherwise, Block Orthogonality partitions $C_i$ into the nonempty level sets
+$T$ of $c\mapsto\abs{p_{\mathbf x,c}}$.  Since the magnitude rows are
+proportional, these are also the level sets for the other row.  Choose any
+anchor $c_T\in T$.  For every $c\in T$,
+\[
+  \rho_{T,c}=\frac{a_{\mathbf x,c}}{a_{\mathbf x,c_T}},
+  \qquad
+  \sigma_{T,c}=\frac{a_{\mathbf y,c}}{a_{\mathbf y,c_T}}
+\]
+belong to $\mu(K)$ by~\eqref{eq:intrinsic-equal-magnitude}.  These roots
+satisfy the anchor equations.  Root covariance and block orthogonality on
+$T$ give
+\begin{align*}
+  0
+  &=\sum_{c\in T}p_{\mathbf x,c}\overline{p_{\mathbf y,c}}\\
+  &=p_{\mathbf x,c_T}\overline{p_{\mathbf y,c_T}}
+    \sum_{c\in T}\rho_{T,c}\overline{\sigma_{T,c}}.
+\end{align*}
+The prefactor is nonzero, so the root sum vanishes.  This constructs a
+retained certificate containing $A$.
+
+\paragraph{Every certified table is block-orthogonal.}
+Fix a certificate $\mathfrak c$, let
+$A\in V_K(E_{\mathfrak c})$, and let $P$ be a singleton purification of
+$A$.  We allow every zero degeneration admitted by the homogeneous
+certificate equations.
+
+Every nonzero row belongs to a unique certified row set $R_i$, and its
+support is contained in $C_i$.  Rows belonging to different certified
+rectangles have disjoint supports because the corresponding column sets are
+disjoint.
+
+Consider two nonzero rows $\mathbf x,\mathbf y\in R_i$.  If their supports
+are disjoint, they already satisfy the block-rank-one alternative.  Suppose
+instead that they overlap, and choose $e\in C_i$ with
+$a_{\mathbf x,e}a_{\mathbf y,e}\ne0$.  For every $c\in C_i\setminus\{e\}$,
+the twisted minor gives
+\[
+  a_{\mathbf x,c}a_{\mathbf y,e}
+  =\tau_{\mathbf x,\mathbf y;c,e}
+   a_{\mathbf x,e}a_{\mathbf y,c}.
+\]
+Consequently,
+$a_{\mathbf x,c}\ne0$ if and only if $a_{\mathbf y,c}\ne0$.
+Thus overlapping rows have the same support.  On that common support,
+\eqref{eq:intrinsic-magnitude-minor} applied to the same twisted equations
+gives
+\[
+  \abs{p_{\mathbf x,c}}\abs{p_{\mathbf y,e}}
+  =\abs{p_{\mathbf x,e}}\abs{p_{\mathbf y,c}},
+\]
+so their purified magnitude rows are positively proportional.  Hence
+$\abs P$ is block-rank one.  A certified rectangle may vanish completely or
+split into smaller surviving support rectangles; the argument covers both
+possibilities.
+
+It remains to verify the dependent-or-block-orthogonal alternative for an
+overlapping pair.  In dependent mode,
+\eqref{eq:bo-certificate-dependent} and
+\eqref{eq:intrinsic-ordinary-minor} show that all purified ordinary minors
+vanish.  Since both rows are nonzero, they are linearly dependent.
+
+Suppose the pair is in orthogonal mode.  The anchor equations imply that,
+in each certified group $T$, all entries of either row survive together or
+vanish together.  A group cannot survive in only one row while some other
+group survives in both rows.  Indeed, if $T$ survives only in row
+$\mathbf x$, if $U$ survives in both, and if $c\in T$ and $e\in U$, then the
+twisted minor has a nonzero left product and a zero right product.  The
+symmetric case is identical.  Since the two rows overlap, at least one
+common surviving group exists; hence every surviving group is common to
+both rows.
+
+For every common surviving group $T$, root covariance and the prechecked
+root sum yield
+\begin{align}
+  \sum_{c\in T}p_{\mathbf x,c}\overline{p_{\mathbf y,c}}
+  &=p_{\mathbf x,c_T}\overline{p_{\mathbf y,c_T}}
+    \sum_{c\in T}\rho_{T,c}\overline{\sigma_{T,c}}\notag\\
+  &=0.
+  \label{eq:certified-group-remains-orthogonal}
+\end{align}
+The anchor equations also imply that, within $T$, the purified entries in each
+row have a common magnitude.  Therefore a certified group cannot split into
+smaller magnitude blocks after specialization.  Distinct certified
+groups may acquire the same purified magnitude.  Because the two magnitude
+rows are proportional, every resulting magnitude block is a disjoint union
+of whole common surviving certified groups.  Summing
+\eqref{eq:certified-group-remains-orthogonal} over those groups shows that
+the Hermitian sum on the merged block is still zero.
+
+The preceding cases cover every specialization permitted by the homogeneous
+certificate equations.  Thus $P$ is block-orthogonal and
+$A\in\mathcal B_k$.
+\end{proof}
+
+\begin{remark}[The role of the working field]
+\label{rem:bo-certificates-k-points}
+Equation~\eqref{eq:bo-certificate-union} is an equality inside $K^{D^k}$,
+exactly the ambient space required here: every table in $W_{\cF}$
+is $K$-valued by \cref{eq:instance-function,eq:partial-marginal}, and every
+relevant torsion quotient therefore lies in $\mu(K)$.
+\end{remark}
+
+\subsection{From a finite union to polynomial identities}
+
+Enumerate the certificate branches as
+\[
+  \mathfrak C_k=\{\mathfrak c_1,\ldots,\mathfrak c_s\}
+\]
+and write $E_j=E_{\mathfrak c_j}$, after deleting syntactically zero
+polynomials.  If some $E_j$ is empty, then
+$V_K(E_j)=K^{D^k}$ and $\mathcal B_k=K^{D^k}$; in that case define
+$Q_k=\varnothing$.  Otherwise define the finite set
+\begin{equation*}
+  Q_k=
+  \left\{
+    \prod_{j=1}^s e_j:
+    (e_1,\ldots,e_s)\in E_1\times\cdots\times E_s
+  \right\}
+  \subseteq K[\mathbf X].
+\end{equation*}
+
+\begin{corollary}[Polynomial identities for the BO locus]
+\label{cor:bo-product-identities}
+For every $A\in K^{D^k}$,
+\begin{equation}
+  A\in\mathcal B_k
+  \quad\Longleftrightarrow\quad
+  q(A)=0\text{ for every }q\in Q_k.
+  \label{eq:bo-locus-by-identities}
+\end{equation}
+The finite set $Q_k$ is effectively computable from $D$, $k$, and $\mu(K)$.
+\end{corollary}
+
+\begin{proof}
+If $A\in V_K(E_j)$ for some $j$, every polynomial $q\in Q_k$ contains a
+factor from $E_j$, and that factor vanishes at $A$.  Hence every $q(A)$ is
+zero.
+
+Conversely, suppose that $A\notin V_K(E_j)$ for every $j$.  For each $j$,
+choose $e_j\in E_j$ with $e_j(A)\ne0$.  Since $K$ is a field,
+\[
+  \left(\prod_{j=1}^s e_j\right)(A)\ne0.
+\]
+The resulting product belongs to $Q_k$, contradicting universal vanishing.
+Together with \cref{thm:finite-bo-certificates}, this proves
+\eqref{eq:bo-locus-by-identities}.  All choices used to enumerate the
+$E_j$ and $Q_k$ range over finite explicitly represented sets.
+\end{proof}
+
+Combining the preceding results gives the following intrinsic test.
+Let $G\in W_{\cF}$ have arity $k$, and let $P$ be any legal singleton
+purification of $G$.  Then
+\begin{equation*}
+\begin{aligned}
+  &P\text{ is block-orthogonal}\\
+  &\quad\Longleftrightarrow\quad G\in\mathcal B_k\\
+  &\quad\Longleftrightarrow\quad
+    G\in\bigcup_{\mathfrak c\in\mathfrak C_k}V_K(E_{\mathfrak c})\\
+  &\quad\Longleftrightarrow\quad
+    q(G)=0\text{ for every }q\in Q_k.
+\end{aligned}
+\end{equation*}
+The first equivalence and its independence from the choice of $P$ use
+\cref{lem:purification-invariance}; the middle equivalence is
+\cref{thm:finite-bo-certificates}, whose proof invokes the translations in
+\cref{lem:intrinsic-purification-tests}; and the last equivalence is
+\cref{cor:bo-product-identities}.
+
+For fixed $k$, let $\InstMonoid{k}$ denote the monoid of finite $k$-labelled
+$\cF$-instances and let $\zvec I$ denote the pinned partition vector of
+$I\in\InstMonoid{k}$.  Precise definitions appear in
+\cref{subsec:labelled-instances}.  Writing $W_{\cF}^{(k)}$ for the $k$-ary
+part of the generated family, the global test is
+\begin{equation*}
+\begin{aligned}
+  W_{\cF}^{(k)}\subseteq\mathcal B_k
+  &\quad\Longleftrightarrow\quad
+  \begin{gathered}
+    q(G)=0\text{ for every }G\in W_{\cF}^{(k)},\\[-2pt]
+    \text{and for every }q\in Q_k
+  \end{gathered}\\
+  &\quad\Longleftrightarrow\quad
+  \begin{gathered}
+    q(\zvec I)=0\text{ for every }I\in\InstMonoid{k},\\[-2pt]
+    \text{and for every }q\in Q_k.
+  \end{gathered}
+\end{aligned}
+\end{equation*}
+The second equivalence is the exact parametrization
+$W_{\cF}^{(k)}=\{\zvec I:I\in\InstMonoid{k}\}$ proved in
+\cref{lem:pinned-realization}.  Each instance supplies one joint coordinate
+assignment
+\[
+  X_{\mathbf a}=\zvec I(\mathbf a)
+  \qquad(\mathbf a\in D^k).
+\]
+Hence the oracle in \cref{thm:universal-identity} tests vanishing on this
+parametrized subset of $K^{D^k}$.
+
+Here $\zvec I$ is the original pinned partition vector, and the polynomials in
+$Q_k$ use its unbarred coordinates.  Thus the oracle is applied directly to
+the generated table $G=\zvec I$.
+
+\section{Universal Identities on Generated Tables}
+\label{sec:universal-identities}
+
+We continue to use the field $K$ from~\eqref{eq:working-field}.
+
+\subsection{Labelled instances and pinned partition vectors}
+\label{subsec:labelled-instances}
+
+Fix $k\ge1$.  Let $\InstMonoid{k}$ be the commutative monoid of
+label-preserving isomorphism classes of finite $k$-labelled $\cF$-instances.
+The $k$ labels are carried by distinct variables.  Multiplication takes the
+disjoint union of two instances and identifies variables with the same
+label; the unit consists of the $k$ labelled variables and no constraints.
+Unlabelled isolated variables are permitted.  For $I\in\InstMonoid{k}$,
+define its pinned partition vector $\zvec I\in K^{D^k}$ by
+\begin{equation}
+  \zvec I(\mathbf a)
+  =\sum_{\substack{\sigma:V(I)\to D\\
+                    \sigma\text{ assigns }\mathbf a\text{ to the labels}}}
+       \prod_{\substack{(f;v_1,\ldots,v_{r_f})\\
+                         \in\mathcal C_I}}
+          f\bigl(\sigma(v_1),\ldots,\sigma(v_{r_f})\bigr).
+  \label{eq:pinned-partition-vector}
+\end{equation}
+
+\begin{lemma}[Pinned realization of the generated family]
+\label{lem:pinned-realization}
+Let $W_{\cF}^{(k)}$ be the set of $k$-ary members of $W_{\cF}$.  Then
+\[
+  \{\zvec I:I\in\InstMonoid{k}\}=W_{\cF}^{(k)}.
+\]
+Moreover, if $IJ$ denotes the labelled product, then
+\[
+  \zvec{IJ}=\zvec I\odot\zvec J,
+\]
+where $\odot$ is coordinatewise multiplication.
+\end{lemma}
+
+\begin{proof}
+Given $G=F_I^{[k]}\in W_{\cF}^{(k)}$, label the retained variables of the
+presenting instance.  Equation~\eqref{eq:pinned-partition-vector} is exactly
+$G$.  Conversely, order the labelled variables of a labelled instance first
+and sum all unlabelled variables; this is a member of $W_{\cF}^{(k)}$.
+The correspondence leaves repeated scopes, arbitrary sharing, isolated
+variables, previous boundary identifications, and exact cancellation
+unchanged.  In the labelled product, the unlabelled variables of the two
+factors remain independent after the common labels are pinned, which gives
+the coordinatewise product formula.
+\end{proof}
+
+\subsection{Tensor characters and pinned indistinguishability}
+
+We recall the consequence of Young's constraint-function isomorphism theorem
+needed below~\cite[Definitions~3--7, Section~4.1, and
+Corollary~35]{Young2025}.  A constraint-function
+family $\mathcal H$ is defined over a common finite domain, denoted
+$V(\mathcal H)$.  Two finite families $\mathcal H$ and $\mathcal G$ are
+\emph{similar} if they are equipped with an arity-preserving bijection between
+their functions.  A domain bijection $\sigma:V(\mathcal H)\to V(\mathcal G)$
+is an \emph{isomorphism} of similar families if, for every corresponding pair
+$h\leftrightarrow g$ of arity $r$,
+\[
+  h(a_1,\ldots,a_r)=g(\sigma(a_1),\ldots,\sigma(a_r))
+  \qquad(a_1,\ldots,a_r\in V(\mathcal H)).
+\]
+Elements $u,v\in V(\mathcal H)$ are \emph{twins in $\mathcal H$} if, for
+every $h\in\mathcal H$ of arity $r$, every $j\in[r]$, and every
+$(a_1,\ldots,a_{r-1})\in V(\mathcal H)^{r-1}$,
+\begin{multline*}
+  h(a_1,\ldots,a_{j-1},u,a_j,\ldots,a_{r-1})\\
+  =h(a_1,\ldots,a_{j-1},v,a_j,\ldots,a_{r-1}).
+\end{multline*}
+A labelled $\mathcal H$-instance is \emph{simple} if the
+variables in each constraint scope are pairwise distinct and, for every fixed
+function $h\in\mathcal H$, no two occurrences of $h$ have scope tuples that
+are permutations of one another.
+
+For a $k$-labelled $\mathcal H$-instance $I$ and a pin
+$\beta:[k]\to V(\mathcal H)$, write $Z_{\beta}^{\mathcal H}(I)$ for its
+pinned partition value.  If $\mathcal H$ and $\mathcal G$ are similar, let
+$I_{\mathcal H\to\mathcal G}$ be the $\mathcal G$-instance obtained by
+replacing every function of $\mathcal H$ by its corresponding function of
+$\mathcal G$, while retaining the variables, labels, and constraint scopes.
+Under this notation, the cited result gives the following pinned form.
+
+\begin{theorem}[Pinned constraint-function isomorphism]
+\label{thm:young-pinned}
+Let $\mathcal H$ and $\mathcal G$ be similar finite sets of constraint
+functions over a field of characteristic zero.  Fix $k\ge1$ and pins
+$\beta:[k]\to V(\mathcal H)$ and $\gamma:[k]\to V(\mathcal G)$.
+If
+\begin{equation*}
+  Z_{\beta}^{\mathcal H}(I)
+  =Z_{\gamma}^{\mathcal G}(I_{\mathcal H\to\mathcal G})
+\end{equation*}
+for every simple $k$-labelled $\mathcal H$-instance $I$, then the two
+domains have the same size and there is an isomorphism
+$\sigma:V(\mathcal H)\to V(\mathcal G)$ of the two families such that
+$\sigma(\beta(i))$ and $\gamma(i)$ are twins in $\mathcal G$ for every
+$i\in[k]$.
+
+Conversely, such a domain bijection and twin replacements preserve pinned
+partition values on every $k$-labelled instance, whether or not it is simple.
+\end{theorem}
+
+The theorem is applied at a fixed triple $(k,\beta,\gamma)$: equality is
+quantified over all simple instances for these fixed data, and the resulting
+isomorphism may depend on the triple.
+
+For the converse, an isomorphism is a change of summation variables, and
+replacing a pin by a twin preserves every constraint value.  In our exactly
+represented algebraic-number setting, the stated condition is decidable by
+enumerating the bijections between the finite domains $V(\mathcal H)$ and
+$V(\mathcal G)$ and testing the corresponding function tables and twin
+relations exactly.
+
+Let $p,q\ge0$.  For $f:D^{r_f}\to K$, define the function
+$T_{p,q}(f):(D^{p+q})^{r_f}\to K$ by
+\begin{align*}
+  T_{p,q}(f)(\mathbf u_1,\ldots,\mathbf u_{r_f})
+  &={}
+    \prod_{\ell=1}^{p}
+      f(u_{1,\ell},\ldots,u_{r_f,\ell})\\
+  &\quad\cdot
+    \prod_{\ell=p+1}^{p+q}
+      \overline{f(u_{1,\ell},\ldots,u_{r_f,\ell})},
+\end{align*}
+where $\mathbf u_j\in D^{p+q}$.  When $p=q=0$, the domain is the
+singleton $D^0$ and $T_{0,0}(f)$ is the constant-one function of arity
+$r_f$ on that domain.  Write
+\[
+  T_{p,q}(\cF)=\bigl(T_{p,q}(f):f\in\cF\bigr)
+\]
+for this $f$-indexed tensorized family; distinct indices may initially give
+the same function table.
+
+Fix $k\ge1$.  For each boundary assignment
+$\mathbf a=(a_1,\ldots,a_k)\in D^k$, introduce two independent formal
+variables $X_{\mathbf a}$ and $Y_{\mathbf a}$.  When a polynomial in these
+variables is evaluated at the pinned partition vector of an instance $I$,
+the substitutions are
+\begin{equation}
+  X_{\mathbf a}\longmapsto\zvec I(\mathbf a),
+  \qquad
+  Y_{\mathbf a}\longmapsto\overline{\zvec I(\mathbf a)}.
+  \label{eq:formal-coordinate-substitution}
+\end{equation}
+A monomial of $X$-degree $p$ and $Y$-degree $q$ can be written as
+\begin{equation*}
+  M=\prod_{i=1}^{p}X_{\mathbf a^{(i)}}
+    \prod_{j=1}^{q}Y_{\mathbf b^{(j)}}.
+\end{equation*}
+For $I\in\InstMonoid{k}$, define
+\begin{equation*}
+  \chi_M(I):=M(\zvec I,\overline{\zvec I}),
+\end{equation*}
+using the simultaneous substitution in
+\eqref{eq:formal-coordinate-substitution}.  The next lemma proves that
+$\chi_M$ is a unital multiplicative character.
+Here the possibly repeated indices
+\[
+\begin{aligned}
+  \mathbf a^{(i)}&=(a_1^{(i)},\ldots,a_k^{(i)})\in D^k
+    &&(i\in[p]),\\
+  \mathbf b^{(j)}&=(b_1^{(j)},\ldots,b_k^{(j)})\in D^k
+    &&(j\in[q])
+\end{aligned}
+\]
+list the factors of $M$.  The parenthesized superscript numbers a factor and
+is not exponentiation; for example, $a_t^{(i)}$ is coordinate $t$ of the
+tuple indexing the $i$th $X$-factor.
+
+The pin $\beta_M:[k]\to D^{p+q}$ is obtained by transposing these $p+q$
+boundary assignments.  For label $t\in[k]$, set
+\[
+  \beta_M(t)
+  =\bigl(a_t^{(1)},\ldots,a_t^{(p)},
+          b_t^{(1)},\ldots,b_t^{(q)}\bigr)\in D^{p+q}.
+\]
+Equivalently, regarding the values $\beta_M(t)$ as columns,
+\begin{equation*}
+  \bigl(\beta_M(1)\ \cdots\ \beta_M(k)\bigr)
+  =
+  \begin{pmatrix}
+    a_1^{(1)}&\cdots&a_k^{(1)}\\
+    \vdots&&\vdots\\
+    a_1^{(p)}&\cdots&a_k^{(p)}\\
+    b_1^{(1)}&\cdots&b_k^{(1)}\\
+    \vdots&&\vdots\\
+    b_1^{(q)}&\cdots&b_k^{(q)}
+  \end{pmatrix}.
+\end{equation*}
+The block of $\mathbf a$-rows or $\mathbf b$-rows is omitted when $p=0$ or
+$q=0$, respectively.
+For example, let $D=\{0,1\}$, $k=2$, $p=2$, $q=1$, and
+\[
+  M=X_{(0,1)}X_{(1,1)}Y_{(1,0)}.
+\]
+Then the three row assignments are $(0,1),(1,1),(1,0)$, so
+\[
+  \beta_M(1)=(0,1,1),
+  \qquad
+  \beta_M(2)=(1,1,0).
+\]
+
+\Cref{fig:tensor-character-layers} visualizes this example and the
+construction used in the next lemma.
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{0.80\linewidth}{!}{%
+  \begin{tikzpicture}[
+      x=1cm,y=1.04cm,
+      title/.style={font=\small\bfseries},
+      panel/.style={draw,rounded corners=2pt,line width=.45pt},
+      cell/.style={draw,minimum width=7mm,minimum height=5.5mm,
+                   inner sep=0pt,font=\scriptsize},
+      conjcell/.style={cell,double,double distance=.6pt},
+      rowlabel/.style={font=\scriptsize,anchor=east},
+      inst/.style={draw,rounded corners=3pt,minimum width=4.5cm,
+                   minimum height=1.55cm,align=center,font=\scriptsize},
+      pin/.style={draw,circle,minimum size=6.5mm,inner sep=1pt,
+                  font=\scriptsize},
+      layer/.style={draw,rounded corners=2pt,minimum width=4.35cm,
+                    minimum height=6.5mm,align=left,font=\scriptsize},
+      conjlayer/.style={layer,double,double distance=.6pt},
+      arrow/.style={-{Latex[length=2mm]},line width=.55pt}
+    ]
+    % Panel (a): rows indexing the factors of the monomial.
+    \draw[panel] (.35,7.85) rectangle (13.65,11.40);
+    \node[title] at (7.00,11.05) {(a) factors of $M$ as rows};
+    \node[font=\scriptsize] at (7.15,10.62) {$t=1$};
+    \node[font=\scriptsize] at (7.95,10.62) {$t=2$};
+    \node[rowlabel] at (6.68,10.19) {$X_{\mathbf a^{(1)}}$};
+    \node[cell] at (7.15,10.19) {$0$};
+    \node[cell] at (7.95,10.19) {$1$};
+    \node[rowlabel] at (6.68,9.49) {$X_{\mathbf a^{(2)}}$};
+    \node[cell] at (7.15,9.49) {$1$};
+    \node[cell] at (7.95,9.49) {$1$};
+    \node[rowlabel] at (6.68,8.79) {$Y_{\mathbf b^{(1)}}$};
+    \node[conjcell] at (7.15,8.79) {$1$};
+    \node[conjcell] at (7.95,8.79) {$0$};
+    \node[font=\scriptsize,align=center] at (7.00,8.23)
+      {single border: ordinary factor; double border: conjugated factor};
+
+    \draw[arrow] (7.00,7.68)--(7.00,7.05)
+      node[midway,right=3pt,font=\scriptsize]
+      {transpose rows into $D^3$-valued columns};
+
+    % Panel (b): bundle the columns into D^3-valued pins.
+    \draw[panel] (.35,3.50) rectangle (13.65,6.85);
+    \node[title] at (7.00,6.50) {(b) transpose and bundle columns};
+    \node[inst] (IM) at (7.00,5.55)
+      {$I^M$ has the same variables, labels, and scopes as $I$\\[2pt]
+       every occurrence $f$ is replaced by $T_{2,1}(f)$};
+    \node[pin] (p1) at (5.55,4.15) {$1$};
+    \node[pin] (p2) at (8.45,4.15) {$2$};
+    \draw[line width=.45pt] (p1.north |- IM.south)--(p1.north);
+    \draw[line width=.45pt] (p2.north |- IM.south)--(p2.north);
+    \node[font=\scriptsize,align=center] at (3.55,4.15)
+      {$\beta_M(1)=(0,1,1)$};
+    \node[font=\scriptsize,align=center] at (10.45,4.15)
+      {$\beta_M(2)=(1,1,0)$};
+
+    \draw[arrow] (7.00,3.32)--(7.00,2.89)
+      node[midway,right=3pt,font=\scriptsize]
+      {split each $D^3$-assignment into its three components};
+
+    % Panel (c): component layers of a D^3-valued assignment.
+    \draw[panel] (.35,-.85) rectangle (13.65,2.68);
+    \node[title] at (7.00,2.33) {(c) independent component layers};
+    \node[layer,minimum width=8.0cm] (L1) at (7.00,1.75)
+      {layer $1$: pin $(0,1)$; value $\zvec I(0,1)$};
+    \node[layer,minimum width=8.0cm] (L2) at (7.00,.92)
+      {layer $2$: pin $(1,1)$; value $\zvec I(1,1)$};
+    \node[conjlayer,minimum width=8.0cm] (L3) at (7.00,.09)
+      {layer $3$: pin $(1,0)$; value $\overline{\zvec I(1,0)}$};
+    \node[font=\scriptsize,align=center] at (7.00,-.49)
+      {multiply the three layer sums to obtain $\chi_M(I)$};
+  \end{tikzpicture}%
+  }
+  \caption{Tensor realization for the example preceding
+  \cref{lem:tensor-character}.  The rows indexing the three monomial factors
+  are transposed into one $D^3$-valued pin at each label.  An assignment to
+  $I^M$ is then exactly three independent $D$-valued assignments to the same
+  instance template $I$; double borders mark the factor and layer that use
+  conjugated constraint weights.
+  Hence its pinned partition value factors as
+  $\zvec I(0,1)\zvec I(1,1)\overline{\zvec I(1,0)}=\chi_M(I)$.}
+  \label{fig:tensor-character-layers}
+\end{figure}
+
+\begin{lemma}[Tensor realization of monomial characters]
+\label{lem:tensor-character}
+For $I\in\InstMonoid{k}$, let $I^M$ be the $k$-labelled
+$T_{p,q}(\cF)$-instance obtained by replacing each occurrence of
+$f\in\cF$ by $T_{p,q}(f)$ while retaining all variables, labels, and scopes.
+Then
+\begin{equation*}
+  Z_{\beta_M}^{T_{p,q}(\cF)}(I^M)
+  =\chi_M(I)
+  =\prod_{i=1}^{p}\zvec I(\mathbf a^{(i)})
+    \prod_{j=1}^{q}\overline{\zvec I(\mathbf b^{(j)})}.
+\end{equation*}
+Thus $\chi_M:\InstMonoid{k}\to K$ is a unital multiplicative character.
+\end{lemma}
+
+\begin{proof}
+An assignment $\eta:V(I)\to D^{p+q}$ is uniquely a tuple
+$(\sigma_1,\ldots,\sigma_{p+q})$ of assignments
+$\sigma_\ell:V(I)\to D$.  By the definition of $\beta_M$, the assignment
+$\sigma_i$ pins the $k$ labels to $\mathbf a^{(i)}$ for $i\in[p]$, while
+$\sigma_{p+j}$ pins them to $\mathbf b^{(j)}$ for $j\in[q]$.
+For an assignment $\sigma:V(I)\to D$, abbreviate its constraint product by
+\[
+  w_I(\sigma)
+  =\prod_{(f;v_1,\ldots,v_{r_f})\in\mathcal C_I}
+     f\bigl(\sigma(v_1),\ldots,\sigma(v_{r_f})\bigr).
+\]
+Expanding the tensorized constraint functions and using this abbreviation
+gives
+\begin{align*}
+  Z_{\beta_M}^{T_{p,q}(\cF)}(I^M)
+  &=\sum_{\sigma_1,\ldots,\sigma_{p+q}}
+      \prod_{i=1}^p w_I(\sigma_i)
+      \prod_{j=1}^q\overline{w_I(\sigma_{p+j})}\\
+  &=\prod_{i=1}^{p}\zvec I(\mathbf a^{(i)})
+    \prod_{j=1}^{q}\overline{\zvec I(\mathbf b^{(j)})}.
+\end{align*}
+The first sum ranges over the component assignments with the pins just
+specified.  The second equality holds because these component assignments
+are independent, so the finite sum factors; finite sums commute with complex
+conjugation.  When $p=q=0$, the domain is $D^0$ and the value is the empty
+product $1$.  Finally, \cref{lem:pinned-realization} gives
+$\chi_M(IJ)=\chi_M(I)\chi_M(J)$ and $\chi_M(1)=1$, so $\chi_M$ is a unital
+multiplicative character.
+\end{proof}
+
+Tensorization may collapse distinct input functions.  For example, if
+$g=\mathrm{i}f$, where $\mathrm{i}^2=-1$, then
+$T_{1,1}(g)=T_{1,1}(f)$.  Common scalar tags restore the canonical indexing
+required by \cref{thm:young-pinned}; the next lemma constructs them.
+
+\begin{lemma}[Common scalar tags]
+\label{lem:scalar-tags}
+Let $(h_f:f\in\cF)$ and $(g_f:f\in\cF)$ be indexed families over finite
+domains $A$ and $B$, respectively, where
+$h_f:A^{r_f}\to\AlgNums$ and $g_f:B^{r_f}\to\AlgNums$ are given by exact
+tables.  Suppose that, within
+each family and each arity, at most one indexed table is identically zero.
+One can effectively choose positive rational numbers $\lambda_f$, $f\in\cF$,
+such that, within every arity, both
+\[
+  \{\lambda_f h_f:f\in\cF\}
+  \quad\text{and}\quad
+  \{\lambda_f g_f:f\in\cF\}
+\]
+contain no duplicate tables.
+\end{lemma}
+
+\begin{proof}
+Choose the tags sequentially.  For a previously treated function $e$ of the
+same arity, the equality
+$\lambda h_f=\lambda_e h_e$ excludes at most one positive rational value of
+$\lambda$; the all-zero case cannot occur for two distinct indices by
+hypothesis.  The same statement holds for the $g$-family.  Thus only finitely
+many rational values are excluded at each stage, and enumerating the positive
+integers finds a valid tag.
+\end{proof}
+
+The tensorized families associated with monomial characters satisfy the
+hypothesis of \cref{lem:scalar-tags}.  At positive tensor degree,
+$T_{p,q}(f)$ is zero exactly when $f$ is zero, and exact deduplication of the
+input leaves at most one zero function of each arity.  At degree zero every
+function table is the nonzero constant-one table.
+
+\begin{lemma}[Effective comparison of monomial characters]
+\label{lem:character-comparison}
+Given two monomials in the coordinates
+$\{X_{\mathbf a},Y_{\mathbf a}:\mathbf a\in D^k\}$, it is decidable whether
+their associated characters agree on every element of $\InstMonoid{k}$.
+\end{lemma}
+
+\begin{proof}
+Let $M$ have $X$-degree $p$ and $Y$-degree $q$, and let $N$ have
+$X$-degree $r$ and $Y$-degree $s$.  The decision has three stages: represent
+the two monomial characters by tensorized constraint-function families,
+repair possible collisions in those families with common scalar tags, and
+then apply the finite isomorphism-and-twin criterion in
+\cref{thm:young-pinned}.
+
+\paragraph{Tensorized representations.}
+Write
+\[
+\begin{aligned}
+  \mathcal H_M=(h_f:f\in\cF)
+    &=\bigl(T_{p,q}(f):f\in\cF\bigr),\\
+  \mathcal H_N=(g_f:f\in\cF)
+    &=\bigl(T_{r,s}(f):f\in\cF\bigr).
+\end{aligned}
+\]
+These families are defined over
+\[
+  A_M=D^{p+q},
+  \qquad
+  A_N=D^{r+s},
+\]
+and carry the pins $\beta_M:[k]\to A_M$ and
+$\beta_N:[k]\to A_N$.  For an original labelled instance template
+$I\in\InstMonoid{k}$, let $I^M$ and $I^N$ be its interpretations by the two
+families, as in \cref{lem:tensor-character}.  That lemma gives
+\begin{equation}
+  Z_{\beta_M}^{\mathcal H_M}(I^M)=\chi_M(I),
+  \qquad
+  Z_{\beta_N}^{\mathcal H_N}(I^N)=\chi_N(I).
+  \label{eq:two-monomial-realizations}
+\end{equation}
+Thus $A_M$ and $A_N$ are domains for the auxiliary constraint functions;
+the arguments of both characters remain the original templates
+$I\in\InstMonoid{k}$.
+
+\paragraph{Common scalar tags.}
+Tensorization may make two differently indexed functions equal.  Apply
+\cref{lem:scalar-tags} to choose common positive rational tags $\lambda_f$
+that make both indexed families duplicate-free, and put
+\[
+\begin{aligned}
+  \widehat h_f&=\lambda_fh_f,
+  &\widehat g_f&=\lambda_fg_f,\\
+  \widehat{\mathcal H}_M&=(\widehat h_f:f\in\cF),
+  &\widehat{\mathcal H}_N&=(\widehat g_f:f\in\cF).
+\end{aligned}
+\]
+Both tagged families are duplicate-free within each arity.  If $N_f(I)$ is
+the number of occurrences of $f$ in the original template $I$, interpreting
+that template with the tagged tables multiplies both values in
+\eqref{eq:two-monomial-realizations} by the same factor
+\begin{equation*}
+  \tau(I)=\prod_{f\in\cF}\lambda_f^{N_f(I)}.
+\end{equation*}
+This factor is nonzero.  Denoting the two tagged interpretations by
+$\widehat I^M$ and $\widehat I^N$, define
+\begin{align*}
+  \widehat Z_M(I)
+  &:=Z_{\beta_M}^{\widehat{\mathcal H}_M}(\widehat I^M)
+    =\tau(I)\chi_M(I),\\
+  \widehat Z_N(I)
+  &:=Z_{\beta_N}^{\widehat{\mathcal H}_N}(\widehat I^N)
+    =\tau(I)\chi_N(I).
+\end{align*}
+Since the same nonzero factor occurs on both sides, we have
+\begin{equation}
+\begin{aligned}
+  &\chi_M(I)=\chi_N(I)
+    \text{ for every }I\in\InstMonoid{k}\\
+  &\qquad\Longleftrightarrow\qquad
+    \widehat Z_M(I)=\widehat Z_N(I)
+    \text{ for every }I\in\InstMonoid{k}.
+\end{aligned}
+  \label{eq:character-agreement-tagged-agreement}
+\end{equation}
+
+\paragraph{Finite isomorphism-and-twin criterion.}
+The tagged families are genuine sets of size $\abs{\cF}$, and
+\[
+  \widehat h_f\longleftrightarrow\widehat g_f
+  \qquad(f\in\cF)
+\]
+is an arity-preserving bijection.  They are therefore similar.  Because the
+tables are duplicate-free, every labelled
+$\widehat{\mathcal H}_M$-instance corresponds uniquely to an original
+$\cF$-instance template, and replacing $\widehat h_f$ by
+$\widehat g_f$ produces its $\widehat{\mathcal H}_N$ interpretation.
+
+If the right-hand side of
+\eqref{eq:character-agreement-tagged-agreement} holds, it holds in
+particular for every simple instance.  By \cref{thm:young-pinned}, the
+domains have equal size and there is a bijection
+\begin{equation}
+  \sigma:A_M\to A_N
+  \label{eq:character-comparison-domain-bijection}
+\end{equation}
+that is an isomorphism of the two tagged families and satisfies
+\begin{equation}
+  \sigma(\beta_M(t))
+  \text{ and }\beta_N(t)
+  \text{ are twins in }\widehat{\mathcal H}_N
+  \qquad(t\in[k]).
+  \label{eq:character-comparison-pin-twins}
+\end{equation}
+Conversely, such a bijection maps every assignment of
+$\widehat I^M$ to an assignment of $\widehat I^N$, preserves each
+constraint weight, and preserves the pins through the twin conditions.
+The converse direction of \cref{thm:young-pinned} therefore gives equality of
+the two tagged pinned values
+for every $I$.  Since $\tau(I)\ne0$, division by the common factor gives
+$\chi_M(I)=\chi_N(I)$ for every $I\in\InstMonoid{k}$.
+
+The resulting decision is finite.  If $\abs{A_M}\ne\abs{A_N}$, no
+bijection in \eqref{eq:character-comparison-domain-bijection} exists and
+the characters are different.  Otherwise enumerate every bijection
+$\sigma:A_M\to A_N$.  For each one, test exactly whether all corresponding
+tagged function tables are carried to one another and whether
+\eqref{eq:character-comparison-pin-twins} holds.  The characters agree if
+and only if some bijection passes.  All domains and tables are finite, so
+the enumeration terminates.
+\end{proof}
+
+\subsection{The universal identity oracle}
+
+We use the elementary linear independence of distinct monoid characters.
+
+\begin{lemma}[Linear independence of monoid characters]
+\label{lem:dedekind-independence}
+Let $M$ be a monoid, let $L$ be a field of characteristic zero, and let
+\[
+  \chi_1,\ldots,\chi_s:M\to L
+\]
+be pairwise distinct unital multiplicative characters.  If
+$c_1,\ldots,c_s\in L$ satisfy
+\begin{equation}
+  \sum_{i=1}^s c_i\chi_i(x)=0
+  \qquad\text{for every }x\in M,
+  \label{eq:dedekind-assumed-relation}
+\end{equation}
+then $c_1=\cdots=c_s=0$.  Equivalently,
+$\chi_1,\ldots,\chi_s$ are linearly independent in the vector space $L^M$.
+\end{lemma}
+
+\begin{proof}
+Suppose the conclusion is false, and choose a nontrivial relation of the
+form~\eqref{eq:dedekind-assumed-relation} involving the minimum possible
+number $s$ of characters.  After deleting zero terms and relabelling, we may
+assume
+\begin{equation}
+  c_i\ne0
+  \qquad(i\in[s]).
+  \label{eq:dedekind-nonzero-coefficients}
+\end{equation}
+If $s=1$, evaluation at the monoid identity gives
+\[
+  0=c_1\chi_1(1)=c_1,
+\]
+contrary to \eqref{eq:dedekind-nonzero-coefficients}.  Hence $s\ge2$.
+
+Because $\chi_1$ and $\chi_s$ are distinct functions on $M$, choose and fix
+$u\in M$ such that
+\begin{equation}
+  \chi_1(u)\ne\chi_s(u).
+  \label{eq:dedekind-fixed-witness}
+\end{equation}
+For an arbitrary $v\in M$, evaluate the assumed relation at $uv$ and use
+multiplicativity:
+\begin{equation}
+\begin{aligned}
+  0
+  &=\sum_{i=1}^s c_i\chi_i(uv)\\
+  &=\sum_{i=1}^s c_i\chi_i(u)\chi_i(v).
+\end{aligned}
+  \label{eq:dedekind-relation-at-uv}
+\end{equation}
+Evaluation at $v$, followed by multiplication by the fixed scalar
+$\chi_s(u)$, gives
+\begin{equation}
+  0
+  =\chi_s(u)\sum_{i=1}^s c_i\chi_i(v)
+  =\sum_{i=1}^s c_i\chi_s(u)\chi_i(v).
+  \label{eq:dedekind-scaled-relation-at-v}
+\end{equation}
+Subtracting \eqref{eq:dedekind-scaled-relation-at-v} from
+\eqref{eq:dedekind-relation-at-uv} yields
+\begin{equation}
+  0=\sum_{i=1}^{s-1}
+      c_i\bigl(\chi_i(u)-\chi_s(u)\bigr)\chi_i(v)
+  \qquad\text{for every }v\in M.
+  \label{eq:dedekind-shorter-relation}
+\end{equation}
+Indeed, the term indexed by $s$ has coefficient zero.  Because $u$ is now
+fixed, the quantities
+\[
+  d_i=c_i\bigl(\chi_i(u)-\chi_s(u)\bigr)
+  \qquad(i\in[s-1])
+\]
+are fixed scalars in $L$, independent of $v$.  Moreover,
+\[
+  d_1=c_1\bigl(\chi_1(u)-\chi_s(u)\bigr)\ne0
+\]
+by \cref{eq:dedekind-nonzero-coefficients,eq:dedekind-fixed-witness}.
+Consequently, \eqref{eq:dedekind-shorter-relation} is a nontrivial linear
+relation involving at most $s-1$ of the characters, contradicting the
+minimality of $s$.
+\end{proof}
+
+\begin{theorem}[Universal identity oracle]
+\label{thm:universal-identity}
+Fix $k\ge1$.  The input is an ordinary commutative polynomial
+\[
+  P\in\AlgNums[X_{\mathbf a},Y_{\mathbf a}:\mathbf a\in D^k],
+\]
+given as a finite list of monomials with exactly encoded algebraic-complex
+coefficients.  The $2\abs{D}^k$ symbols
+$X_{\mathbf a},Y_{\mathbf a}$ are independent formal variables; no
+homogeneity assumption is imposed.  For $I\in\InstMonoid{k}$, the notation
+$P(\zvec I,\overline{\zvec I})$ means the simultaneous substitution
+\begin{equation*}
+  X_{\mathbf a}=\zvec I(\mathbf a),
+  \qquad
+  Y_{\mathbf a}=\overline{\zvec I(\mathbf a)}
+  \qquad(\mathbf a\in D^k),
+\end{equation*}
+as in \eqref{eq:formal-coordinate-substitution}.  There is a total exact
+algorithm deciding whether
+\begin{equation}
+  P(\zvec I,\overline{\zvec I})=0
+  \qquad\text{for every }I\in\InstMonoid{k}.
+  \label{eq:universal-star-identity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $L$ be the number field generated over $K$ by the finitely many
+coefficients of $P$.  It is effectively constructible from their exact
+encodings.  Every monomial character takes values in $K\subseteq L$, so we
+may regard all of them as $L$-valued characters.
+
+Expand $P$ into finitely many monomials and combine identical monomials.  By
+\cref{lem:character-comparison}, we can decide equality of every pair of the
+resulting characters and partition them into equivalence classes.  Choosing
+one representative $\chi_E$ for every class $E$ in the resulting finite set
+$\mathcal E_{\mathrm{char}}$ gives, for every
+$I\in\InstMonoid{k}$,
+\[
+  P(\zvec I,\overline{\zvec I})
+  =\sum_{E\in\mathcal E_{\mathrm{char}}}
+     \left(\sum_{M\in E}c_M\right)\chi_E(I),
+\]
+where $c_M\in L$ is the coefficient of $M$.  The characters $\chi_E$ are
+pairwise distinct, so \cref{lem:dedekind-independence} makes them linearly
+independent over $L$.  Therefore~\eqref{eq:universal-star-identity} holds if
+and only if
+\[
+  \sum_{M\in E}c_M=0
+  \qquad\text{for every }E\in\mathcal E_{\mathrm{char}}.
+\]
+These are finitely many exact algebraic-number equality tests.
+
+All tensorized function tables, scalar-tag searches, domain bijections, table
+isomorphisms, twin tests, and coefficient sums are finite and effective.  If
+one class sum is nonzero, \cref{lem:dedekind-independence} says that the
+displayed linear combination is not the zero function on $\InstMonoid{k}$.
+Hence a
+finite labelled instance $I$ satisfies
+$P(\zvec I,\overline{\zvec I})\ne0$, and the algorithm rejects.
+\end{proof}
+
+\subsection{Degree-multiple generated families}
+\label{subsec:degree-multiple-identities}
+
+Fix $\delta\ge1$.  Let $\mathfrak M_{k,\delta}$ be the submonoid of
+$\InstMonoid{k}$ consisting of the labelled instances in which every
+variable has occurrence degree divisible by $\delta$.  It is a submonoid:
+in a labelled product, the degrees of identified labels add, and zero is
+divisible by $\delta$, so the constraint-free labelled unit belongs to it.
+The proof of \cref{lem:pinned-realization} restricts verbatim to give
+\begin{equation*}
+  \{\zvec I:I\in\mathfrak M_{k,\delta}\}
+  =\{G\in\WFdeg{\delta}:\arity(G)=k\}.
+\end{equation*}
+
+To compare monomial characters after restriction to
+$\mathfrak M_{k,\delta}$, we use a root-of-unity filter that reduces the
+problem to finitely many ordinary character comparisons on
+$\InstMonoid{k}$.
+
+\begin{lemma}[Degree-filtered comparison of monomial characters]
+\label{lem:degree-filtered-character-comparison}
+Fix $k,\delta\ge1$.  Given two monomials $M,N$ in the coordinates
+$\{X_{\mathbf a},Y_{\mathbf a}:\mathbf a\in D^k\}$ and their associated
+characters $\chi_M,\chi_N:\InstMonoid{k}\to K$, it is decidable whether
+\begin{equation}
+  \chi_M(I)=\chi_N(I)
+  \qquad\text{for every }I\in\mathfrak M_{k,\delta}.
+  \label{eq:degree-filtered-character-goal}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We implement the comparison by tensorization, cyclic filtering, finite
+character comparison, and the linear independence of distinct monoid
+characters.
+
+\paragraph{Tensorized representations.}
+Let
+\[
+  \mathcal H_M=(h_f:f\in\cF)
+  \quad\text{and}\quad
+  \mathcal H_N=(g_f:f\in\cF)
+\]
+be the tensorized families associated with $M$ and $N$, defined over the
+finite domains $A_M$ and $A_N$, with pins
+$\beta_M:[k]\to A_M$ and $\beta_N:[k]\to A_N$, respectively.  For an
+original labelled $\cF$-instance template $I\in\InstMonoid{k}$, let $I^M$
+and $I^N$ denote its interpretations by these two families.  By
+\cref{lem:tensor-character},
+\begin{equation}
+  Z_{\beta_M}^{\mathcal H_M}(I^M)=\chi_M(I),
+  \qquad
+  Z_{\beta_N}^{\mathcal H_N}(I^N)=\chi_N(I).
+  \label{eq:degree-filter-monomial-realizations}
+\end{equation}
+
+\paragraph{Cyclic degree filter.}
+Recall that
+\[
+  C_\delta=\mathbb Z/\delta\mathbb Z
+  =\{0,1,\ldots,\delta-1\},
+\]
+with addition modulo $\delta$.  This is an auxiliary cyclic domain, separate
+from the original CSP domain $D$, introduced solely to filter occurrence
+degrees modulo $\delta$.  Let $L_\delta=K(\omega_\delta)$.  For an input
+function $f\in\cF$ of arity
+$r_f$, define the everywhere-nonzero function
+\begin{equation*}
+  u_f(s_1,\ldots,s_{r_f})
+  =\omega_\delta^{s_1+\cdots+s_{r_f}}.
+\end{equation*}
+Augment $h_f$ and $g_f$ to functions over
+$A_M\times C_\delta$ and $A_N\times C_\delta$, respectively, by
+\begin{multline*}
+  \widehat h_f\bigl((a_1,s_1),\ldots,(a_{r_f},s_{r_f})\bigr)\\
+  =h_f(a_1,\ldots,a_{r_f})
+     u_f(s_1,\ldots,s_{r_f}),
+\end{multline*}
+and define $\widehat g_f$ by the same formula with $g_f$ in place of $h_f$.
+For $\mathbf s=(s_1,\ldots,s_k)\in C_\delta^k$, interpret an original
+template $I$ using the $\widehat h_f$-family and pin label $t$ to
+$(\beta_M(t),s_t)$.  Denote the resulting pinned value by
+\[
+  \rho^M_{\mathbf s}(I).
+\]
+Define $\rho^N_{\mathbf s}(I)$ analogously using the $\widehat g_f$-family
+and the pins $(\beta_N(t),s_t)$.  Coordinatewise multiplication under the
+labelled product shows that every
+\[
+  \rho^M_{\mathbf s},\rho^N_{\mathbf s}:
+  \InstMonoid{k}\to L_\delta
+\]
+is a unital multiplicative character.
+
+\paragraph{Formula for the filter.}
+Fix $I\in\InstMonoid{k}$.  For an assignment
+$\theta:V(I)\to C_\delta$ to the cyclic coordinate, the product of all
+auxiliary factors is
+\begin{equation}
+\begin{aligned}
+  &\prod_{(f;v_1,\ldots,v_{r_f})\in\mathcal C_I}
+    u_f\bigl(\theta(v_1),\ldots,\theta(v_{r_f})\bigr)\\
+  &\quad={}
+    \omega_\delta^{
+      \sum_{(f;v_1,\ldots,v_{r_f})\in\mathcal C_I}
+      \sum_{j=1}^{r_f}\theta(v_j)}\\
+  &\quad={}
+    \omega_\delta^{
+      \sum_{v\in V(I)}\deg_I(v)\theta(v)}.
+  \label{eq:degree-filter-assignment-weight}
+\end{aligned}
+\end{equation}
+Here $\deg_I(v)$ is the occurrence degree of $v$.  If a variable occurs
+several times in one scope, it appears the same number of times in the first
+sum in \eqref{eq:degree-filter-assignment-weight}; hence repeated scope
+positions are counted correctly.
+
+Summing $\rho^M_{\mathbf s}(I)$ over all cyclic label pins
+$\mathbf s\in C_\delta^k$ is equivalent to summing $\theta$ over all cyclic
+assignments to $V(I)$.  The tensorized coordinates and the cyclic coordinate
+are independent, so
+\cref{eq:degree-filter-monomial-realizations,eq:degree-filter-assignment-weight}
+give the following identity, where $\mathbf 1_E$ denotes the indicator of an event
+$E$:
+\begin{equation}
+\begin{aligned}
+  \sum_{\mathbf s\in C_\delta^k}\rho^M_{\mathbf s}(I)
+  &=\chi_M(I)
+    \sum_{\theta:V(I)\to C_\delta}
+      \omega_\delta^{\sum_v\deg_I(v)\theta(v)}\\
+  &=\chi_M(I)
+    \prod_{v\in V(I)}
+      \left(
+        \sum_{t\in C_\delta}
+          \omega_\delta^{t\deg_I(v)}
+      \right)\\
+  &=\delta^{\abs{V(I)}}
+    \mathbf 1_{\{I\in\mathfrak M_{k,\delta}\}}
+    \chi_M(I).
+  \label{eq:degree-filter-H}
+\end{aligned}
+\end{equation}
+The last equality applies \eqref{eq:cyclic-character-filter} separately at
+every variable.  The identical calculation for $N$ gives
+\begin{equation}
+  \sum_{\mathbf s\in C_\delta^k}\rho^N_{\mathbf s}(I)
+  =\delta^{\abs{V(I)}}
+    \mathbf 1_{\{I\in\mathfrak M_{k,\delta}\}}
+    \chi_N(I).
+  \label{eq:degree-filter-G}
+\end{equation}
+
+\paragraph{Reduction to two ordinary character sums.}
+Define functions on the full monoid $\InstMonoid{k}$ by
+\begin{equation}
+  R_M=\sum_{\mathbf s\in C_\delta^k}\rho^M_{\mathbf s},
+  \qquad
+  R_N=\sum_{\mathbf s\in C_\delta^k}\rho^N_{\mathbf s}.
+  \label{eq:degree-filter-character-sums}
+\end{equation}
+If $I\notin\mathfrak M_{k,\delta}$, both functions vanish at $I$ by
+\cref{eq:degree-filter-H,eq:degree-filter-G}.  If
+$I\in\mathfrak M_{k,\delta}$, the same equations give
+\[
+  R_M(I)=\delta^{\abs{V(I)}}\chi_M(I),
+  \qquad
+  R_N(I)=\delta^{\abs{V(I)}}\chi_N(I).
+\]
+The common factor is nonzero because $L_\delta$ has characteristic zero.
+Consequently,
+\begin{equation}
+  \chi_M=\chi_N\text{ on }\mathfrak M_{k,\delta}
+  \quad\Longleftrightarrow\quad
+  R_M=R_N\text{ on }\InstMonoid{k}.
+  \label{eq:degree-filter-reduction}
+\end{equation}
+
+\paragraph{Finite comparison and acceptance test.}
+There are $2\delta^k$ ordinary characters in
+\eqref{eq:degree-filter-character-sums}.  The scalar-tagged comparison from
+the proof of \cref{lem:character-comparison} applies, for any fixed pair
+of pins, to two finite arity-matched indexed families represented by exact
+algebraic tables on finite domains and satisfying the zero-table hypothesis
+of \cref{lem:scalar-tags}.  Positive tensor degree preserves the zero pattern
+of the input family, while tensor degree zero produces the nonzero
+constant-one table.  Thus each tensorized family has at most one zero table
+of each arity.  Moreover, $u_f$ is everywhere nonzero, so $\widehat h_f$ is
+zero exactly when $h_f$ is zero, and likewise for $\widehat g_f$.  Hence the
+augmented families satisfy the hypothesis.  Common scalar tags make both
+families duplicate-free, after which the comparison procedure of
+\cref{lem:character-comparison} decides each pairwise equality.
+
+Partition the $2\delta^k$ characters into equality classes, let
+$\mathcal E_{\mathrm{char}}$
+be the resulting finite set of classes, and write
+$E\in\mathcal E_{\mathrm{char}}$ for one class.  Define its multiplicities
+on the two sides by
+\begin{equation*}
+\begin{aligned}
+  m_M(E)&=\abs{\{\mathbf s\in C_\delta^k:
+                    \rho^M_{\mathbf s}\in E\}},\\
+  m_N(E)&=\abs{\{\mathbf s\in C_\delta^k:
+                    \rho^N_{\mathbf s}\in E\}}.
+\end{aligned}
+\end{equation*}
+Choose one representative character $\rho_E$ from each
+$E\in\mathcal E_{\mathrm{char}}$.
+Then, as functions on $\InstMonoid{k}$,
+\begin{equation*}
+  R_M-R_N
+  =\sum_{E\in\mathcal E_{\mathrm{char}}}
+     \bigl(m_M(E)-m_N(E)\bigr)\rho_E.
+\end{equation*}
+The representatives $\rho_E$, $E\in\mathcal E_{\mathrm{char}}$, are
+pairwise distinct.  By
+\cref{lem:dedekind-independence},
+\begin{equation}
+\begin{aligned}
+  R_M=R_N
+  \quad\Longleftrightarrow\quad&
+  m_M(E)=m_N(E)\\[-2pt]
+  &\text{for every }E\in\mathcal E_{\mathrm{char}}.
+\end{aligned}
+  \label{eq:degree-filter-acceptance-test}
+\end{equation}
+Combining
+\cref{eq:degree-filter-reduction,eq:degree-filter-acceptance-test}
+gives a finite exact decision procedure
+for \eqref{eq:degree-filtered-character-goal}.
+\end{proof}
+
+\begin{theorem}[Degree-multiple universal identity oracle]
+\label{thm:degree-multiple-universal-identity}
+For every $k,\delta\ge1$ and every polynomial
+\[
+  P\in\AlgNums[X_{\mathbf a},Y_{\mathbf a}:\mathbf a\in D^k],
+\]
+given as a finite list of monomials with exactly encoded algebraic-complex
+coefficients, it is decidable whether
+\[
+  P(\zvec I,\overline{\zvec I})=0
+  \qquad\text{for every }I\in\mathfrak M_{k,\delta}.
+\]
+\end{theorem}
+
+\begin{proof}
+Every monomial of $P$ is a unital multiplicative character after restriction
+to the submonoid $\mathfrak M_{k,\delta}$.  By
+\cref{lem:degree-filtered-character-comparison}, equality of any two such
+restricted characters is decidable.  Partition the finitely many monomials
+into restricted-character classes and sum their coefficients in the number
+field generated by the input coefficients and $K$.  Applying
+\cref{lem:dedekind-independence} to the monoid $\mathfrak M_{k,\delta}$ shows
+that the identity
+holds exactly when every class sum is zero.  All steps are finite and exact.
+\end{proof}
+
+\section{The Global Block Orthogonality Decision Procedure}
+\label{sec:bo-algorithm}
+
+Recall that, for every $k\ge2$,
+\[
+  \mathcal B_k
+  =\left\{A\in K^{D^k}:
+    \begin{array}{l}
+      \text{a singleton purification of $A$}\\
+      \text{is block-orthogonal}
+    \end{array}
+  \right\}.
+\]
+By \cref{cor:bo-product-identities}, one can effectively construct a finite
+set
+\[
+  Q_k\subseteq K[X_{\mathbf a}:\mathbf a\in D^k]
+\]
+such that, for every $A\in K^{D^k}$,
+\begin{equation}
+  A\in\mathcal B_k
+  \quad\Longleftrightarrow\quad
+  q(A)=0\text{ for every }q\in Q_k.
+  \label{eq:bo-algorithm-membership}
+\end{equation}
+When invoking \cref{thm:universal-identity}, we regard $q$ as a polynomial in
+the full displayed ring that is independent of every variable
+$Y_{\mathbf a}$.
+
+\begin{procedure}[Global Block Orthogonality]
+\label{proc:global-bo}
+On input a nonempty finite domain $D$ and a finite algebraic-complex
+constraint language $\cF$ whose values are given by exact encodings, perform
+the following steps.
+\begin{enumerate}
+  \item Delete duplicate typed tables.  If $\cF=\varnothing$, return
+        \YES.  Otherwise construct the field $K$
+        in~\eqref{eq:working-field} and compute $\mu(K)$.
+  \item For every integer
+        \[
+          2\le k\le d^2+1,
+          \qquad d=\abs D,
+        \]
+        enumerate the Block Orthogonality certificates of arity $k$ and
+        construct $Q_k$ as in \cref{cor:bo-product-identities}.
+  \item For every tested $k$ and every $q\in Q_k$, use
+        \cref{thm:universal-identity} to decide whether
+        \[
+          q(\zvec I)=0
+          \qquad\text{for every }I\in\InstMonoid{k}.
+        \]
+        Return \NO{} as soon as one identity fails.
+  \item If every identity at every indicated arity succeeds, return
+        \YES.
+\end{enumerate}
+\end{procedure}
+
+\begin{theorem}[Exact decision of global BO]
+\label{thm:global-bo-decidable}
+\Cref{proc:global-bo} is a total exact algorithm.  It returns \YES{}
+on $(D,\cF)$ if and only if the Block Orthogonality condition from the
+complex-weighted $\#\mathrm{CSP}$ dichotomy theorem of Cai and
+Chen~\cite[Section~3.1]{CaiChen2017}, denoted $\BO(\cF)$ in
+\cref{def:global-bo}, holds on the entire unbounded family $W_{\cF}$.
+\end{theorem}
+
+\begin{proof}
+The empty-language case was verified in \cref{sec:preliminaries}; assume
+$\cF\ne\varnothing$.
+
+\paragraph{Termination.}
+The arity loop is finite.  At each fixed arity, the row and column sets are
+finite, $\mu(K)$ is finite, and the certificate construction ranges over
+finitely many rectangle systems, row-pair modes, set partitions, anchors,
+and root-of-unity labels.  Every root-sum test is an exact equality test in
+$K$.  Each certificate has finitely many equations, and hence $Q_k$ is
+finite and effectively computable.  A branch with no nonzero equations is
+recognized syntactically and yields $Q_k=\varnothing$.
+
+Finally, \cref{thm:universal-identity} is total and exact for each queried
+polynomial.  Consequently every loop in \cref{proc:global-bo} is finite.
+
+\paragraph{Soundness of \YES.}
+Suppose the procedure returns \YES.  Fix
+$2\le k\le d^2+1$ and a $k$-ary $G\in W_{\cF}$.  By
+\cref{lem:pinned-realization}, there is a finite
+$I\in\InstMonoid{k}$ such that $G=\zvec I$.  Every queried identity is
+universal, so $q(G)=0$ for every $q\in Q_k$.  By
+\eqref{eq:bo-algorithm-membership}, $G\in\mathcal B_k$.  Thus every generated
+table through arity $d^2+1$ has a block-orthogonal singleton purification.
+
+If a generated table of larger arity had a non-block-orthogonal singleton
+purification, \cref{lem:bo-arity-bound} would produce such a member of
+$W_{\cF}$ at a tested arity, a contradiction.  Hence every member of
+$W_{\cF}$ of arity at least two has a block-orthogonal singleton
+purification.  By \cref{cor:singleton-purification}, this is exactly the
+original joint condition $\BO(\cF)$.
+
+\paragraph{Completeness of \YES.}
+Conversely, suppose $\BO(\cF)$ holds.  Every $G\in W_{\cF}$ of arity at
+least two has a block-orthogonal singleton purification.  At every tested
+arity and for every $I\in\InstMonoid{k}$, the table $\zvec I$ therefore lies
+in $\mathcal B_k$.  Equation~\eqref{eq:bo-algorithm-membership} gives
+\[
+  q(\zvec I)=0
+  \qquad
+  \text{for every }q\in Q_k
+  \text{ and every }I\in\InstMonoid{k}.
+\]
+The universal identity oracle accepts every query, and the procedure returns
+\YES.
+
+\paragraph{Soundness and completeness of \NO.}
+If the procedure returns \NO, then some $q\in Q_k$ is not universal.
+By \cref{thm:universal-identity}, a finite labelled instance
+$I\in\InstMonoid{k}$ exists for which $q(\zvec I)\ne0$.
+Equation~\eqref{eq:bo-algorithm-membership}
+gives $\zvec I\notin\mathcal B_k$, so a generated table violates the
+singleton condition.  By \cref{cor:singleton-purification}, $\BO(\cF)$ is
+false.
+
+Conversely, if $\BO(\cF)$ is false, then
+\cref{cor:singleton-purification,lem:bo-arity-bound} give a
+$G\in W_{\cF}$ of some tested arity $k$ with $G\notin\mathcal B_k$.  Write
+$G=\zvec I$ using \cref{lem:pinned-realization}.  The reverse implication
+in~\eqref{eq:bo-algorithm-membership} supplies $q\in Q_k$ with
+$q(\zvec I)\ne0$.  That identity is not universal, so the procedure returns
+\NO.
+
+Because $\InstMonoid{k}$ ranges over all finite labelled instances and
+$\zvec I$ records their exact pinned values, the argument covers every member
+of $W_{\cF}$, including cancellation-created zeros; the bound $d^2+1$
+concerns only retained arity.
+\end{proof}
+
+\section{Generated Supports and a Common Mal'tsev Operation}
+\label{sec:generated-supports}
+
+We now prove that global Block Orthogonality supplies one Mal'tsev operation
+preserving every generated support.  Every auxiliary relation used below is
+realized as the support of a member of $W_{\cF}$.
+
+\subsection{Equality-free support realization}
+
+We first isolate the cancellation argument used throughout this section.
+
+\Needspace{8\baselineskip}
+\begin{lemma}[Simultaneous nonvanishing of power sums]
+\label{lem:simultaneous-power-sums}
+Let $\mathcal A_1,\ldots,\mathcal A_t$ be nonempty finite multisets of
+elements of $\AlgNums^\times$.  There exist infinitely many integers $m\ge1$
+such that
+\begin{equation}
+  \sum_{a\in\mathcal A_i}a^m\ne0
+  \qquad\text{for every }i\in[t].
+  \label{eq:simultaneous-power-sums}
+\end{equation}
+Moreover, such an $m$ can be found by enumerating the positive integers and
+performing exact algebraic zero tests.
+\end{lemma}
+
+\begin{proof}
+For $i\in[t]$, put $s_i(n)=\sum_{a\in\mathcal A_i}a^n$.  This is a linear
+recurrence over the number field generated by $\mathcal A_i$, with
+characteristic roots among the distinct elements of $\mathcal A_i$.  By the
+Skolem--Mahler--Lech theorem~\cite{Lech1953}, its zero set is the union of a
+finite set and finitely many arithmetic progressions.
+
+More explicitly, after absorbing finitely many initial terms into the finite
+exceptional set, write each progression as
+\[
+  \{n\ge N:n\equiv r\pmod p\},
+  \qquad 0\le r<p.
+\]
+Call such a progression a \emph{zero progression}; $p$ is its period and
+$r$ its residue.  No zero progression can have residue $0$.  Otherwise, for
+some $p\ge1$ and $N\ge0$,
+\begin{equation}
+  s_i(pn)=0
+  \qquad(n\ge N).
+  \label{eq:zero-progression-multiples}
+\end{equation}
+Group the elements of the multiset $\mathcal A_i$ according to their $p$th
+powers.  Let $\beta_1,\ldots,\beta_h$ be the distinct resulting nonzero
+values, and let $\nu_j\ge1$ be the multiplicity of $\beta_j$.  Then
+\[
+  s_i(pn)
+  =\sum_{a\in\mathcal A_i}(a^p)^n
+  =\sum_{j=1}^h\nu_j\beta_j^n.
+\]
+Applying~\eqref{eq:zero-progression-multiples} at
+$n=N,N+1,\ldots,N+h-1$ gives
+\begin{equation}
+  \begin{pmatrix}
+    1&\cdots&1\\
+    \beta_1&\cdots&\beta_h\\
+    \vdots&&\vdots\\
+    \beta_1^{h-1}&\cdots&\beta_h^{h-1}
+  \end{pmatrix}
+  \begin{pmatrix}
+    \nu_1\beta_1^N\\
+    \vdots\\
+    \nu_h\beta_h^N
+  \end{pmatrix}
+  =\mathbf0.
+  \label{eq:zero-progression-vandermonde}
+\end{equation}
+The determinant of the first matrix is
+\[
+  \prod_{1\le j<k\le h}(\beta_k-\beta_j)\ne0,
+\]
+so~\eqref{eq:zero-progression-vandermonde} forces
+$\nu_j\beta_j^N=0$ for every $j$.  Since every $\beta_j$ is nonzero, this
+contradicts $\nu_j\ge1$.
+
+Let $M$ be a common multiple of all progression periods occurring for all
+$s_i$, taking $M=1$ if there are no such progressions.  Every multiple of
+$M$ has residue zero modulo each such period and
+therefore belongs to none of the zero progressions.  All sufficiently large
+multiples of $M$ also avoid the finitely many exceptional zeros.  This proves
+existence of infinitely many simultaneous choices.  It also proves
+termination of the exact search that enumerates $m=1,2,\ldots$ and tests
+\eqref{eq:simultaneous-power-sums}.
+\end{proof}
+
+Call a primitive-positive (pp) formula \emph{equality-free} if it uses
+conjunction, existential quantification, and repeated occurrences of the same
+logical variable, but has no equality atom between two distinct variables.
+
+\begin{lemma}[Equality-free support realization]
+\label{lem:equality-free-support-realization}
+Let $h\ge1$ and $G_1,\ldots,G_h\in W_{\cF}$.  Let
+$\mathbf x=(x_1,\ldots,x_\ell)$, with $\ell\ge1$, be the tuple of free
+variables, and let $\mathbf y=(y_1,\ldots,y_s)$, with $s\ge0$, be the tuple
+of existential variables.  Let $\mathcal E$ be a finite set indexing the
+atoms.  For every $e\in\mathcal E$, choose
+$i(e)\in[h]$ and an ordered scope $\mathbf z_e$ of length
+$\arity(G_{i(e)})$ whose entries are variables from $\mathbf x$ and
+$\mathbf y$.  The same logical variable may occur repeatedly within one
+scope or across several scopes.  Define $R\subseteq D^\ell$ by
+\begin{equation}
+  R(\mathbf x)
+  \quad\Longleftrightarrow\quad
+  \exists\mathbf y\;
+  \bigwedge_{e\in\mathcal E}
+       \SuppRel{G_{i(e)}}(\mathbf z_e).
+  \label{eq:equality-free-pp}
+\end{equation}
+Then there exists $H\in W_{\cF}$ with $\SuppRel H=R$.  Given presentations
+of the $G_i$, such an $H$ can be obtained by a terminating exact search.
+\end{lemma}
+
+\paragraph{Interpretation and example.}
+Because $\SuppRel G$ records precisely the nonzero entries of $G$, the direct
+set-theoretic meaning of~\eqref{eq:equality-free-pp} is
+\begin{equation*}
+\begin{aligned}
+  R=\{\mathbf a\in D^\ell:\;&
+      \text{there exists }\mathbf b\in D^s\text{ such that}\\
+    &G_{i(e)}\bigl(\mathbf z_e(\mathbf a,\mathbf b)\bigr)\ne0
+      \quad\text{for every }e\in\mathcal E\}.
+\end{aligned}
+\end{equation*}
+Thus $R$ consists of the assignments to the free variables that extend to an
+assignment of the hidden variables making every selected generated table
+nonzero on its indicated scope.  Equivalently, $R$ is obtained by projecting
+the solution set of these support constraints onto the $\mathbf x$
+coordinates.
+
+For example, if $G_1$ and $G_2$ are binary, then
+\[
+  R(x_1,x_2)
+  \quad\Longleftrightarrow\quad
+  \exists y\;
+  \SuppRel{G_1}(x_1,y)\wedge\SuppRel{G_2}(y,x_2)
+\]
+means directly that
+\[
+\begin{aligned}
+  R=\{(a_1,a_2)\in D^2:\;&\exists b\in D,\\
+       &G_1(a_1,b)\ne0,\\[-2pt]
+       &G_2(b,a_2)\ne0\}.
+\end{aligned}
+\]
+Literal reuse of the same logical variable, such as the two occurrences of
+$y$ in this example, is permitted and is distinct from an equality atom
+$u=v$ joining two distinct logical variables.
+
+\Cref{fig:equality-free-support-construction} shows how this binary example
+is implemented by one actual base-language instance.
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{0.94\linewidth}{!}{%
+  \begin{tikzpicture}[
+      x=1cm,y=1cm,
+      title/.style={font=\small\bfseries},
+      panel/.style={draw,rounded corners=2pt,line width=.45pt},
+      var/.style={circle,draw,minimum size=6.5mm,inner sep=0pt,
+                  font=\scriptsize},
+      hidden/.style={var,dashed},
+      factor/.style={draw,double,double distance=.45pt,rounded corners=2pt,
+                     minimum width=9mm,minimum height=6.5mm,
+                     font=\scriptsize},
+      module/.style={draw,rounded corners=2pt,minimum width=2.2cm,
+                     minimum height=6.5mm,line width=.65pt,
+                     font=\scriptsize,align=center},
+      edge/.style={line width=.42pt},
+      arrow/.style={-{Latex[length=2mm]},line width=.55pt}
+    ]
+    % Panel (a): the support pattern to be implemented.
+    \draw[panel] (-.20,5.95) rectangle (14.20,9.25);
+    \node[title] at (7.00,8.90) {(a) equality-free support pattern};
+    \node[var] (sx1) at (2.30,7.65) {$x_1$};
+    \node[factor] (sG1) at (4.40,7.65) {$G_1$};
+    \node[hidden] (sy) at (7.00,7.65) {$y$};
+    \node[factor] (sG2) at (9.60,7.65) {$G_2$};
+    \node[var] (sx2) at (11.70,7.65) {$x_2$};
+    \draw[edge] (sx1)--(sG1)--(sy)--(sG2)--(sx2);
+    \node[font=\scriptsize,align=center] at (7.00,6.88)
+      {$R(x_1,x_2)\iff\exists y\;$
+       $\SuppRel{G_1}(x_1,y)\wedge\SuppRel{G_2}(y,x_2)$};
+    \node[font=\scriptsize,align=center] at (7.00,6.30)
+      {the dashed $y$ node is shared variable reuse, not an equality atom};
+
+    \draw[arrow] (7.00,5.78)--(7.00,5.15)
+      node[midway,right=3pt,font=\scriptsize,align=left]
+      {replace each support atom by $m$ fresh copies\\
+       of a fixed base-language presentation};
+
+    % Panel (b): m copies of presentations of G_1 and G_2.
+    \draw[panel] (-.20,-.55) rectangle (14.20,4.95);
+    \node[title] at (7.00,4.60)
+      {(b) one $\cF$-instance whose marginal is $H_m$};
+
+    \node[module] (I11) at (5.00,3.90) {$I_1^{(1)}\;\bullet$};
+    \node[module] (I12) at (5.00,3.05) {$I_1^{(2)}\;\bullet$};
+    \node[font=\scriptsize] at (5.00,2.51) {$\vdots$};
+    \node[module] (I1m) at (5.00,1.93) {$I_1^{(m)}\;\bullet$};
+
+    \node[module] (I21) at (9.00,3.90) {$I_2^{(1)}\;\bullet$};
+    \node[module] (I22) at (9.00,3.05) {$I_2^{(2)}\;\bullet$};
+    \node[font=\scriptsize] at (9.00,2.51) {$\vdots$};
+    \node[module] (I2m) at (9.00,1.93) {$I_2^{(m)}\;\bullet$};
+
+    \node[var] (x1) at (2.15,1.13) {$x_1$};
+    \node[hidden] (y) at (7.00,1.13) {$y$};
+    \node[var] (x2) at (11.85,1.13) {$x_2$};
+
+    \foreach \u in {I11,I12,I1m}{
+      \draw[edge] (x1)--(\u.west);
+      \draw[edge] (y)--(\u.east);
+    }
+    \foreach \u in {I21,I22,I2m}{
+      \draw[edge] (y)--(\u.west);
+      \draw[edge] (x2)--(\u.east);
+    }
+
+    \node[font=\scriptsize,align=center] at (7.00,-.07)
+      {solid boxes are fresh copies of fixed $\cF$-presentations;
+       each $\bullet$ denotes fresh internal variables\\
+       retain $x_1,x_2$ and sum over the shared dashed $y$ and all
+       $\bullet$-variables};
+  \end{tikzpicture}%
+  }
+  \caption{The instance construction in
+  \cref{lem:equality-free-support-realization} for the binary example.
+  For each atom, take $m$ fresh copies of a base-language presentation of
+  the corresponding generated table.  Identify only their displayed
+  boundary variables with the logical variables $x_1,y,x_2$; all internal
+  variables, denoted by $\bullet$, remain fresh.  Marginalizing the internal
+  variables first gives
+  $G_1(x_1,y)^mG_2(y,x_2)^m$, and then marginalizing the one shared variable
+  $y$ gives $H_m(x_1,x_2)$.}
+  \label{fig:equality-free-support-construction}
+\end{figure}
+
+\begin{proof}
+For $m\ge1$, define
+\begin{equation}
+  H_m(\mathbf x)
+  =\sum_{\mathbf y\in D^s}
+       \prod_{e\in\mathcal E}G_{i(e)}(\mathbf z_e)^m.
+  \label{eq:powered-support-table}
+\end{equation}
+The empty product is $1$.  For fixed $\mathbf a\in D^\ell$, let
+$\mathcal A_{\mathbf a}$ be the multiset of all nonzero values
+\[
+  \prod_{e\in\mathcal E}
+      G_{i(e)}(\mathbf z_e(\mathbf a,\mathbf b)),
+  \qquad \mathbf b\in D^s.
+\]
+Then $\mathcal A_{\mathbf a}$ is nonempty exactly when $\mathbf a\in R$,
+and
+\begin{equation}
+  H_m(\mathbf a)=\sum_{w\in\mathcal A_{\mathbf a}}w^m,
+  \label{eq:witness-power-sum}
+\end{equation}
+where an empty sum is zero.  Thus tuples outside $R$ give zero term by term
+for every $m$.  Apply \cref{lem:simultaneous-power-sums} to the finitely many
+nonempty multisets $\mathcal A_{\mathbf a}$, $\mathbf a\in R$.  The resulting
+common exponent makes~\eqref{eq:witness-power-sum} nonzero for every tuple in
+$R$.  If $R=\varnothing$, any $m$ works.  Hence $\SuppRel{H_m}=R$.
+
+The table $H_m$ belongs to $W_{\cF}$ by the following instance construction.
+Choose a presenting base-language instance for each $G_i$.  For every
+occurrence $e$ and every
+copy index in $[m]$, take a fresh copy of that presentation, identify its
+displayed boundary variables with those in $\mathbf z_e$, and keep all of
+its hidden variables fresh.  For fixed $(\mathbf x,\mathbf y)$,
+marginalizing the copied hidden variables factorizes as
+\[
+  \prod_{e\in\mathcal E}G_{i(e)}(\mathbf z_e)^m.
+\]
+Marginalizing $\mathbf y$ then gives~\eqref{eq:powered-support-table}.
+Repeated variables in $\mathbf z_e$ are legal scope identifications, and the
+retained variables may be put in the displayed order.  Therefore
+$H_m\in W_{\cF}$.  Zeros created by earlier cancellation remain zero, while
+the simultaneous choice of $m$ removes cancellation in the outer sum.
+\end{proof}
+
+\begin{corollary}[Singleton rectangularity]
+\label{cor:generated-singleton-rectangularity}
+Assume $\BO(\cF)$.  Let $R\subseteq D^{q-1}\times D$, with $q\ge2$, have an
+equality-free pp definition from finitely many relations $\SuppRel G$,
+$G\in W_{\cF}$.  For $\mathbf u\in D^{q-1}$, put
+\[
+  R_{\mathbf u}=\{a\in D:(\mathbf u,a)\in R\}.
+\]
+Then any two nonempty sets $R_{\mathbf u}$ and $R_{\mathbf v}$ are equal or
+disjoint.
+\end{corollary}
+
+\begin{proof}
+By \cref{lem:equality-free-support-realization}, in the displayed coordinate
+order there is an $H\in W_{\cF}$ with $\SuppRel H=R$.  Apply $\BO(\cF)$ to
+the singleton set $\{H\}$ and write $\Pure(H)=\widetilde H$.  Purification
+preserves support, and $\abs{\widetilde H}$ is block-rank one.  Hence two
+nonzero rows that overlap have equal support.
+\end{proof}
+
+\subsection{The universal polymorphism relation}
+
+\begin{lemma}[Finite-family support lemma]
+\label{lem:finite-support-maltsev}
+Assume $\BO(\cF)$.  Every finite family of generated support relations has a
+common Mal'tsev polymorphism.
+\end{lemma}
+
+\begin{proof}
+Let $\Delta\subseteq\{\SuppRel G:G\in W_{\cF}\}$ be finite.  Empty
+relations may be removed because every operation preserves them.  If nothing
+remains, fix $a_0\in D$ and use
+\[
+  m_0(a,b,c)=
+  \begin{cases}
+    c,&a=b,\\
+    a,&b=c,\\
+    a_0,&\text{otherwise}.
+  \end{cases}
+\]
+Thus assume that $\Delta$ contains a nonempty relation.  For every
+$R\in\Delta$, fix $G_R\in W_{\cF}$ such that $R=\SuppRel{G_R}$, and write
+$r_R$ for its arity.
+
+For every $R\in\Delta$, every ordered triple
+$\mathbf u^1,\mathbf u^2,\mathbf u^3\in R$, and every $j\in[r_R]$, record
+the operation-table input $(u^1_j,u^2_j,u^3_j)\in D^3$.  Let
+$T\subseteq D^3$ be the set of all recorded inputs, and introduce one
+logical variable $x_\tau$, taking values in $D$, for every $\tau\in T$.
+Its intended meaning is
+\[
+  x_\tau=t(\tau)
+\]
+for one candidate ternary operation $t:D^3\to D$.  Consequently, an input to
+the formula below is an assignment
+\[
+  \mathbf p=(p_\tau)_{\tau\in T}\in D^T,
+\]
+equivalently a partial operation table $p:T\to D$; evaluation at $\mathbf p$
+sets $x_\tau=p_\tau=p(\tau)$.
+
+For every $R\in\Delta$ and
+$\mathbf U=(\mathbf u^1,\mathbf u^2,\mathbf u^3)\in R^3$, use the formal
+scope abbreviation
+\[
+  \mathbf x[\mathbf U]
+  =\bigl(x_{(u^1_j,u^2_j,u^3_j)}\bigr)_{j\in[r_R]}.
+\]
+Define the finite constraint formula, viewed equivalently as a predicate on
+$D^T$, by
+\begin{align}
+  \Psi_\Delta((x_\tau)_{\tau\in T})
+  &=\bigwedge_{R\in\Delta}
+    \ \bigwedge_{\mathbf U\in R^3}
+    \SuppRel{G_R}\bigl(\mathbf x[\mathbf U]\bigr).
+  \label{eq:universal-polymorphism-formula}
+\end{align}
+Directly, for an input partial table $p:T\to D$,
+\begin{equation*}
+\begin{aligned}
+  \Psi_\Delta(\mathbf p)
+  \quad\Longleftrightarrow\quad
+  &\bigl(p(u^1_j,u^2_j,u^3_j)\bigr)_{j\in[r_R]}\in R\\
+  &\text{for every }R\in\Delta\text{ and every}\\[-2pt]
+  &\qquad \mathbf u^1,\mathbf u^2,\mathbf u^3\in R.
+\end{aligned}
+\end{equation*}
+Thus $\Psi_\Delta$ checks all coordinatewise preservation tests for all
+relations in $\Delta$ simultaneously.  For example, if $D=\{0,1\}$ and one
+test for a binary relation $R$ uses
+\[
+  \mathbf u^1=(0,0),\qquad
+  \mathbf u^2=(0,1),\qquad
+  \mathbf u^3=(1,1),
+\]
+then its conjunct is
+\[
+  R\bigl(x_{(0,0,1)},x_{(0,1,1)}\bigr),
+\]
+which requires
+$(p(0,0,1),p(0,1,1))\in R$ on an input table $p$.
+Identical operation-table inputs use literally the same variable.  Thus
+\eqref{eq:universal-polymorphism-formula} is equality-free, even when a
+variable occurs repeatedly in one atomic scope.
+
+Let $U_\Delta\subseteq D^T$ be its solution relation.  Its elements are
+exactly the restrictions to $T$ of common ternary polymorphisms of $\Delta$.
+Indeed, a common polymorphism satisfies every displayed atom.  Conversely,
+extend a solution arbitrarily from $T$ to $D^3$.  Every coordinate triple in
+a preservation test belongs to $T$, and its atom asserts that the
+coordinatewise image belongs to the tested relation.  Hence every such
+extension is a common polymorphism.
+
+Put
+\begin{equation*}
+  \begin{aligned}
+    A&=\{(a,a,b)\in T:a,b\in D\},\\
+    C&=\{(a,b,b)\in T:a,b\in D,\ a\ne b\},
+  \end{aligned}
+\end{equation*}
+and let $P=\pr_{A\cup C}(U_\Delta)$.  The sets $A$ and $C$ are disjoint,
+and every constant triple in $T$ lies in $A$.  For each $k\in\{1,2,3\}$,
+let
+\[
+  \pi_k:D^3\to D,
+  \qquad
+  \pi_k(a_1,a_2,a_3)=a_k,
+\]
+be the $k$th coordinate-selector operation.  It preserves every relation:
+for $R\in\Delta$ and
+$\mathbf u^1,\mathbf u^2,\mathbf u^3\in R$,
+\[
+  \pi_k(\mathbf u^1,\mathbf u^2,\mathbf u^3)
+  =\bigl(\pi_k(u^1_j,u^2_j,u^3_j)\bigr)_{j\in[r_R]}
+  =\mathbf u^k\in R.
+\]
+Hence
+\begin{equation}
+  \pi_k|_T\in U_\Delta,
+  \qquad
+  \pi_k|_{A\cup C}\in P
+  \qquad(k=1,2,3).
+  \label{eq:projection-tables-in-P}
+\end{equation}
+Here $\pi_k$ selects one of three operation arguments, whereas
+$\pr_{A\cup C}$ is the different map that restricts a table indexed by $T$
+to the coordinates in $A\cup C$.  Moreover,
+$A\ne\varnothing$: repeating any tuple of a nonempty positive-arity relation
+three times produces a constant triple in $T$.
+
+Enumerate $C=\{c_1,\ldots,c_s\}$.  For $0\le j\le s$, we inductively
+construct a partial table $p_j:A\cup C\to D$ satisfying the three separate
+invariants
+\begin{align}
+  p_j&\in P,
+    \notag\\
+  p_j(a,a,b)&=b
+    &&\text{for every }(a,a,b)\in A,
+    \notag\\
+  p_j(c_i)&=\pi_1(c_i)
+    &&\text{for every }i\in[j].
+    \label{eq:partial-maltsev-c}
+\end{align}
+Membership in $P$ is maintained as an independent invariant alongside the
+two value conditions.  For
+$j=0$, take $p_0=\pi_3|_{A\cup C}$.  Membership follows from
+\eqref{eq:projection-tables-in-P}, the first value condition follows from
+$\pi_3(a,a,b)=b$, and the second is vacuous.
+
+Suppose the three invariants hold for $p_j$.  Because
+\[
+  p_j\in P=\pr_{A\cup C}(U_\Delta),
+\]
+there exists a lift $\widehat p_j\in U_\Delta$ satisfying
+\begin{equation*}
+  \widehat p_j|_{A\cup C}=p_j.
+\end{equation*}
+This lift is effective: enumerate all maps
+$T\setminus(A\cup C)\to D$, combine each with the fixed values of $p_j$,
+and test~\eqref{eq:universal-polymorphism-formula}.  There are at most
+$d^{\abs{T\setminus(A\cup C)}}$ candidates, and membership in $P$ guarantees
+that one succeeds.  Extend $\widehat p_j$ to a map $t_j:D^3\to D$ by assigning
+an arbitrary domain value on $D^3\setminus T$.  By the definition of $T$,
+those cells occur in no preservation test, so $t_j$ is a common ternary
+polymorphism of $\Delta$.
+
+The minor
+\begin{equation*}
+  q_j(x,y,z)=t_j(x,y,y)
+\end{equation*}
+is again a common ternary polymorphism, because identifying and repeating
+arguments of a polymorphism preserves every relation it preserves.  Let
+$K_j=A\cup\{c_1,\ldots,c_j\}$.  On $K_j$, $q_j$ agrees with $\pi_1$.
+This follows from~\eqref{eq:partial-maltsev-c} on the previously fixed cells.
+If $(x,x,z)\in A$, then $(x,x,x)\in T$ by repeating the tuple that witnesses
+the occurrence of $x$.  Since $(x,x,x)\in A$,
+\[
+  q_j(x,x,z)=t_j(x,x,x)=x=\pi_1(x,x,z).
+\]
+
+Write $c_{j+1}=(a,b,b)$ and set
+\[
+\begin{aligned}
+  X&=\pi_1|_{K_j}=q_j|_{K_j},
+  &Y&=p_j|_{K_j},\\
+  v&=p_j(c_{j+1})=q_j(c_{j+1}).
+\end{aligned}
+\]
+Project $P$ onto $K_j\cup\{c_{j+1}\}$, ordering $c_{j+1}$ last:
+\[
+  Q_j=\pr_{K_j\cup\{c_{j+1}\}}(P).
+\]
+This is an equality-free pp projection of
+\eqref{eq:universal-polymorphism-formula}.  Since $A\ne\varnothing$, its
+arity is at least two.  The minor $q_j$ is a common polymorphism, so its
+restriction belongs to $P$; the same is true of $p_j$ by the induction
+invariant and of $\pi_1$ by~\eqref{eq:projection-tables-in-P}.  Their further
+restrictions give the three corners
+\begin{equation*}
+  (X,v),\qquad(Y,v),\qquad(X,a)\in Q_j.
+\end{equation*}
+\Cref{fig:finite-support-induction} summarizes both the finite lifting step
+and the missing-corner argument at this point of the induction.
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[
+      x=1cm,y=1cm,
+      title/.style={font=\small\bfseries},
+      panel/.style={draw,rounded corners=2pt,line width=.45pt},
+      rel/.style={draw,rounded corners=2pt,minimum width=2.75cm,
+                  minimum height=7mm,font=\scriptsize,align=center},
+      elem/.style={draw,double,double distance=.45pt,rounded corners=2pt,
+                   minimum width=2.75cm,minimum height=7mm,
+                   font=\scriptsize,align=center},
+      cell/.style={draw,minimum width=2.25cm,minimum height=9mm,
+                   font=\scriptsize,align=center},
+      forcedcell/.style={cell,double,double distance=.6pt,line width=.65pt},
+      arrow/.style={-{Latex[length=2mm]},line width=.55pt},
+      lift/.style={-{Latex[length=2mm]},line width=.55pt,dashed}
+    ]
+    % Panel (a): restrictions, a lift, extension, and a minor.
+    \draw[panel] (-.20,5.35) rectangle (14.20,10.75);
+    \node[title] at (7.00,10.40) {(a) projection and finite lifting};
+
+    \node[rel,minimum width=3.0cm] (U) at (1.80,9.30)
+      {$U_\Delta\subseteq D^T$};
+    \node[rel,minimum width=3.4cm] (P) at (7.00,9.30)
+      {$P=\pr_{A\cup C}(U_\Delta)$};
+    \node[rel,minimum width=3.6cm] (Q) at (12.20,9.30)
+      {$Q_j=\pr_{K_j\cup\{c_{j+1}\}}(P)$};
+    \draw[arrow] (U)--(P)
+      node[midway,above=2pt,font=\scriptsize] {restriction};
+    \draw[arrow] (P)--(Q)
+      node[midway,above=2pt,font=\scriptsize] {restriction};
+
+    \node[elem,minimum width=3.4cm] (hatp) at (1.80,7.77)
+      {$\widehat p_j\in U_\Delta$\\$\widehat p_j|_{A\cup C}=p_j$};
+    \node[elem,minimum width=3.0cm] (pj) at (7.00,7.77) {$p_j\in P$};
+    \draw[lift] (pj)--(hatp)
+      node[midway,above=2pt,font=\scriptsize] {finite lift};
+    \draw[arrow] (hatp)--(U);
+    \draw[arrow] (pj)--(P);
+
+    \node[elem,minimum width=3.4cm] (tj) at (1.80,6.22)
+      {$t_j:D^3\to D$\\extends $\widehat p_j$};
+    \node[elem,minimum width=4.2cm] (qj) at (7.20,6.22)
+      {$q_j(x,y,z)=t_j(x,y,y)$\\common polymorphism;
+       $q_j|_{A\cup C}\in P$};
+    \draw[arrow] (hatp)--(tj)
+      node[midway,right=2pt,font=\scriptsize] {extend};
+    \draw[arrow] (tj)--(qj)
+      node[midway,above=2pt,font=\scriptsize] {minor};
+    \node[font=\scriptsize,align=center,text width=3.4cm] at (11.95,7.77)
+      {restrictions of $p_j$, $q_j$, and $\pi_1$ give the three corners};
+
+    % Panel (b): singleton rectangularity fills the missing corner.
+    \draw[panel] (-.20,-.40) rectangle (14.20,5.05);
+    \node[title] at (7.00,4.70) {(b) the missing-corner step in $Q_j$};
+    \node[font=\scriptsize] at (7.70,4.13)
+      {last coordinate $c_{j+1}$};
+    \node[font=\scriptsize] at (6.45,3.73) {$v$};
+    \node[font=\scriptsize] at (9.15,3.73) {$a$};
+    \node[font=\scriptsize] at (4.10,3.18) {row $X$};
+    \node[font=\scriptsize] at (4.10,2.13) {row $Y$};
+
+    \node[cell,minimum width=2.5cm] (Xv) at (6.45,3.18)
+      {$(X,v)$\\from $q_j$};
+    \node[cell,minimum width=2.5cm] (Xa) at (9.15,3.18)
+      {$(X,a)$\\from $\pi_1$};
+    \node[cell,minimum width=2.5cm] (Yv) at (6.45,2.13)
+      {$(Y,v)$\\from $p_j$};
+    \node[forcedcell,minimum width=2.5cm] (Ya) at (9.15,2.13)
+      {$(Y,a)$\\forced into $Q_j$};
+
+    \node[font=\scriptsize] at (6.25,1.47)
+      {the two rows meet at $v$, so rectangularity fills the fourth corner};
+    \node[elem,text width=7.0cm] (next) at (7.00,.48)
+      {lift $(Y,a)\in Q_j$ to $p_{j+1}\in P$ with
+       $p_{j+1}|_{K_j}=Y$ and $p_{j+1}(c_{j+1})=a$};
+    % Route the dashed lift down the right side so it does not cover the text.
+    \draw[lift] (Ya.south east) to[out=-70,in=70] (next.north east);
+  \end{tikzpicture}%
+  }
+  \caption{One induction step in
+    \cref{lem:finite-support-maltsev}.  Top: membership $p_j\in P$
+    guarantees a lift $\widehat p_j\in U_\Delta$; because all sets are
+    finite, it is found by exhaustive search.  Extending that lift and taking
+    the displayed minor supplies the common polymorphism $q_j$.  Solid arrows
+    are restrictions, extensions, or minors, whereas dashed arrows are finite
+    lifts.  Bottom: in the row view of $Q_j$, the rows $X$ and $Y$ intersect at
+    $v$.  Singleton rectangularity makes their supports equal, so the
+    double-bordered fourth corner $(Y,a)$ must exist.  Lifting that corner
+    produces the next partial table $p_{j+1}$.}
+  \label{fig:finite-support-induction}
+\end{figure}
+
+By \cref{cor:generated-singleton-rectangularity}, the two nonempty rows
+indexed by $X$ and $Y$ have equal support because they intersect at $v$.
+Consequently $(Y,a)\in Q_j$.  By the definition of the projection $Q_j$,
+this means precisely that there exists $p_{j+1}\in P$ such that
+\begin{equation*}
+\begin{aligned}
+  p_{j+1}|_{K_j}&=Y=p_j|_{K_j},\\
+  p_{j+1}(c_{j+1})&=a=\pi_1(c_{j+1}).
+\end{aligned}
+\end{equation*}
+Thus $p_{j+1}$ retains the required values on $A,c_1,\ldots,c_j$ and fixes
+the next cell $c_{j+1}$, proving all three invariants at the next step.
+This second lift is also a finite exact construction: enumerate
+$\widehat p\in D^T$ subject to
+\[
+  \widehat p|_{K_j}=Y,
+  \qquad
+  \widehat p(c_{j+1})=a,
+  \qquad
+  \Psi_\Delta(\widehat p),
+\]
+and take $p_{j+1}=\widehat p|_{A\cup C}$.  Membership
+$(Y,a)\in Q_j$ guarantees that this search terminates.
+
+At $j=s$, choose a lift $\widehat p_s\in U_\Delta$ with
+$\widehat p_s|_{A\cup C}=p_s$, using the same finite search.  On every
+Mal'tsev-form cell in $T$, this solution has the required value.  Extend it
+to $D^3$ by
+assigning the required Mal'tsev value to every Mal'tsev-form cell outside
+$T$, and assign all remaining cells arbitrarily.  The two prescriptions
+overlap only on constant triples and agree there.  Cells outside $T$ occur
+in no preservation test, so the resulting operation still preserves every
+relation in $\Delta$.  It satisfies
+\[
+  m(a,b,b)=m(b,b,a)=a
+  \qquad(a,b\in D),
+\]
+and is therefore a common Mal'tsev polymorphism of $\Delta$.
+\end{proof}
+
+\subsection{One operation for the entire generated family}
+
+\begin{theorem}[Common Mal'tsev operation for generated supports]
+\label{thm:common-support-maltsev}
+If $\BO(\cF)$ holds, then
+\begin{equation}
+  \begin{aligned}
+  &\exists m:D^3\to D\quad\forall G\in W_{\cF},\\
+  &\qquad
+    m\text{ is a Mal'tsev polymorphism of }\SuppRel G.
+  \end{aligned}
+  \label{eq:global-support-maltsev}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $\mathcal M_D$ be the finite set of all Mal'tsev operation tables on
+$D$.  By \cref{lem:finite-support-maltsev}, every finite family of generated
+supports is preserved by some member of $\mathcal M_D$.
+
+Suppose, toward a contradiction, that no member of $\mathcal M_D$ preserves
+all generated supports.  For every $m\in\mathcal M_D$, choose
+$G_m\in W_{\cF}$ such that $m$ fails to preserve $\SuppRel{G_m}$.  Such a
+support is necessarily nonempty.  The finite family
+\[
+  \Delta=\{\SuppRel{G_m}:m\in\mathcal M_D\}
+\]
+has a common Mal'tsev polymorphism $m^\star\in\mathcal M_D$ by
+\cref{lem:finite-support-maltsev}.  But $\Delta$ contains
+$\SuppRel{G_{m^\star}}$, which was chosen not to be preserved by
+$m^\star$, a contradiction.  This proves~\eqref{eq:global-support-maltsev}.
+\end{proof}
+
+\section{Realizing Row Equivalence as a Generated Support}
+\label{sec:omega-realization}
+
+Under global Block Orthogonality, we realize every derived relation
+$\RowEq G$ as the support of a table in $W_{\cF}$.  The construction
+preserves the zeros forced by Block Orthogonality while avoiding cancellation
+on proportional rows.
+
+Let $e_K$ be the exponent of the finite group $\mu(K)$, and define
+\begin{equation*}
+  K_\mu=\lcm(2,e_K),
+  \qquad
+  L_D=\lcm(1,\ldots,d).
+\end{equation*}
+These integers are computable from the input, $K_\mu\ge2$, and
+\begin{equation}
+  \xi^{K_\mu}=1
+  \qquad\text{for every }\xi\in\mu(K).
+  \label{eq:Kmu-kills-torsion}
+\end{equation}
+For a table or vector $H$ and $h\ge1$, let $\Pow{H}{h}$ denote its entrywise
+$h$th power: every coordinate $H(\mathbf a)$ is replaced by
+$H(\mathbf a)^h$.
+
+\begin{lemma}[Generated entrywise powers]
+\label{lem:generated-entrywise-powers}
+If $G\in W_{\cF}$ and $h\ge1$, then $\Pow{G}{h}\in W_{\cF}$.
+\end{lemma}
+
+\begin{proof}
+Choose a presentation
+\[
+  G(\mathbf a)=\sum_{\mathbf w\in D^s}P(\mathbf a,\mathbf w),
+\]
+where $P$ is the product of the constraints in a finite $\cF$-instance.
+Take $h$ copies of that instance, identify their retained variables
+$\mathbf a$, and make their internal tuples
+$\mathbf w^{(1)},\ldots,\mathbf w^{(h)}$ pairwise fresh.  Marginalizing them
+gives
+\[
+  \sum_{\mathbf w^{(1)},\ldots,\mathbf w^{(h)}}
+     \prod_{j=1}^hP(\mathbf a,\mathbf w^{(j)})
+  =G(\mathbf a)^h.
+\]
+Thus $\Pow{G}{h}\in W_{\cF}$; the construction preserves every zero of $G$,
+including those created by cancellation.
+\end{proof}
+
+\begin{lemma}[Finite relative row phases]
+\label{lem:finite-row-phases}
+Assume $\BO(\cF)$.  Let $G:D^r\to K$, $r\ge2$, belong to $W_{\cF}$, and
+let $\mathbf u=G(\mathbf x,\ast)$ and
+$\mathbf v=G(\mathbf y,\ast)$ be nonzero rows with overlapping supports.
+Then their supports are equal.  Fix any anchor $z_0$ in their common support
+$S$, and define
+\begin{equation}
+  \lambda:=\frac{v_{z_0}}{u_{z_0}},
+  \qquad
+  \zeta_z:=
+    \frac{v_z/u_z}{v_{z_0}/u_{z_0}}
+    =\frac{v_zu_{z_0}}{u_zv_{z_0}}
+  \qquad(z\in S).
+  \label{eq:anchored-row-phases}
+\end{equation}
+Then $\lambda\in K^\times$ and
+$(\zeta_z)_{z\in S}\in\mu(K)^S$.  For every $z\in S$,
+\begin{equation}
+  v_z=\lambda\zeta_z u_z,
+  \qquad
+  \zeta_{z_0}=1,
+  \qquad
+  \zeta_z^{L_D}=1.
+  \label{eq:finite-row-phases}
+\end{equation}
+\end{lemma}
+
+The anchor separates one scalar $\lambda$, independent of $z$, from the
+coordinate-dependent torsion factors $(\zeta_z)_{z\in S}$.  Although
+$\lambda\zeta_z=v_z/u_z\in K^\times$, absorbing this product would produce
+a scalar depending on $z$ unless all $\zeta_z$ are equal.  The common
+$\lambda$ is what can later be factored out of the detector sum.
+
+\begin{proof}
+By \cref{cor:singleton-purification} and Corollary~1 of the Purification Lemma
+of Cai and Chen~\cite[Lemma~7 and Corollary~1]{CaiChen2017}, the original
+table $G$ is block-orthogonal.
+Hence overlapping nonzero rows have equal
+supports and proportional magnitude vectors.
+
+By \cref{lem:generated-entrywise-powers}, $\Pow{G}{h}\in W_{\cF}$ for every
+$h\ge1$.  Applying the same corollary again shows that each original table
+$\Pow{G}{h}$ is block-orthogonal.  Suppose, toward a contradiction,
+that $\Pow{\mathbf u}{h}$ and $\Pow{\mathbf v}{h}$ are linearly independent
+for every $h\in[d]$.  Fix a nonempty magnitude block $B$ of $\mathbf u$.
+Positive powering is injective on positive real numbers, so $B$ remains the
+same magnitude block in every $\Pow{\mathbf u}{h}$.  Block orthogonality of
+$\Pow{G}{h}$ gives the following power sums.  Put
+\[
+  b=\abs B,
+  \qquad
+  x_z=u_z\overline{v_z}\quad(z\in B).
+\]
+Because $B$ lies in the common support, every $x_z$ is nonzero.  Also
+$b\le d$, and hence
+\begin{equation*}
+  p_h:=\sum_{z\in B}x_z^h
+  =\sum_{z\in B}u_z^h\overline{v_z^h}=0,
+  \qquad h=1,\ldots,b.
+\end{equation*}
+Enumerate the $x_z$, $z\in B$, as $x_1,\ldots,x_b$, and let
+\[
+  e_k=\sum_{1\le i_1<\cdots<i_k\le b}
+       x_{i_1}\cdots x_{i_k},
+  \qquad e_0=1,
+\]
+be their elementary symmetric polynomials.  Newton's identities state
+\begin{equation}
+  k e_k
+  =\sum_{j=1}^k(-1)^{j-1}e_{k-j}p_j
+  \qquad(k=1,\ldots,b).
+  \label{eq:newton-block-identities}
+\end{equation}
+Since the ambient field has characteristic zero, each integer
+$k\in[b]$ is invertible.  As $p_1=\cdots=p_b=0$, induction on $k$ in
+\eqref{eq:newton-block-identities} gives
+$e_1=\cdots=e_b=0$.  In particular,
+\[
+  0=e_b=x_1\cdots x_b
+  =\prod_{z\in B}u_z\overline{v_z},
+\]
+contradicting the fact that every factor is nonzero.
+
+Consequently, $\Pow{\mathbf u}{h}$ and $\Pow{\mathbf v}{h}$ are dependent
+for some $h\in[d]$.  Thus $(v_z/u_z)^h$ is independent of $z\in S$.  By
+\eqref{eq:anchored-row-phases}, for every $z\in S$,
+\[
+  \zeta_z^h
+  =\frac{(v_z/u_z)^h}{(v_{z_0}/u_{z_0})^h}=1.
+\]
+Since $h$ divides $L_D$, \eqref{eq:finite-row-phases} follows.  All ratios
+in~\eqref{eq:anchored-row-phases} belong to $K^\times$, so each
+$\zeta_z\in\mu(K)$; the same display gives
+$\lambda\in K^\times$ and $\zeta_{z_0}=1$.
+\end{proof}
+
+\begin{lemma}[Nondegenerate exponential sums]
+\label{lem:nondegenerate-exponential-sums}
+Let $s\ge1$, let $a_1,\ldots,a_s,b_1,\ldots,b_s$ be nonzero algebraic
+numbers, and
+suppose $b_i/b_j$ is not a root of unity whenever $i\ne j$.  Then
+\[
+  p(t)=\sum_{i=1}^s a_ib_i^t
+\]
+vanishes for only finitely many integers $t\ge0$.
+\end{lemma}
+
+\begin{proof}
+The sequence $p(t)$ is a linear recurrence with characteristic roots among
+$b_1,\ldots,b_s$.  The Skolem--Mahler--Lech theorem~\cite{Lech1953} says that
+its zero set is a finite set together with finitely many arithmetic
+progressions.  Suppose one such progression is
+$\{r+mn:n\ge N\}$, where $m\ge1$.  Then
+\[
+  0=p(r+mn)=\sum_{i=1}^s(a_i b_i^r)(b_i^m)^n
+\]
+for $n=N,N+1,\ldots,N+s-1$.  The bases $b_i^m$ are pairwise distinct because
+no $b_i/b_j$ is a root of unity.  The resulting Vandermonde system is
+invertible and forces
+$(a_i b_i^r)(b_i^m)^N=0$ for every $i$, contradicting the nonzero hypotheses.
+Hence no infinite progression occurs.
+\end{proof}
+
+\begin{theorem}[Row-equivalence realization]
+\label{thm:omega-support-realization}
+Assume $\BO(\cF)$.  Let $G:D^r\to K$, $r\ge2$, be any member of
+$W_{\cF}$.  There is an integer $t\ge0$ such that, for $q=1+tL_D$, the
+$2(r-1)$-ary function
+\begin{equation}
+  C_q(\mathbf x,\mathbf y)
+  =\sum_{z\in D}
+       G(\mathbf x,z)^{(K_\mu-1)q}G(\mathbf y,z)^q
+  \label{eq:omega-detector}
+\end{equation}
+belongs to $W_{\cF}$ and satisfies
+\begin{equation}
+  \SuppRel{C_q}=\RowEq G.
+  \label{eq:omega-is-support}
+\end{equation}
+We call $C_q$ the \emph{row-equivalence detector}; the displayed equality
+says that it is nonzero exactly when the rows indexed by $\mathbf x$ and
+$\mathbf y$ are both nonzero and linearly dependent.
+Given the exact table of $G$ and an instance presentation of it, a terminating
+exact search finds such a $t$, the corresponding exponent $q=1+tL_D$, and an
+instance presentation of $C_q$.
+\end{theorem}
+
+\begin{proof}
+Fix an allowed exponent $q=1+tL_D$.  Both exponents
+in~\eqref{eq:omega-detector} are positive.  Let
+$\mathbf u=G(\mathbf x,\ast)$ and $\mathbf v=G(\mathbf y,\ast)$.  If one row
+is zero, or if their supports are disjoint, every summand is zero.
+Suppose henceforth that the rows are nonzero and overlap.  Global Block
+Orthogonality and support invariance under purification imply that their
+supports agree and that their purified magnitude rows are proportional.
+Write their common support as
+\[
+  S=\supp(\mathbf u)=\supp(\mathbf v).
+\]
+
+First suppose that $\mathbf u$ and $\mathbf v$ are linearly independent.
+Fix a legal singleton purification of $G$, and let $B$ be one magnitude block
+of the purified row corresponding to $\mathbf u$.  The two purified
+magnitude rows are proportional, so $B$ is simultaneously a magnitude block
+of the purified row corresponding to $\mathbf v$.  Choose $z_B\in B$.  By
+\cref{lem:intrinsic-purification-tests}, the anchor ratios
+\begin{equation}
+  \eta_z=u_z/u_{z_B},
+  \qquad
+  \theta_z=v_z/v_{z_B}
+  \qquad(z\in B)
+  \label{eq:block-anchor-ratios}
+\end{equation}
+belong to $\mu(K)$.  Purification preserves complex row dependence, so the
+two purified rows remain independent and are block-orthogonal.  Root
+covariance then turns the Hermitian sum on $B$ into
+\begin{equation}
+  \sum_{z\in B}\eta_z\overline{\theta_z}=0.
+  \label{eq:purified-root-sum}
+\end{equation}
+
+Apply \cref{lem:finite-row-phases} with the same anchor $z_B$:
+$v_z=\lambda\zeta_z u_z$, where $\zeta_{z_B}=1$ and
+$\zeta_z^{L_D}=1$.  Taking ratios gives $\theta_z=\zeta_z\eta_z$.
+Substitution in~\eqref{eq:purified-root-sum}, followed by conjugation, yields
+\begin{equation*}
+  \sum_{z\in B}\zeta_z=0.
+\end{equation*}
+Equation~\eqref{eq:block-anchor-ratios} and
+\eqref{eq:Kmu-kills-torsion} give
+$u_z^{K_\mu}=u_{z_B}^{K_\mu}$.  Since $q\equiv1\pmod{L_D}$, also
+$\zeta_z^q=\zeta_z$.  The contribution of $B$ to
+$C_q(\mathbf x,\mathbf y)$ is therefore
+\begin{align}
+  \sum_{z\in B}u_z^{(K_\mu-1)q}v_z^q
+  &=\lambda^q\sum_{z\in B}\zeta_z^q u_z^{K_\mu q}\notag\\
+  &=\lambda^q u_{z_B}^{K_\mu q}\sum_{z\in B}\zeta_z
+   =0.
+  \label{eq:independent-block-stays-zero}
+\end{align}
+The purified magnitude blocks partition the common support; write
+\[
+  S=B_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}B_N.
+\]
+Terms outside $S$ are zero, and
+\eqref{eq:independent-block-stays-zero} applies to every $B_i$.  Therefore
+\begin{equation*}
+\begin{aligned}
+  C_q(\mathbf x,\mathbf y)
+  &=\sum_{z\in S}u_z^{(K_\mu-1)q}v_z^q\\
+  &=\sum_{i=1}^N
+      \sum_{z\in B_i}u_z^{(K_\mu-1)q}v_z^q
+    =0.
+\end{aligned}
+\end{equation*}
+Thus the detector vanishes on every overlapping independent ordered row pair
+for every allowed $q$.
+
+It remains to treat a nonzero dependent pair, say
+$\mathbf v=\lambda\mathbf u$ with $\lambda\ne0$.  Using the common support
+$S$, we have
+\begin{equation*}
+  C_q(\mathbf x,\mathbf y)
+   =\lambda^q\sum_{z\in S}u_z^{K_\mu q}.
+\end{equation*}
+Along $q=1+tL_D$, put $a_z=u_z^{K_\mu}$ and
+$b_z=u_z^{K_\mu L_D}$.  The remaining sum is
+\begin{equation}
+  p_{\mathbf x,\mathbf y}(t)=\sum_{z\in S}a_zb_z^t.
+  \label{eq:dependent-exponential-sum}
+\end{equation}
+Group coordinates having the same base $b_z$.  If $b_z=b_w$, then
+$u_z/u_w\in\mu(K)$, so $a_z=a_w$ by
+\eqref{eq:Kmu-kills-torsion}.  Thus each grouped coefficient is a positive
+integer multiple of one nonzero $a_z$.  Moreover, the quotient of two
+distinct grouped bases is not a root of unity: otherwise a power of
+$u_z/u_w$ would be one, so $u_z/u_w\in\mu(K)$ and the two bases would have
+been equal.  After grouping,
+\cref{lem:nondegenerate-exponential-sums} shows that
+\eqref{eq:dependent-exponential-sum} has only finitely many zeros.
+
+There are finitely many ordered dependent nonzero row pairs in $G$.  Choose
+$t$ outside the union of their finite exceptional sets.  Then the detector
+is nonzero on every member of $\RowEq G$, whereas the zero-row,
+disjoint-support, and independent cases show that it vanishes on every
+nonmember.  This proves~\eqref{eq:omega-is-support}.
+
+The witness $t$ is found by exact search.  Compute $\RowEq G$ exactly: a row
+is nonzero if one entry is nonzero, and two
+nonzero rows are dependent exactly when
+\begin{equation*}
+  G(\mathbf x,z)G(\mathbf y,w)
+  -G(\mathbf x,w)G(\mathbf y,z)=0
+  \qquad(z,w\in D).
+\end{equation*}
+Enumerate $t=0,1,2,\ldots$, evaluate~\eqref{eq:omega-detector} by exact
+algebraic arithmetic, and stop when its support equals $\RowEq G$.  The
+finite-exception argument proves termination.
+
+Finally, choose a presentation
+\[
+  G(\mathbf x,z)
+   =\sum_{\mathbf h\in D^s}P(\mathbf x,z,\mathbf h)
+\]
+by a finite $\cF$-instance, and set $A=(K_\mu-1)q$.  Take $A$
+fresh-internal copies of this presentation sharing only $(\mathbf x,z)$ and
+$q$ fresh-internal copies sharing only $(\mathbf y,z)$.  Make every copied
+internal tuple fresh.  For fixed $(\mathbf x,\mathbf y,z)$, marginalizing
+the two collections of copied hidden variables gives
+\begin{align*}
+  \left(\sum_{\mathbf h}P(\mathbf x,z,\mathbf h)\right)^A
+    &=G(\mathbf x,z)^A,\\
+  \left(\sum_{\mathbf k}P(\mathbf y,z,\mathbf k)\right)^q
+    &=G(\mathbf y,z)^q.
+\end{align*}
+Because the collections are disjoint, their contributions multiply.
+Summing over $z$ now gives exactly $C_q(\mathbf x,\mathbf y)$.
+Thus $C_q\in W_{\cF}$.  The construction preserves repeated scopes and
+previous boundary identifications, and it treats every earlier marginal by
+fresh copies of its hidden variables.
+\end{proof}
+
+\begin{corollary}[Support preservation extends to all row relations]
+\label{cor:omega-reduces-to-supports}
+Assume $\BO(\cF)$.  If one operation $m:D^3\to D$ preserves $\SuppRel H$
+for every $H\in W_{\cF}$, then the same operation preserves $\RowEq G$ for
+every $G\in W_{\cF}$ of arity at least two.
+\end{corollary}
+
+\begin{proof}
+Fix the one operation $m$ from the hypothesis, and let
+$G\in W_{\cF}$ have arity at least two.  By
+\cref{thm:omega-support-realization}, there is a witness $t_G\ge0$, with
+$q_G=1+t_GL_D$, for which the detector table constructed from $G$ belongs
+to $W_{\cF}$.  Denote this table by $C_G$.  Then
+\[
+  \SuppRel{C_G}=\RowEq G.
+\]
+The hypothesis says that the fixed operation $m$ preserves the support of
+every member of $W_{\cF}$, so it preserves $\SuppRel{C_G}=\RowEq G$.
+Since $G$ was arbitrary, this same $m$ preserves every generated row
+relation.
+
+Although $t_G$ and $C_G$ may depend on $G$, the operation $m$ is fixed.
+Hence the quantifier order is $\exists m\,\forall G$.
+\end{proof}
+
+\section{Type Partition and the Structural Collapse}
+\label{sec:type-collapse}
+
+For equal-length tuples $\mathbf u,\mathbf v,\mathbf w$, we write
+$m(\mathbf u,\mathbf v,\mathbf w)$ for coordinatewise application of $m$.
+
+\begin{lemma}[Row equivalence forces Type Partition]
+\label{lem:omega-implies-type}
+Let $G:D^r\to\AlgNums$, $r\ge2$, and let $m:D^3\to D$ be a Mal'tsev
+operation preserving $\RowEq G$.  Then the type map of $G$ is a
+type-partition map.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+  \Row(G)=\{(S_1,\mathbf v_1),\ldots,(S_s,\mathbf v_s)\}.
+\]
+Fix $\ell\in[r-1]$ and
+$\boldsymbol\alpha,\boldsymbol\beta\in D^\ell$.  Suppose their types
+intersect.  Choose
+\[
+  j\in\typeop_G(\boldsymbol\alpha)
+       \cap\typeop_G(\boldsymbol\beta)
+\]
+and rows $\mathbf a,\mathbf b\in S_j$ extending
+$\boldsymbol\alpha,\boldsymbol\beta$, respectively.
+
+Let $h\in\typeop_G(\boldsymbol\alpha)$ be arbitrary, and choose
+$\mathbf c\in S_h$ extending $\boldsymbol\alpha$.  The three
+$2(r-1)$-tuples
+\[
+  (\mathbf c,\mathbf c),\qquad
+  (\mathbf a,\mathbf a),\qquad
+  (\mathbf b,\mathbf a)
+\]
+belong to $\RowEq G$: the first two are diagonal pairs of nonzero rows, and
+the third belongs because $\mathbf a$ and $\mathbf b$ lie in the same row
+class $S_j$.  Put $\mathbf d=m(\mathbf c,\mathbf a,\mathbf b)$.  Applying
+$m$ coordinatewise to these three members of $\RowEq G$ gives
+\[
+\begin{aligned}
+  &m\bigl((\mathbf c,\mathbf c),
+          (\mathbf a,\mathbf a),
+          (\mathbf b,\mathbf a)\bigr)\\
+  &\qquad=
+  \bigl(m(\mathbf c,\mathbf a,\mathbf b),
+        m(\mathbf c,\mathbf a,\mathbf a)\bigr)
+  =(\mathbf d,\mathbf c),
+\end{aligned}
+\]
+where the last equality uses the Mal'tsev identity $m(x,y,y)=x$ in every
+coordinate.  Preservation therefore gives
+\begin{equation*}
+  (\mathbf d,\mathbf c)\in\RowEq G.
+\end{equation*}
+For every $i\in[\ell]$, the $i$th coordinate of the first component is
+\[
+  m(\alpha_i,\alpha_i,\beta_i)=\beta_i.
+\]
+Thus the row indexed by $\mathbf d$ extends $\boldsymbol\beta$.
+Membership in $\RowEq G$ also says that this row is
+nonzero and belongs to the same original complex row class $S_h$ as
+$\mathbf c$.  Therefore $h\in\typeop_G(\boldsymbol\beta)$.  Since $h$ was
+arbitrary,
+\[
+  \typeop_G(\boldsymbol\alpha)
+  \subseteq\typeop_G(\boldsymbol\beta).
+\]
+Interchanging the prefixes proves the reverse inclusion.  Thus any two types
+are equal or disjoint.  Empty types and the zero table are covered as well.
+\end{proof}
+
+\begin{theorem}[Structural collapse]
+\label{thm:structural-collapse}
+For every nonempty finite domain $D$ and every finite algebraic-complex
+constraint language $\cF$,
+\[
+  \BO(\cF)\quad\Longrightarrow\quad\TP(\cF)\wedge\Mal(\cF).
+\]
+More explicitly, under $\BO(\cF)$ there is one Mal'tsev operation
+$m:D^3\to D$ such that, for every $G\in W_{\cF}$,
+\begin{equation*}
+  \begin{aligned}
+  &m\text{ preserves }\SuppRel G,\\
+  &\arity(G)\ge2
+    \quad\Longrightarrow\quad
+    m\text{ preserves }\RowEq G.
+  \end{aligned}
+\end{equation*}
+Consequently,
+\[
+  \CC(\cF)\quad\Longleftrightarrow\quad\BO(\cF).
+\]
+\end{theorem}
+
+\begin{proof}
+The empty-language case was handled in \cref{sec:preliminaries}; assume
+$\cF\ne\varnothing$.
+Assume $\BO(\cF)$.  By \cref{thm:common-support-maltsev}, there is one
+Mal'tsev operation $m:D^3\to D$ preserving $\SuppRel H$ for every
+$H\in W_{\cF}$.
+
+Fix $G\in W_{\cF}$ of arity $r\ge2$.  By
+\cref{thm:omega-support-realization}, there exists a generated table
+\[
+  C_G:D^{2(r-1)}\to\AlgNums,
+  \qquad C_G\in W_{\cF},
+\]
+such that $\SuppRel{C_G}=\RowEq G$.  Since $m$ preserves every generated
+support, it preserves $\RowEq G=\SuppRel{C_G}$.  Hence the same $m$ preserves
+every relation in $\Lambda_{\cF}$, proving $\Mal(\cF)$.
+
+Applying \cref{lem:omega-implies-type} to every generated table of arity at
+least two proves $\TP(\cF)$.  The argument applies in every generated
+coordinate ordering; relabelling the retained variables preserves membership
+in $W_{\cF}$.
+
+We have proved $\BO(\cF)\Rightarrow\TP(\cF)\wedge\Mal(\cF)$.  The reverse
+implication in the final equivalence is immediate because $\BO(\cF)$ is a
+conjunct of $\CC(\cF)$.
+\end{proof}
+
+\subsection{Proof of uniform decidability}
+
+\begin{proof}[Proof of \cref{thm:main}]
+On input $(D,\cF)$, run \cref{proc:global-bo}.  By
+\cref{thm:global-bo-decidable}, this is a total exact procedure and returns
+\YES{} if and only if $\BO(\cF)$ holds.  By
+\cref{thm:structural-collapse},
+\[
+  \BO(\cF)\quad\Longleftrightarrow\quad\CC(\cF).
+\]
+Consequently, the same procedure halts on every input and returns
+\YES{} exactly when $\CC(\cF)$ holds, proving both uniform
+decidability and~\eqref{eq:main-equivalence}.
+\end{proof}
+
+\begin{proof}[Proof of \cref{cor:degree-multiple-main}]
+Fix $\delta\ge1$.  The proof of \cref{cor:singleton-purification} restricts
+verbatim to $\WFdeg{\delta}$: $\BO^\delta(\cF)$ holds if and only if every
+member of $\WFdeg{\delta}$ of arity at least two has a block-orthogonal
+singleton purification.  At arity $k$, use the labelled submonoid
+$\mathfrak M_{k,\delta}$ and the oracle in
+\cref{thm:degree-multiple-universal-identity}.  The purification-invariance
+and finite-certificate arguments concern one finite table and are unchanged.
+The external-arity compression also remains valid: identifying retained
+variables replaces their occurrence degrees by their sum, which is still
+divisible by $\delta$.  Hence \cref{proc:global-bo}, using the
+degree-multiple oracle, is a total exact decision procedure for
+$\BO^\delta(\cF)$.
+
+The structural proof likewise remains inside $\WFdeg{\delta}$.  More
+explicitly, every instance substitution used in
+\cref{lem:equality-free-support-realization,lem:generated-entrywise-powers,thm:omega-support-realization}
+takes copies of degree-multiple presentations, keeps their hidden variables
+fresh, and identifies some boundary variables.  A fresh variable retains a
+degree divisible by $\delta$, while an identified variable receives a sum
+of such degrees.  Labelled products, diagonal minors, coordinate
+permutations, and repeated boundary positions obey the same rule.  Thus all
+support tables and row-equivalence detectors used in
+\crefrange{sec:generated-supports}{sec:type-collapse} are members of
+$\WFdeg{\delta}$.  Repeating the proofs gives
+\[
+  \BO^\delta(\cF)
+  \Longrightarrow
+  \TP^\delta(\cF)\wedge\Mal^\delta(\cF),
+\]
+with one Mal'tsev operation preserving the entire degree-multiple generated
+family.  Since $\BO^\delta$ is a conjunct of $\CC^\delta$, this proves the
+claimed equivalence and decidability.  Together with the dichotomy theorem
+for $\#\mathrm{CSP}^{\delta}$ proved by Lin~\cite[Theorem~3]{Lin2021}, this
+decides the polynomial-time versus $\#\mathsf P$-hard alternative for
+$\CSPdeg{\delta}{\cF}$.
+\end{proof}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have given a total exact decision procedure for the three tractability
+conditions characterizing the polynomial-time side of the complex-weighted
+$\#\mathrm{CSP}$ dichotomy theorem of Cai and
+Chen~\cite[Theorem~1 and Section~3.1]{CaiChen2017}.  The procedure decides
+these conditions on the full unbounded family $W_{\cF}$.
+Its finite reduction combines the external-arity bound $d^2+1$ with universal
+identity testing over all finite labelled instances.
+
+Global Block Orthogonality moreover forces the Type Partition and common
+Mal'tsev conditions from that dichotomy theorem, with a single operation
+satisfying
+$\exists m\,\forall G$.  The support-amplification and row-equivalence
+detector constructions remain within $W_{\cF}$ and handle
+cancellation-created zeros exactly.
+
+A cyclic root-of-unity degree filter extends both recognition and the
+structural collapse to the degree-divisibility restriction
+$\#\mathrm{CSP}^{\delta}$ studied by Lin~\cite[Definition~2 and
+Theorem~3]{Lin2021}.  Thus the three infinitary tractability conditions on
+$W_{\cF}^{\delta}$ in that dichotomy theorem are uniformly decidable for every
+positive degree modulus $\delta$.
+
+\bibliographystyle{alpha}
+\bibliography{cai-chen-complex-csp-decidability}
+\end{document}

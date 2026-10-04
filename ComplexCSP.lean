@@ -1,0 +1,22 @@
+import ComplexCSP.Algebra.AlgebraicPowerSumZeros
+import ComplexCSP.Algebra.AmbientInvarianceClauses
+import ComplexCSP.Structure.ArityCompression
+import ComplexCSP.Recognition.CertificatesGlobalLocus
+import ComplexCSP.Recognition.CertificatesHomogeneity
+import ComplexCSP.Complexity.CSPCountMembership
+import ComplexCSP.Complexity.CSPRepresentationFP
+import ComplexCSP.Complexity.ObstructionFieldTransport
+import ComplexCSP.Complexity.PartitionCountReduction
+import ComplexCSP.Complexity.SingletonDomain
+import ComplexCSP.Complexity.SupportInitialCorrectness
+import ComplexCSP.Algebra.EncodedNumberFieldOracle
+import ComplexCSP.Algebra.PositiveBinaryHardness
+import ComplexCSP.Algebra.ScalarTags
+import ComplexCSP.Algebra.Theorem52Counterexample
+import ComplexCSP.Recognition.UniformAlgebraicDetector
+import ComplexCSP.Recognition.UniformAlgebraicIdentityDegree
+import ComplexCSP.Recognition.UniformComplexityClassification
+import ComplexCSP.Structure.PaperBridge
+
+/-! Complete production entrypoint, including standalone checked alternatives.
+The original Theorem 5.2 is refuted; the recognition proofs use the corrected all-instance theorem. -/

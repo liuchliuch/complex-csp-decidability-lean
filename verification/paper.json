@@ -1,0 +1,1548 @@
+{
+  "schema_version": 1,
+  "paper": {
+    "title": "From Block Orthogonality to Decidability in Complex-Weighted Counting CSP",
+    "authors": [
+      "Chenghua Liu",
+      "Boning Meng"
+    ],
+    "url": "https://arxiv.org/abs/2608.14845v1",
+    "version": "v1",
+    "tex_file": "paper/source/cai-chen-complex-csp-decidability.tex",
+    "tex_sha256": "d71a123ca1186595783e14f12a53d449c374eb9426f0f0df30bd0a61e718ae2c",
+    "bib_file": "paper/source/cai-chen-complex-csp-decidability.bib",
+    "bib_sha256": "a639b636eeb651d674a4407df9da044b24d7484a0537c9802d744bbe4a1b1a2b"
+  },
+  "statements": [
+    {
+      "number": "1.1",
+      "kind": "theorem",
+      "label": "thm:main",
+      "title_tex": "Uniform decidability",
+      "source_range": {
+        "start_line": 221,
+        "end_line": 232
+      },
+      "statement_tex": "\\begin{theorem}[Uniform decidability]\n\\label{thm:main}\nLet $D$ be a nonempty finite domain and let $\\cF$ be a finite\nconstraint language whose values are algebraic complex numbers given by\nexact encodings.  There is a deterministic algorithm that halts on every\ninput $(D,\\cF)$ and decides whether $\\CC(\\cF)$ holds on the full generated\nfamily $W_{\\cF}$.  Moreover,\n\\begin{equation}\n  \\CC(\\cF)\\quad\\Longleftrightarrow\\quad\\BO(\\cF).\n  \\label{eq:main-equivalence}\n\\end{equation}\n\\end{theorem}",
+      "statement_sha256": "fb68efa6e38b4c2a0a8bd9d78166f50f6d412aa6273d8205a0801c3da39fc4dd",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.encodedGlobalTest",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicEncoded.lean",
+          "role": "executable finite-input recognition"
+        },
+        {
+          "name": "ComplexCSP.Recognition.encodedGlobalTest_correct",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicEncoded.lean",
+          "role": "recognition iff actual CC"
+        },
+        {
+          "name": "ComplexCSP.Recognition.exists_algebraic_language_description",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicGlobal.lean",
+          "role": "all algebraic languages have accepted-format descriptions"
+        },
+        {
+          "name": "ComplexCSP.structural_collapse",
+          "file": "ComplexCSP/Structure/StructuralCollapse.lean",
+          "role": "CC iff BO"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.workingField_realization",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.ComplexityClassification.ordinary_conditions",
+          "file": "ComplexCSP/Complexity/Classification.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.Recognition.encodedGlobalTest_complexity",
+          "file": "ComplexCSP/Recognition/UniformComplexityClassification.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.Recognition.finiteAlgebraicLanguage_decode_encode",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicEncoded.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_1_1_encodedGlobalTest_correct",
+        "ComplexCSP.PaperSpec.paper_1_1_exists_algebraic_language_description",
+        "ComplexCSP.PaperSpec.paper_1_1_structural_collapse",
+        "ComplexCSP.PaperSpec.paper_1_1_workingField_realization",
+        "ComplexCSP.PaperSpec.paper_1_1_ordinary_conditions",
+        "ComplexCSP.PaperSpec.paper_1_1_encodedGlobalTest_complexity",
+        "ComplexCSP.PaperSpec.paper_1_1_finiteAlgebraicLanguage_decode_encode"
+      ]
+    },
+    {
+      "number": "1.2",
+      "kind": "corollary",
+      "label": "cor:degree-multiple-main",
+      "title_tex": "Uniform recognition for $\\#\\mathrm{CSP}^{\\delta}$",
+      "source_range": {
+        "start_line": 244,
+        "end_line": 259
+      },
+      "statement_tex": "\\begin{corollary}[Uniform recognition for $\\#\\mathrm{CSP}^{\\delta}$]\n\\label{cor:degree-multiple-main}\nLet $\\delta\\ge1$.  On input a nonempty finite domain $D$ and a finite\nalgebraic-complex constraint language $\\cF$ whose values are given by exact\nencodings, there is a deterministic algorithm deciding whether the three\ntractability conditions hold on the full generated family\n$\\WFdeg{\\delta}$.  Writing these conditions as\n$\\BO^\\delta(\\cF)$, $\\TP^\\delta(\\cF)$, and $\\Mal^\\delta(\\cF)$, we have\n\\[\n  \\BO^\\delta(\\cF)\\wedge\\TP^\\delta(\\cF)\\wedge\\Mal^\\delta(\\cF)\n  \\quad\\Longleftrightarrow\\quad\n  \\BO^\\delta(\\cF).\n\\]\nConsequently, one can decide which side of the dichotomy theorem for\n$\\CSPdeg{\\delta}{\\cF}$ proved by Lin~\\cite[Theorem~3]{Lin2021} applies.\n\\end{corollary}",
+      "statement_sha256": "92e16fded0b4476c76128eec6601215f43f063f153953e6a115a8625caef395a",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.encodedDegreeGlobalTest",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicEncoded.lean",
+          "role": "executable modulus-dependent recognizer"
+        },
+        {
+          "name": "ComplexCSP.Recognition.encodedDegreeGlobalTest_correct",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicEncoded.lean",
+          "role": "recognition iff actual restricted CC"
+        },
+        {
+          "name": "ComplexCSP.degree_structural_collapse",
+          "file": "ComplexCSP/Structure/DegreeStructuralCollapse.lean",
+          "role": "restricted CC iff BO"
+        },
+        {
+          "name": "ComplexCSP.degreeCaiChenConditions_one_iff",
+          "file": "ComplexCSP/Structure/DegreeStructuralCollapse.lean",
+          "role": "δ=1 recovers ordinary conditions"
+        },
+        {
+          "name": "ComplexCSP.ComplexityDegreeHardness.hard_of_not_degreeJointBO",
+          "file": "ComplexCSP/Complexity/DegreeHardness.lean",
+          "role": "charged #P-hardness from restricted BO failure in any fixed rational-basis realization"
+        },
+        {
+          "name": "ComplexCSP.ComplexityDegreeHardness.hard_of_not_degreeConditions",
+          "file": "ComplexCSP/Complexity/DegreeHardness.lean",
+          "role": "charged #P-hardness from restricted condition failure"
+        },
+        {
+          "name": "ComplexCSP.ComplexityPositiveFP.degreeConditions_inFP",
+          "file": "ComplexCSP/Complexity/PositiveFP.lean",
+          "role": "actual fixed-language FP evaluator from the literal degree conditions"
+        },
+        {
+          "name": "ComplexCSP.ComplexityClassification.degree_conditions",
+          "file": "ComplexCSP/Complexity/Classification.lean",
+          "role": "both proved degree complexity implications"
+        },
+        {
+          "name": "ComplexCSP.Recognition.encodedDegreeGlobalTest_complexity",
+          "file": "ComplexCSP/Recognition/UniformComplexityClassification.lean",
+          "role": "encoded recognition answer selects its proved complexity implication"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.workingField_realization",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_1_2_encodedDegreeGlobalTest_correct",
+        "ComplexCSP.PaperSpec.paper_1_2_degree_structural_collapse",
+        "ComplexCSP.PaperSpec.paper_1_2_degreeCaiChenConditions_one_iff",
+        "ComplexCSP.PaperSpec.paper_1_2_hard_of_not_degreeJointBO",
+        "ComplexCSP.PaperSpec.paper_1_2_hard_of_not_degreeConditions",
+        "ComplexCSP.PaperSpec.paper_1_2_degreeConditions_inFP",
+        "ComplexCSP.PaperSpec.paper_1_2_degree_conditions",
+        "ComplexCSP.PaperSpec.paper_1_2_encodedDegreeGlobalTest_complexity",
+        "ComplexCSP.PaperSpec.paper_1_1_workingField_realization"
+      ]
+    },
+    {
+      "number": "2.1",
+      "kind": "definition",
+      "label": "def:block-orthogonal-function",
+      "title_tex": "Block-orthogonal function",
+      "source_range": {
+        "start_line": 788,
+        "end_line": 794
+      },
+      "statement_tex": "\\begin{definition}[Block-orthogonal function]\n\\label{def:block-orthogonal-function}\nA function $G:D^r\\to\\AlgNums$, $r\\ge2$, is \\emph{block-orthogonal} if it\nis block-rank one and, whenever two nonzero complex rows have proportional\nmagnitude vectors, those rows are either linearly dependent or\nblock-orthogonal in the sense of~\\eqref{eq:vector-block-orthogonality}.\n\\end{definition}",
+      "statement_sha256": "f14d1af8a969601ca6be9aec26ed3d4529a51f4523fb50e6d680c3aef5fc896e",
+      "status": "definition",
+      "declarations": [
+        {
+          "name": "ComplexCSP.BlockOrthogonality.BlockOrthogonal",
+          "file": "ComplexCSP/Structure/BlockOrthogonality.lean",
+          "role": "literal row and magnitude-block definition"
+        }
+      ],
+      "goals": []
+    },
+    {
+      "number": "2.2",
+      "kind": "definition",
+      "label": "def:global-bo",
+      "title_tex": "Global Block Orthogonality",
+      "source_range": {
+        "start_line": 915,
+        "end_line": 926
+      },
+      "statement_tex": "\\begin{definition}[Global Block Orthogonality]\n\\label{def:global-bo}\nThe language $\\cF$ satisfies the \\emph{Block Orthogonality condition} of Cai\nand Chen~\\cite[Section~3.1]{CaiChen2017}, denoted $\\BO(\\cF)$, if for every\nnonempty finite tuple\n$(G_1,\\ldots,G_h)$ of pairwise distinct members of $W_{\\cF}$, writing\n\\[\n  \\Pure(G_1,\\ldots,G_h)=(P_1,\\ldots,P_h),\n\\]\nthe table $P_i$ is block-orthogonal for every $i$ with\n$\\arity(G_i)\\ge2$.\n\\end{definition}",
+      "statement_sha256": "979949cf9c91323558fd06d5d21a5cd21f3e081cd4d796905fc37826cf87e4e0",
+      "status": "definition",
+      "declarations": [
+        {
+          "name": "ComplexCSP.JointBO",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "all finite ambient tuples and legal purifications"
+        }
+      ],
+      "goals": []
+    },
+    {
+      "number": "2.3",
+      "kind": "definition",
+      "label": "def:type-maltsev",
+      "title_tex": "Type Partition and the common Mal'tsev condition",
+      "source_range": {
+        "start_line": 1048,
+        "end_line": 1060
+      },
+      "statement_tex": "\\begin{definition}[Type Partition and the common Mal'tsev condition]\n\\label{def:type-maltsev}\nThe language $\\cF$ satisfies $\\TP(\\cF)$ if every generated table of arity at\nleast two has a type-partition map.  It satisfies $\\Mal(\\cF)$ if\n\\begin{equation*}\n  \\begin{aligned}\n  \\exists m:D^3\\to D\\quad &m\\text{ is a Mal'tsev operation},\\\\\n  &\\forall R\\in\\Lambda_{\\cF},\\quad m\\text{ preserves }R.\n  \\end{aligned}\n\\end{equation*}\nThe order of these quantifiers is essential: one operation must preserve the\nentire family.\n\\end{definition}",
+      "statement_sha256": "9bea9807c6c6d3fe2d2efd267f7d9d3fb9af19ef8fbc15df2c0bc621d3cbe555",
+      "status": "definition",
+      "declarations": [
+        {
+          "name": "ComplexCSP.GlobalTypePartition",
+          "file": "ComplexCSP/Structure/StructuralCollapse.lean",
+          "role": "type partition on original generated tables"
+        },
+        {
+          "name": "ComplexCSP.GlobalMaltsev",
+          "file": "ComplexCSP/Structure/StructuralCollapse.lean",
+          "role": "one operation for all supports and row relations"
+        }
+      ],
+      "goals": []
+    },
+    {
+      "number": "3.1",
+      "kind": "lemma",
+      "label": "lem:purification-invariance",
+      "title_tex": "Ambient invariance of purification",
+      "source_range": {
+        "start_line": 1182,
+        "end_line": 1201
+      },
+      "statement_tex": "\\begin{lemma}[Ambient invariance of purification]\n\\label{lem:purification-invariance}\nLet $A:D^r\\to\\AlgNums$, where $r\\ge2$, be a table that occurs as a\ndistinguished component of each of two finite ambient tuples.  Legally purify\nthe two tuples, and let $P$ and $Q$ be the two purified tables occupying the\ndistinguished position formerly occupied by $A$.  Either printed\npurifications or their positive table-wide normalizations may be used.  Then:\n\\begin{enumerate}\n  \\item the two purified tables have the same support;\n  \\item disjointness and positive proportionality of every pair of magnitude\n        rows agree under $P$ and $Q$;\n  \\item complex linear dependence of every pair of nonzero rows agrees under\n        $P$ and $Q$; and\n  \\item for proportional magnitude rows, the two purifications induce the\n        same equal-magnitude blocks, and the Hermitian sum on each such block\n        vanishes under $P$ if and only if it vanishes under $Q$.\n\\end{enumerate}\nIn particular, $P$ is block-orthogonal if and only if $Q$ is\nblock-orthogonal.\n\\end{lemma}",
+      "statement_sha256": "64fd99ff1b1f660c8c40590ced46cf655493cdefcb4d4ecaab7c6d644a90c68f",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.GeneratingSet.LegalGeneratingSet.table_ambient_agreement",
+          "file": "ComplexCSP/Algebra/AmbientInvarianceClauses.lean",
+          "role": "all unnormalized clauses"
+        },
+        {
+          "name": "ComplexCSP.AmbientTableAgreement.disjoint_iff",
+          "file": "ComplexCSP/Algebra/AmbientInvarianceClauses.lean",
+          "role": "support disjointness"
+        },
+        {
+          "name": "ComplexCSP.GeneratingSet.LegalGeneratingSet.table_normalized_ambient_agreement",
+          "file": "ComplexCSP/Algebra/AmbientInvarianceClauses.lean",
+          "role": "positive-normalized clauses"
+        },
+        {
+          "name": "ComplexCSP.GeneratingSet.LegalGeneratingSet.table_ambient_blockOrthogonal_iff",
+          "file": "ComplexCSP/Algebra/LegalPurificationTables.lean",
+          "role": "previously checked BO endpoint"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_3_1_table_ambient_agreement",
+        "ComplexCSP.PaperSpec.paper_3_1_disjoint_iff",
+        "ComplexCSP.PaperSpec.paper_3_1_table_normalized_ambient_agreement",
+        "ComplexCSP.PaperSpec.paper_3_1_table_ambient_blockOrthogonal_iff"
+      ]
+    },
+    {
+      "number": "3.2",
+      "kind": "corollary",
+      "label": "cor:singleton-purification",
+      "title_tex": "Singleton purification suffices",
+      "source_range": {
+        "start_line": 1433,
+        "end_line": 1438
+      },
+      "statement_tex": "\\begin{corollary}[Singleton purification suffices]\n\\label{cor:singleton-purification}\nThe joint condition $\\BO(\\cF)$ holds if and only if every\n$G\\in W_{\\cF}$ of arity at least two has a block-orthogonal singleton\npurification.\n\\end{corollary}",
+      "statement_sha256": "51e91659f847cb5e89f2aa7f64f4d15f4cd99b22a1b5d63b3397b80c811607da",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.JointBO",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "literal joint predicate"
+        },
+        {
+          "name": "ComplexCSP.SingletonBO",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "separate singleton predicate"
+        },
+        {
+          "name": "ComplexCSP.jointBO_iff_singletonBO",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "both implications"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_3_2_jointBO_iff_singletonBO"
+      ]
+    },
+    {
+      "number": "3.3",
+      "kind": "lemma",
+      "label": "lem:diagonal-minors",
+      "title_tex": "External diagonal minors",
+      "source_range": {
+        "start_line": 1483,
+        "end_line": 1492
+      },
+      "statement_tex": "\\begin{lemma}[External diagonal minors]\n\\label{lem:diagonal-minors}\nLet $G\\in W_{\\cF}$ have arity $r$, let $1\\le s\\le r$, and let\n$\\pi:[r]\\twoheadrightarrow[s]$ be a surjection.  Then\n\\[\n  H(y_1,\\ldots,y_s)\n  =G(y_{\\pi(1)},\\ldots,y_{\\pi(r)})\n\\]\nbelongs to $W_{\\cF}$.\n\\end{lemma}",
+      "statement_sha256": "366b4887742ad03531af97a16b71af00dd9bad7d37c172cade3930f5a8abb992",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.paper_generated_diagonal_minor",
+          "file": "ComplexCSP/Instances/OrderedInstances.lean",
+          "role": "literal ordered generated-family endpoint"
+        },
+        {
+          "name": "ComplexCSP.generated_iff_paperGenerated",
+          "file": "ComplexCSP/Instances/OrderedInstances.lean",
+          "role": "semantics bridge"
+        },
+        {
+          "name": "ComplexCSP.Presentation.rename",
+          "file": "ComplexCSP/Instances/PresentationAlgorithms.lean",
+          "role": "executable presentation transformation"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_3_3_paper_generated_diagonal_minor",
+        "ComplexCSP.PaperSpec.paper_3_3_generated_iff_paperGenerated"
+      ]
+    },
+    {
+      "number": "3.4",
+      "kind": "lemma",
+      "label": "lem:bo-arity-bound",
+      "title_tex": "Bounded external arity",
+      "source_range": {
+        "start_line": 1612,
+        "end_line": 1619
+      },
+      "statement_tex": "\\begin{lemma}[Bounded external arity]\n\\label{lem:bo-arity-bound}\nIf the singleton Block Orthogonality condition fails on $W_{\\cF}$, then it\nfails for some member of $W_{\\cF}$ of arity at most\n\\[\n  R_{\\mathrm{BO}}=d^2+1.\n\\]\n\\end{lemma}",
+      "statement_sha256": "608bafe3be8430fd27cb9b9e9b082b08cead43915761260167cd61787b0db3c4",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.singletonBO_iff_bounded",
+          "file": "ComplexCSP/Structure/BoundedArity.lean",
+          "role": "full compression equivalence"
+        },
+        {
+          "name": "ComplexCSP.bounded_external_arity_counterexample",
+          "file": "ComplexCSP/Structure/BoundedArity.lean",
+          "role": "exact bounded witness"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_3_4_singletonBO_iff_bounded",
+        "ComplexCSP.PaperSpec.paper_3_4_bounded_external_arity_counterexample"
+      ]
+    },
+    {
+      "number": "4.1",
+      "kind": "lemma",
+      "label": "lem:intrinsic-purification-tests",
+      "title_tex": "Intrinsic purification tests",
+      "source_range": {
+        "start_line": 1735,
+        "end_line": 1764
+      },
+      "statement_tex": "\\begin{lemma}[Intrinsic purification tests]\n\\label{lem:intrinsic-purification-tests}\nLet $A$ be a finite $K$-valued table, let $P$ be any legal singleton\npurification of $A$, and, for every nonzero value $a$ occurring in $A$,\nwrite $\\widehat a$ for its purified value.  For nonzero values $a,b,c,u$\noccurring in $A$,\n\\begin{align}\n  \\abs{\\widehat a}=\\abs{\\widehat b}\n  &\\quad\\Longleftrightarrow\\quad\n  a/b\\in\\mu(K),\n  \\label{eq:intrinsic-equal-magnitude}\\\\\n  \\abs{\\widehat a}\\abs{\\widehat u}\n     =\\abs{\\widehat b}\\abs{\\widehat c}\n  &\\quad\\Longleftrightarrow\\quad\n  au/(bc)\\in\\mu(K)\\notag\\\\\n  &\\quad\\Longleftrightarrow\\quad\n  au=\\zeta bc\n  \\text{ for some }\\zeta\\in\\mu(K),\n  \\label{eq:intrinsic-magnitude-minor}\\\\\n  \\widehat a\\,\\widehat u=\\widehat b\\,\\widehat c\n  &\\quad\\Longleftrightarrow\\quad\n  au=bc.\n  \\label{eq:intrinsic-ordinary-minor}\n\\end{align}\nMoreover, if $a=\\rho b$ for $\\rho\\in\\mu(K)$, then\n\\begin{equation}\n  \\widehat a=\\rho\\,\\widehat b.\n  \\label{eq:purification-root-covariance}\n\\end{equation}\n\\end{lemma}",
+      "statement_sha256": "ec3922fb137b9312357a3f964629c89696cc9acc12f530cd37cb0ff504eef5c5",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Certificates.value_norm_eq_iff_numberFieldRoot",
+          "file": "ComplexCSP/Recognition/CertificatesPurificationBridge.lean",
+          "role": "equal magnitude/root ratio"
+        },
+        {
+          "name": "ComplexCSP.Certificates.entry_norm_products_iff_twisted",
+          "file": "ComplexCSP/Recognition/CertificatesPurificationBridge.lean",
+          "role": "twisted magnitude minor"
+        },
+        {
+          "name": "ComplexCSP.Certificates.entry_products_iff_field_products",
+          "file": "ComplexCSP/Recognition/CertificatesPurificationBridge.lean",
+          "role": "ordinary minor"
+        },
+        {
+          "name": "ComplexCSP.Certificates.value_root_covariance",
+          "file": "ComplexCSP/Recognition/CertificatesPurificationBridge.lean",
+          "role": "root covariance"
+        },
+        {
+          "name": "ComplexCSP.Certificates.intrinsicTests_legalTable",
+          "file": "ComplexCSP/Recognition/CertificatesLegalTables.lean",
+          "role": "actual table/legal-choice bridge"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.normalization_norm_iff",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.normalization_products_iff",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.normalization_norm_products_iff",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.normalization_covariance_iff",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_4_1_value_norm_eq_iff_numberFieldRoot",
+        "ComplexCSP.PaperSpec.paper_4_1_entry_norm_products_iff_twisted",
+        "ComplexCSP.PaperSpec.paper_4_1_entry_products_iff_field_products",
+        "ComplexCSP.PaperSpec.paper_4_1_value_root_covariance",
+        "ComplexCSP.PaperSpec.paper_4_1_intrinsicTests_legalTable",
+        "ComplexCSP.PaperSpec.paper_4_1_normalization_norm_iff",
+        "ComplexCSP.PaperSpec.paper_4_1_normalization_products_iff",
+        "ComplexCSP.PaperSpec.paper_4_1_normalization_norm_products_iff",
+        "ComplexCSP.PaperSpec.paper_4_1_normalization_covariance_iff"
+      ]
+    },
+    {
+      "number": "4.2",
+      "kind": "theorem",
+      "label": "thm:finite-bo-certificates",
+      "title_tex": "Algebraic description of the BO locus",
+      "source_range": {
+        "start_line": 1951,
+        "end_line": 1960
+      },
+      "statement_tex": "\\begin{theorem}[Algebraic description of the BO locus]\n\\label{thm:finite-bo-certificates}\nFor every $k\\ge2$, the effectively enumerable certificate family\n$\\mathfrak C_k$ satisfies\n\\begin{equation}\n  \\mathcal B_k\n  =\\bigcup_{\\mathfrak c\\in\\mathfrak C_k}V_K(E_{\\mathfrak c}).\n  \\label{eq:bo-certificate-union}\n\\end{equation}\n\\end{theorem}",
+      "statement_sha256": "ff8be0ae5fb2c6ee808db341ff62dc1c4f2dcdd06b1cb88864780163a3e3fc9f",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Certificates.legal_purified_blockOrthogonal_iff_finite_union",
+          "file": "ComplexCSP/Recognition/CertificatesLegalTables.lean",
+          "role": "actual finite-union theorem"
+        },
+        {
+          "name": "ComplexCSP.Certificates.certificate_complete",
+          "file": "ComplexCSP/Recognition/CertificatesCompleteness.lean",
+          "role": "completeness"
+        },
+        {
+          "name": "ComplexCSP.Certificates.certificate_sound",
+          "file": "ComplexCSP/Recognition/CertificatesSoundness.lean",
+          "role": "soundness including degenerations"
+        },
+        {
+          "name": "ComplexCSP.Certificates.retainedCertificateList",
+          "file": "ComplexCSP/Recognition/CertificatePrograms.lean",
+          "role": "executable retained-branch enumeration"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_4_2_legal_purified_blockOrthogonal_iff_finite_union",
+        "ComplexCSP.PaperSpec.paper_4_2_certificate_complete",
+        "ComplexCSP.PaperSpec.paper_4_2_certificate_sound"
+      ]
+    },
+    {
+      "number": "4.3",
+      "kind": "remark",
+      "label": "rem:bo-certificates-k-points",
+      "title_tex": "The role of the working field",
+      "source_range": {
+        "start_line": 2087,
+        "end_line": 2093
+      },
+      "statement_tex": "\\begin{remark}[The role of the working field]\n\\label{rem:bo-certificates-k-points}\nEquation~\\eqref{eq:bo-certificate-union} is an equality inside $K^{D^k}$,\nexactly the ambient space required here: every table in $W_{\\cF}$\nis $K$-valued by \\cref{eq:instance-function,eq:partial-marginal}, and every\nrelevant torsion quotient therefore lies in $\\mu(K)$.\n\\end{remark}",
+      "statement_sha256": "e3bb62bae9d439ec3bcb1121929a16a65018542776443d747be259178d9387bf",
+      "status": "documented",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Language.workingField",
+          "file": "ComplexCSP/Algebra/WorkingField.lean",
+          "role": "actual field generated by input entries"
+        }
+      ],
+      "goals": []
+    },
+    {
+      "number": "4.4",
+      "kind": "corollary",
+      "label": "cor:bo-product-identities",
+      "title_tex": "Polynomial identities for the BO locus",
+      "source_range": {
+        "start_line": 2114,
+        "end_line": 2124
+      },
+      "statement_tex": "\\begin{corollary}[Polynomial identities for the BO locus]\n\\label{cor:bo-product-identities}\nFor every $A\\in K^{D^k}$,\n\\begin{equation}\n  A\\in\\mathcal B_k\n  \\quad\\Longleftrightarrow\\quad\n  q(A)=0\\text{ for every }q\\in Q_k.\n  \\label{eq:bo-locus-by-identities}\n\\end{equation}\nThe finite set $Q_k$ is effectively computable from $D$, $k$, and $\\mu(K)$.\n\\end{corollary}",
+      "statement_sha256": "1d156d6625a213c4bc667df1aa7ad4568d3b5d8942e5cd90efbaad0541ac8692",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.finite_union_zeroLocus_iff",
+          "file": "ComplexCSP/Structure/PolynomialUnion.lean",
+          "role": "finite-union/product equivalence"
+        },
+        {
+          "name": "ComplexCSP.Certificates.legal_purified_blockOrthogonal_iff_product_equations",
+          "file": "ComplexCSP/Recognition/CertificatesLegalTables.lean",
+          "role": "actual BO locus"
+        },
+        {
+          "name": "ComplexCSP.Certificates.allProductPrograms",
+          "file": "ComplexCSP/Recognition/CertificatePrograms.lean",
+          "role": "executable product family"
+        },
+        {
+          "name": "ComplexCSP.Certificates.allProductPrograms_zero_iff",
+          "file": "ComplexCSP/Recognition/CertificatePrograms.lean",
+          "role": "exact compiler correctness"
+        },
+        {
+          "name": "ComplexCSP.Certificates.optimizedProductPrograms_zero_iff",
+          "file": "ComplexCSP/Recognition/CertificatePrograms.lean",
+          "role": "sound normalization/optimization"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_4_4_finite_union_zeroLocus_iff",
+        "ComplexCSP.PaperSpec.paper_4_4_legal_purified_blockOrthogonal_iff_product_equations",
+        "ComplexCSP.PaperSpec.paper_4_4_allProductPrograms_zero_iff",
+        "ComplexCSP.PaperSpec.paper_4_4_optimizedProductPrograms_zero_iff"
+      ]
+    },
+    {
+      "number": "5.1",
+      "kind": "lemma",
+      "label": "lem:pinned-realization",
+      "title_tex": "Pinned realization of the generated family",
+      "source_range": {
+        "start_line": 2221,
+        "end_line": 2232
+      },
+      "statement_tex": "\\begin{lemma}[Pinned realization of the generated family]\n\\label{lem:pinned-realization}\nLet $W_{\\cF}^{(k)}$ be the set of $k$-ary members of $W_{\\cF}$.  Then\n\\[\n  \\{\\zvec I:I\\in\\InstMonoid{k}\\}=W_{\\cF}^{(k)}.\n\\]\nMoreover, if $IJ$ denotes the labelled product, then\n\\[\n  \\zvec{IJ}=\\zvec I\\odot\\zvec J,\n\\]\nwhere $\\odot$ is coordinatewise multiplication.\n\\end{lemma}",
+      "statement_sha256": "d15043eb0d07a43208b6588889503e732778afbe2f60ebd69fc02cfb900f6d10",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.generated_iff_paperGenerated",
+          "file": "ComplexCSP/Instances/OrderedInstances.lean",
+          "role": "literal generated-family bridge"
+        },
+        {
+          "name": "ComplexCSP.GeneratedTable.exists_presentation",
+          "file": "ComplexCSP/Instances/PinnedMonoid.lean",
+          "role": "every semantic element has an actual witness"
+        },
+        {
+          "name": "ComplexCSP.GeneratedTable.ofPresentation_mul",
+          "file": "ComplexCSP/Instances/PinnedMonoid.lean",
+          "role": "literal gluing product"
+        },
+        {
+          "name": "ComplexCSP.GeneratedTable.forall_iff_presentations",
+          "file": "ComplexCSP/Instances/PinnedMonoid.lean",
+          "role": "universal quantification equivalence"
+        },
+        {
+          "name": "ComplexCSP.Instance.partition_glue",
+          "file": "ComplexCSP/Instances/Basic.lean",
+          "role": "actual partition factorization"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_3_3_generated_iff_paperGenerated",
+        "ComplexCSP.PaperSpec.paper_5_1_exists_presentation",
+        "ComplexCSP.PaperSpec.paper_5_1_ofPresentation_mul",
+        "ComplexCSP.PaperSpec.paper_5_1_forall_iff_presentations",
+        "ComplexCSP.PaperSpec.paper_5_1_partition_glue"
+      ]
+    },
+    {
+      "number": "5.2",
+      "kind": "theorem",
+      "label": "thm:young-pinned",
+      "title_tex": "Pinned constraint-function isomorphism",
+      "source_range": {
+        "start_line": 2281,
+        "end_line": 2299
+      },
+      "statement_tex": "\\begin{theorem}[Pinned constraint-function isomorphism]\n\\label{thm:young-pinned}\nLet $\\mathcal H$ and $\\mathcal G$ be similar finite sets of constraint\nfunctions over a field of characteristic zero.  Fix $k\\ge1$ and pins\n$\\beta:[k]\\to V(\\mathcal H)$ and $\\gamma:[k]\\to V(\\mathcal G)$.\nIf\n\\begin{equation*}\n  Z_{\\beta}^{\\mathcal H}(I)\n  =Z_{\\gamma}^{\\mathcal G}(I_{\\mathcal H\\to\\mathcal G})\n\\end{equation*}\nfor every simple $k$-labelled $\\mathcal H$-instance $I$, then the two\ndomains have the same size and there is an isomorphism\n$\\sigma:V(\\mathcal H)\\to V(\\mathcal G)$ of the two families such that\n$\\sigma(\\beta(i))$ and $\\gamma(i)$ are twins in $\\mathcal G$ for every\n$i\\in[k]$.\n\nConversely, such a domain bijection and twin replacements preserve pinned\npartition values on every $k$-labelled instance, whether or not it is simple.\n\\end{theorem}",
+      "statement_sha256": "877619f1f5c3a1300aabb19769aa782f9f3982beeb9523cf196c220ad7f182f0",
+      "status": "original_refuted_corrected_all_instance_proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Theorem52Counterexample.printed_theorem_5_2_counterexample",
+          "file": "ComplexCSP/Algebra/Theorem52Counterexample.lean",
+          "role": "universal actual-simple-instance refutation"
+        },
+        {
+          "name": "ComplexCSP.Instance.partition_eq_of_iso_pin_twins",
+          "file": "ComplexCSP/Instances/PinnedIsomorphism.lean",
+          "role": "valid converse"
+        },
+        {
+          "name": "ComplexCSP.PinnedIsomorphism.all_instance_pinned_iso_iff",
+          "file": "ComplexCSP/Instances/IsomorphismCompleteness.lean",
+          "role": "separate repaired equivalence"
+        },
+        {
+          "name": "ComplexCSP.PinnedIsomorphism.pinnedIsoCheck_correct_all_instances",
+          "file": "ComplexCSP/Instances/IsomorphismCompleteness.lean",
+          "role": "finite checker under repaired premise"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.theorem_5_2_complex_counterexample",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.PinnedIsomorphism.all_instance_completeness",
+          "file": "ComplexCSP/Instances/IsomorphismCompleteness.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.Theorem52Counterexample.doubledUnary_first_value",
+          "file": "ComplexCSP/Algebra/Theorem52Counterexample.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.Theorem52Counterexample.doubledUnary_second_value",
+          "file": "ComplexCSP/Algebra/Theorem52Counterexample.lean",
+          "role": "explicit paper bridge or companion theorem"
+        },
+        {
+          "name": "ComplexCSP.Theorem52Counterexample.paperSimple_iff_simple",
+          "file": "ComplexCSP/Algebra/Theorem52Counterexample.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_2_printed_theorem_5_2_counterexample",
+        "ComplexCSP.PaperSpec.paper_5_2_partition_eq_of_iso_pin_twins",
+        "ComplexCSP.PaperSpec.paper_5_2_all_instance_pinned_iso_iff",
+        "ComplexCSP.PaperSpec.paper_5_2_pinnedIsoCheck_correct_all_instances",
+        "ComplexCSP.PaperSpec.paper_5_2_theorem_5_2_complex_counterexample",
+        "ComplexCSP.PaperSpec.paper_5_2_all_instance_completeness",
+        "ComplexCSP.PaperSpec.paper_5_2_doubledUnary_first_value",
+        "ComplexCSP.PaperSpec.paper_5_2_doubledUnary_second_value",
+        "ComplexCSP.PaperSpec.paper_5_2_paperSimple_iff_simple"
+      ]
+    },
+    {
+      "number": "5.3",
+      "kind": "lemma",
+      "label": "lem:tensor-character",
+      "title_tex": "Tensor realization of monomial characters",
+      "source_range": {
+        "start_line": 2488,
+        "end_line": 2501
+      },
+      "statement_tex": "\\begin{lemma}[Tensor realization of monomial characters]\n\\label{lem:tensor-character}\nFor $I\\in\\InstMonoid{k}$, let $I^M$ be the $k$-labelled\n$T_{p,q}(\\cF)$-instance obtained by replacing each occurrence of\n$f\\in\\cF$ by $T_{p,q}(f)$ while retaining all variables, labels, and scopes.\nThen\n\\begin{equation*}\n  Z_{\\beta_M}^{T_{p,q}(\\cF)}(I^M)\n  =\\chi_M(I)\n  =\\prod_{i=1}^{p}\\zvec I(\\mathbf a^{(i)})\n    \\prod_{j=1}^{q}\\overline{\\zvec I(\\mathbf b^{(j)})}.\n\\end{equation*}\nThus $\\chi_M:\\InstMonoid{k}\\to K$ is a unital multiplicative character.\n\\end{lemma}",
+      "statement_sha256": "2a161ea51515586048cb08866b9d54647ce2478a4495316373b88450b48cf7ac",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Instance.partition_tensorConjugate",
+          "file": "ComplexCSP/Structure/TensorCharacters.lean",
+          "role": "literal displayed product formula"
+        },
+        {
+          "name": "ComplexCSP.Instance.partition_tensorConjugate_zero",
+          "file": "ComplexCSP/Structure/TensorCharacters.lean",
+          "role": "degree-zero tensor"
+        },
+        {
+          "name": "ComplexCSP.pinnedMonomialCharacter",
+          "file": "ComplexCSP/Instances/PinnedMonoid.lean",
+          "role": "unital multiplicative character"
+        },
+        {
+          "name": "ComplexCSP.tensor_realizes_pinnedMonomial",
+          "file": "ComplexCSP/Instances/PinnedMonoid.lean",
+          "role": "actual presentation bridge"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_3_partition_tensorConjugate",
+        "ComplexCSP.PaperSpec.paper_5_3_partition_tensorConjugate_zero",
+        "ComplexCSP.PaperSpec.paper_5_3_tensor_realizes_pinnedMonomial"
+      ]
+    },
+    {
+      "number": "5.4",
+      "kind": "lemma",
+      "label": "lem:scalar-tags",
+      "title_tex": "Common scalar tags",
+      "source_range": {
+        "start_line": 2539,
+        "end_line": 2554
+      },
+      "statement_tex": "\\begin{lemma}[Common scalar tags]\n\\label{lem:scalar-tags}\nLet $(h_f:f\\in\\cF)$ and $(g_f:f\\in\\cF)$ be indexed families over finite\ndomains $A$ and $B$, respectively, where\n$h_f:A^{r_f}\\to\\AlgNums$ and $g_f:B^{r_f}\\to\\AlgNums$ are given by exact\ntables.  Suppose that, within\neach family and each arity, at most one indexed table is identically zero.\nOne can effectively choose positive rational numbers $\\lambda_f$, $f\\in\\cF$,\nsuch that, within every arity, both\n\\[\n  \\{\\lambda_f h_f:f\\in\\cF\\}\n  \\quad\\text{and}\\quad\n  \\{\\lambda_f g_f:f\\in\\cF\\}\n\\]\ncontain no duplicate tables.\n\\end{lemma}",
+      "statement_sha256": "7be16315175e474ead4ea8e521b0e223a6a65e971635ebac392845388c0c16e3",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.ScalarTags.exists_common_rational_tags",
+          "file": "ComplexCSP/Algebra/ScalarTagsTyped.lean",
+          "role": "literal existence"
+        },
+        {
+          "name": "ComplexCSP.ScalarTags.findRationalTags",
+          "file": "ComplexCSP/Algebra/ScalarTagsTyped.lean",
+          "role": "executable search"
+        },
+        {
+          "name": "ComplexCSP.ScalarTags.findRationalTags_spec",
+          "file": "ComplexCSP/Algebra/ScalarTagsTyped.lean",
+          "role": "positivity and both injectivities"
+        },
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.comparePaperTagged_correct",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "actual common-tag cancellation callsite"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_4_exists_common_rational_tags",
+        "ComplexCSP.PaperSpec.paper_5_4_findRationalTags_spec",
+        "ComplexCSP.PaperSpec.paper_5_4_comparePaperTagged_correct"
+      ]
+    },
+    {
+      "number": "5.5",
+      "kind": "lemma",
+      "label": "lem:character-comparison",
+      "title_tex": "Effective comparison of monomial characters",
+      "source_range": {
+        "start_line": 2572,
+        "end_line": 2577
+      },
+      "statement_tex": "\\begin{lemma}[Effective comparison of monomial characters]\n\\label{lem:character-comparison}\nGiven two monomials in the coordinates\n$\\{X_{\\mathbf a},Y_{\\mathbf a}:\\mathbf a\\in D^k\\}$, it is decidable whether\ntheir associated characters agree on every element of $\\InstMonoid{k}$.\n\\end{lemma}",
+      "statement_sha256": "a2cbeeb868563a532747b176a6e6547c3884b3fe6137fa49d19709fc9dfda76c",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.characters_eq_iff_all_tensor_instances",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "semantic reduction"
+        },
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.compare",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "actual checker"
+        },
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.compare_correct",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "soundness/completeness"
+        },
+        {
+          "name": "ComplexCSP.Recognition.partition_common_tags_iff",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "per-instance tag cancellation"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_5_characters_eq_iff_all_tensor_instances",
+        "ComplexCSP.PaperSpec.paper_5_5_compare_correct",
+        "ComplexCSP.PaperSpec.paper_5_5_partition_common_tags_iff"
+      ]
+    },
+    {
+      "number": "5.6",
+      "kind": "lemma",
+      "label": "lem:dedekind-independence",
+      "title_tex": "Linear independence of monoid characters",
+      "source_range": {
+        "start_line": 2708,
+        "end_line": 2723
+      },
+      "statement_tex": "\\begin{lemma}[Linear independence of monoid characters]\n\\label{lem:dedekind-independence}\nLet $M$ be a monoid, let $L$ be a field of characteristic zero, and let\n\\[\n  \\chi_1,\\ldots,\\chi_s:M\\to L\n\\]\nbe pairwise distinct unital multiplicative characters.  If\n$c_1,\\ldots,c_s\\in L$ satisfy\n\\begin{equation}\n  \\sum_{i=1}^s c_i\\chi_i(x)=0\n  \\qquad\\text{for every }x\\in M,\n  \\label{eq:dedekind-assumed-relation}\n\\end{equation}\nthen $c_1=\\cdots=c_s=0$.  Equivalently,\n$\\chi_1,\\ldots,\\chi_s$ are linearly independent in the vector space $L^M$.\n\\end{lemma}",
+      "statement_sha256": "f93a75f32459606391b5695c0e3540dcf099298fa51ff366a70b76035eef3508",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.characters_linearIndependent",
+          "file": "ComplexCSP/Structure/CharacterIndependence.lean",
+          "role": "linear independence"
+        },
+        {
+          "name": "ComplexCSP.character_coefficients_eq_zero",
+          "file": "ComplexCSP/Structure/CharacterIndependence.lean",
+          "role": "literal finite relation"
+        },
+        {
+          "name": "ComplexCSP.grouped_character_zero_iff",
+          "file": "ComplexCSP/Structure/CharacterIndependence.lean",
+          "role": "group equal characters"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_6_characters_linearIndependent",
+        "ComplexCSP.PaperSpec.paper_5_6_character_coefficients_eq_zero",
+        "ComplexCSP.PaperSpec.paper_5_6_grouped_character_zero_iff"
+      ]
+    },
+    {
+      "number": "5.7",
+      "kind": "theorem",
+      "label": "thm:universal-identity",
+      "title_tex": "Universal identity oracle",
+      "source_range": {
+        "start_line": 2789,
+        "end_line": 2813
+      },
+      "statement_tex": "\\begin{theorem}[Universal identity oracle]\n\\label{thm:universal-identity}\nFix $k\\ge1$.  The input is an ordinary commutative polynomial\n\\[\n  P\\in\\AlgNums[X_{\\mathbf a},Y_{\\mathbf a}:\\mathbf a\\in D^k],\n\\]\ngiven as a finite list of monomials with exactly encoded algebraic-complex\ncoefficients.  The $2\\abs{D}^k$ symbols\n$X_{\\mathbf a},Y_{\\mathbf a}$ are independent formal variables; no\nhomogeneity assumption is imposed.  For $I\\in\\InstMonoid{k}$, the notation\n$P(\\zvec I,\\overline{\\zvec I})$ means the simultaneous substitution\n\\begin{equation*}\n  X_{\\mathbf a}=\\zvec I(\\mathbf a),\n  \\qquad\n  Y_{\\mathbf a}=\\overline{\\zvec I(\\mathbf a)}\n  \\qquad(\\mathbf a\\in D^k),\n\\end{equation*}\nas in \\eqref{eq:formal-coordinate-substitution}.  There is a total exact\nalgorithm deciding whether\n\\begin{equation}\n  P(\\zvec I,\\overline{\\zvec I})=0\n  \\qquad\\text{for every }I\\in\\InstMonoid{k}.\n  \\label{eq:universal-star-identity}\n\\end{equation}\n\\end{theorem}",
+      "statement_sha256": "008a16bd1225665024b38e44225ba9e50d4433fa72016007106737a245b29e01",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicIdentityTest",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicIdentity.lean",
+          "role": "raw exact-input algorithm"
+        },
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicIdentityTest_correct",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicIdentity.lean",
+          "role": "all-instance correctness"
+        },
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicIdentityTest_rejects_iff",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicIdentity.lean",
+          "role": "finite rejection witness"
+        },
+        {
+          "name": "ComplexCSP.Recognition.programIdentityTest_mvPolynomial_correct",
+          "file": "ComplexCSP/Recognition/IdentityOracle.lean",
+          "role": "ordinary polynomial semantic bridge"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_7_uniformAlgebraicIdentityTest_correct",
+        "ComplexCSP.PaperSpec.paper_5_7_uniformAlgebraicIdentityTest_rejects_iff",
+        "ComplexCSP.PaperSpec.paper_5_7_programIdentityTest_mvPolynomial_correct"
+      ]
+    },
+    {
+      "number": "5.8",
+      "kind": "lemma",
+      "label": "lem:degree-filtered-character-comparison",
+      "title_tex": "Degree-filtered comparison of monomial characters",
+      "source_range": {
+        "start_line": 2870,
+        "end_line": 2880
+      },
+      "statement_tex": "\\begin{lemma}[Degree-filtered comparison of monomial characters]\n\\label{lem:degree-filtered-character-comparison}\nFix $k,\\delta\\ge1$.  Given two monomials $M,N$ in the coordinates\n$\\{X_{\\mathbf a},Y_{\\mathbf a}:\\mathbf a\\in D^k\\}$ and their associated\ncharacters $\\chi_M,\\chi_N:\\InstMonoid{k}\\to K$, it is decidable whether\n\\begin{equation}\n  \\chi_M(I)=\\chi_N(I)\n  \\qquad\\text{for every }I\\in\\mathfrak M_{k,\\delta}.\n  \\label{eq:degree-filtered-character-goal}\n\\end{equation}\n\\end{lemma}",
+      "statement_sha256": "1ae6eca9cb9d570649a407c7bf35501d5c021ad52945a679f027886f7e02bcba",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Instance.degree_filter_identity",
+          "file": "ComplexCSP/Recognition/DegreeFilter.lean",
+          "role": "actual full degree filter"
+        },
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.filtered_sum_formula",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "tensor/filter sum bridge"
+        },
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.degreeCompare",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "finite comparison algorithm"
+        },
+        {
+          "name": "ComplexCSP.Recognition.PinnedMonomial.degreeCompare_correct",
+          "file": "ComplexCSP/Recognition/CharacterComparison.lean",
+          "role": "restricted character equality"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_8_degree_filter_identity",
+        "ComplexCSP.PaperSpec.paper_5_8_filtered_sum_formula",
+        "ComplexCSP.PaperSpec.paper_5_8_degreeCompare_correct"
+      ]
+    },
+    {
+      "number": "5.9",
+      "kind": "theorem",
+      "label": "thm:degree-multiple-universal-identity",
+      "title_tex": "Degree-multiple universal identity oracle",
+      "source_range": {
+        "start_line": 3082,
+        "end_line": 3094
+      },
+      "statement_tex": "\\begin{theorem}[Degree-multiple universal identity oracle]\n\\label{thm:degree-multiple-universal-identity}\nFor every $k,\\delta\\ge1$ and every polynomial\n\\[\n  P\\in\\AlgNums[X_{\\mathbf a},Y_{\\mathbf a}:\\mathbf a\\in D^k],\n\\]\ngiven as a finite list of monomials with exactly encoded algebraic-complex\ncoefficients, it is decidable whether\n\\[\n  P(\\zvec I,\\overline{\\zvec I})=0\n  \\qquad\\text{for every }I\\in\\mathfrak M_{k,\\delta}.\n\\]\n\\end{theorem}",
+      "statement_sha256": "24af8d5f5deac8a394ca1cbe7c9aff3809f8acb46ecaa18fee3c6cc940465d3d",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicDegreeIdentityTest",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicIdentityDegree.lean",
+          "role": "raw runtime degree algorithm"
+        },
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicDegreeIdentityTest_correct",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicIdentityDegree.lean",
+          "role": "exact all restricted instances"
+        },
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicDegreeIdentityTest_rejects_iff",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicIdentityDegree.lean",
+          "role": "actual degree-divisible counterexample"
+        },
+        {
+          "name": "ComplexCSP.degreeGeneratedTableSubmonoid",
+          "file": "ComplexCSP/Recognition/DegreeGenerated.lean",
+          "role": "actual restricted multiplicative closure"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_5_9_uniformAlgebraicDegreeIdentityTest_correct",
+        "ComplexCSP.PaperSpec.paper_5_9_uniformAlgebraicDegreeIdentityTest_rejects_iff"
+      ]
+    },
+    {
+      "number": "6.1",
+      "kind": "procedure",
+      "label": "proc:global-bo",
+      "title_tex": "Global Block Orthogonality",
+      "source_range": {
+        "start_line": 3137,
+        "end_line": 3163
+      },
+      "statement_tex": "\\begin{procedure}[Global Block Orthogonality]\n\\label{proc:global-bo}\nOn input a nonempty finite domain $D$ and a finite algebraic-complex\nconstraint language $\\cF$ whose values are given by exact encodings, perform\nthe following steps.\n\\begin{enumerate}\n  \\item Delete duplicate typed tables.  If $\\cF=\\varnothing$, return\n        \\YES.  Otherwise construct the field $K$\n        in~\\eqref{eq:working-field} and compute $\\mu(K)$.\n  \\item For every integer\n        \\[\n          2\\le k\\le d^2+1,\n          \\qquad d=\\abs D,\n        \\]\n        enumerate the Block Orthogonality certificates of arity $k$ and\n        construct $Q_k$ as in \\cref{cor:bo-product-identities}.\n  \\item For every tested $k$ and every $q\\in Q_k$, use\n        \\cref{thm:universal-identity} to decide whether\n        \\[\n          q(\\zvec I)=0\n          \\qquad\\text{for every }I\\in\\InstMonoid{k}.\n        \\]\n        Return \\NO{} as soon as one identity fails.\n  \\item If every identity at every indicated arity succeeds, return\n        \\YES.\n\\end{enumerate}\n\\end{procedure}",
+      "statement_sha256": "85665f64152e7c946c61f1b17bdd950801c520ca82576f129376ba8ad251529f",
+      "status": "documented",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.globalCertificateTest",
+          "file": "ComplexCSP/Recognition/GlobalProgram.lean",
+          "role": "finite certificate-testing procedure"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_6_2_globalCertificateTest_exponent_correct_jointBO",
+        "ComplexCSP.PaperSpec.paper_6_2_uniformAlgebraicGlobalTest_correct_jointBO"
+      ]
+    },
+    {
+      "number": "6.2",
+      "kind": "theorem",
+      "label": "thm:global-bo-decidable",
+      "title_tex": "Exact decision of global BO",
+      "source_range": {
+        "start_line": 3165,
+        "end_line": 3172
+      },
+      "statement_tex": "\\begin{theorem}[Exact decision of global BO]\n\\label{thm:global-bo-decidable}\n\\Cref{proc:global-bo} is a total exact algorithm.  It returns \\YES{}\non $(D,\\cF)$ if and only if the Block Orthogonality condition from the\ncomplex-weighted $\\#\\mathrm{CSP}$ dichotomy theorem of Cai and\nChen~\\cite[Section~3.1]{CaiChen2017}, denoted $\\BO(\\cF)$ in\n\\cref{def:global-bo}, holds on the entire unbounded family $W_{\\cF}$.\n\\end{theorem}",
+      "statement_sha256": "1b0ef05da06b101aa5441caa584324be135834cba5a34aa6d4a234d848673dda",
+      "status": "proved_using_corrected_5_2",
+      "declarations": [
+        {
+          "name": "ComplexCSP.Recognition.globalCertificateTest",
+          "file": "ComplexCSP/Recognition/GlobalProgram.lean",
+          "role": "finite-arity procedure"
+        },
+        {
+          "name": "ComplexCSP.Recognition.globalCertificateTest_exponent_correct_jointBO",
+          "file": "ComplexCSP/Recognition/GlobalCorrectness.lean",
+          "role": "unbounded-family correctness"
+        },
+        {
+          "name": "ComplexCSP.Recognition.uniformAlgebraicGlobalTest_correct_jointBO",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicGlobal.lean",
+          "role": "raw input and runtime roots"
+        },
+        {
+          "name": "ComplexCSP.Recognition.encodedGlobalTest",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicEncoded.lean",
+          "role": "all sizes explicitly encoded"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_6_2_globalCertificateTest_exponent_correct_jointBO",
+        "ComplexCSP.PaperSpec.paper_6_2_uniformAlgebraicGlobalTest_correct_jointBO"
+      ]
+    },
+    {
+      "number": "7.1",
+      "kind": "lemma",
+      "label": "lem:simultaneous-power-sums",
+      "title_tex": "Simultaneous nonvanishing of power sums",
+      "source_range": {
+        "start_line": 3255,
+        "end_line": 3267
+      },
+      "statement_tex": "\\begin{lemma}[Simultaneous nonvanishing of power sums]\n\\label{lem:simultaneous-power-sums}\nLet $\\mathcal A_1,\\ldots,\\mathcal A_t$ be nonempty finite multisets of\nelements of $\\AlgNums^\\times$.  There exist infinitely many integers $m\\ge1$\nsuch that\n\\begin{equation}\n  \\sum_{a\\in\\mathcal A_i}a^m\\ne0\n  \\qquad\\text{for every }i\\in[t].\n  \\label{eq:simultaneous-power-sums}\n\\end{equation}\nMoreover, such an $m$ can be found by enumerating the positive integers and\nperforming exact algebraic zero tests.\n\\end{lemma}",
+      "statement_sha256": "979060de694cdcd94b7e9ab38f68463193c8ed288a0f9bdd2f0b2d5426649844",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.infinite_simultaneous_multiset_powerSum_ne_zero",
+          "file": "ComplexCSP/Algebra/PowerSums.lean",
+          "role": "literal multiset infinitude"
+        },
+        {
+          "name": "ComplexCSP.exists_simultaneous_powerSum_ne_zero_bounded",
+          "file": "ComplexCSP/Algebra/PowerSums.lean",
+          "role": "stronger finite bound"
+        },
+        {
+          "name": "ComplexCSP.findSimultaneousPower_success",
+          "file": "ComplexCSP/Algebra/PowerSums.lean",
+          "role": "actual finite-search termination"
+        },
+        {
+          "name": "ComplexCSP.findSimultaneousPower_sound",
+          "file": "ComplexCSP/Algebra/PowerSums.lean",
+          "role": "returned witness correctness"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_7_1_infinite_simultaneous_multiset_powerSum_ne_zero",
+        "ComplexCSP.PaperSpec.paper_7_1_exists_simultaneous_powerSum_ne_zero_bounded",
+        "ComplexCSP.PaperSpec.paper_7_1_findSimultaneousPower_success",
+        "ComplexCSP.PaperSpec.paper_7_1_findSimultaneousPower_sound"
+      ]
+    },
+    {
+      "number": "7.2",
+      "kind": "lemma",
+      "label": "lem:equality-free-support-realization",
+      "title_tex": "Equality-free support realization",
+      "source_range": {
+        "start_line": 3337,
+        "end_line": 3358
+      },
+      "statement_tex": "\\begin{lemma}[Equality-free support realization]\n\\label{lem:equality-free-support-realization}\nLet $h\\ge1$ and $G_1,\\ldots,G_h\\in W_{\\cF}$.  Let\n$\\mathbf x=(x_1,\\ldots,x_\\ell)$, with $\\ell\\ge1$, be the tuple of free\nvariables, and let $\\mathbf y=(y_1,\\ldots,y_s)$, with $s\\ge0$, be the tuple\nof existential variables.  Let $\\mathcal E$ be a finite set indexing the\natoms.  For every $e\\in\\mathcal E$, choose\n$i(e)\\in[h]$ and an ordered scope $\\mathbf z_e$ of length\n$\\arity(G_{i(e)})$ whose entries are variables from $\\mathbf x$ and\n$\\mathbf y$.  The same logical variable may occur repeatedly within one\nscope or across several scopes.  Define $R\\subseteq D^\\ell$ by\n\\begin{equation}\n  R(\\mathbf x)\n  \\quad\\Longleftrightarrow\\quad\n  \\exists\\mathbf y\\;\n  \\bigwedge_{e\\in\\mathcal E}\n       \\SuppRel{G_{i(e)}}(\\mathbf z_e).\n  \\label{eq:equality-free-pp}\n\\end{equation}\nThen there exists $H\\in W_{\\cF}$ with $\\SuppRel H=R$.  Given presentations\nof the $G_i$, such an $H$ can be obtained by a terminating exact search.\n\\end{lemma}",
+      "statement_sha256": "bbed98d30957ad12f3dec2eb4e299cd2407e9cdc412d8d9cfc985b05cd1d96c5",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.paper_generated_equalityfree_pp_support",
+          "file": "ComplexCSP/Structure/SupportRealization.lean",
+          "role": "literal ordered mathematical claim"
+        },
+        {
+          "name": "ComplexCSP.PresentedAtom.compile",
+          "file": "ComplexCSP/Instances/PresentationAlgorithms.lean",
+          "role": "actual presentation-returning compiler"
+        },
+        {
+          "name": "ComplexCSP.PresentedAtom.compile_correct",
+          "file": "ComplexCSP/Instances/PresentationAlgorithms.lean",
+          "role": "full support iff"
+        },
+        {
+          "name": "ComplexCSP.findSupportPower_spec",
+          "file": "ComplexCSP/Structure/SupportRealization.lean",
+          "role": "terminating exact amplification"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_7_2_paper_generated_equalityfree_pp_support",
+        "ComplexCSP.PaperSpec.paper_7_2_compile_correct",
+        "ComplexCSP.PaperSpec.paper_7_2_findSupportPower_spec"
+      ]
+    },
+    {
+      "number": "7.3",
+      "kind": "corollary",
+      "label": "cor:generated-singleton-rectangularity",
+      "title_tex": "Singleton rectangularity",
+      "source_range": {
+        "start_line": 3529,
+        "end_line": 3539
+      },
+      "statement_tex": "\\begin{corollary}[Singleton rectangularity]\n\\label{cor:generated-singleton-rectangularity}\nAssume $\\BO(\\cF)$.  Let $R\\subseteq D^{q-1}\\times D$, with $q\\ge2$, have an\nequality-free pp definition from finitely many relations $\\SuppRel G$,\n$G\\in W_{\\cF}$.  For $\\mathbf u\\in D^{q-1}$, put\n\\[\n  R_{\\mathbf u}=\\{a\\in D:(\\mathbf u,a)\\in R\\}.\n\\]\nThen any two nonempty sets $R_{\\mathbf u}$ and $R_{\\mathbf v}$ are equal or\ndisjoint.\n\\end{corollary}",
+      "statement_sha256": "fbcb67a14457e69c30b1a60c7f82f3cb7d128e9e7f9d4dc57eb3d0dcbd106c99",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.JointBO.original",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "removes purification premise"
+        },
+        {
+          "name": "ComplexCSP.allGeneratedOriginalBO_supportRectangular",
+          "file": "ComplexCSP/Structure/GeneratedBlockOrthogonality.lean",
+          "role": "actual generated support rectangles"
+        },
+        {
+          "name": "ComplexCSP.generated_supports_equalityfree_rectangularity",
+          "file": "ComplexCSP/Structure/SupportMaltsevBridge.lean",
+          "role": "literal pp/projected support bridge"
+        },
+        {
+          "name": "ComplexCSP.MaltsevRelations.rectangular_iff_equal_or_disjoint",
+          "file": "ComplexCSP/Structure/MaltsevRelations.lean",
+          "role": "fiber formulation"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.lemma_7_3_pp_rectangularity",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_7_3_original",
+        "ComplexCSP.PaperSpec.paper_7_3_allGeneratedOriginalBO_supportRectangular",
+        "ComplexCSP.PaperSpec.paper_7_3_generated_supports_equalityfree_rectangularity",
+        "ComplexCSP.PaperSpec.paper_7_3_rectangular_iff_equal_or_disjoint",
+        "ComplexCSP.PaperSpec.paper_7_3_lemma_7_3_pp_rectangularity"
+      ]
+    },
+    {
+      "number": "7.4",
+      "kind": "lemma",
+      "label": "lem:finite-support-maltsev",
+      "title_tex": "Finite-family support lemma",
+      "source_range": {
+        "start_line": 3551,
+        "end_line": 3555
+      },
+      "statement_tex": "\\begin{lemma}[Finite-family support lemma]\n\\label{lem:finite-support-maltsev}\nAssume $\\BO(\\cF)$.  Every finite family of generated support relations has a\ncommon Mal'tsev polymorphism.\n\\end{lemma}",
+      "statement_sha256": "815b5a60c1d3f29299deffc3e732f55ad1dfe18f8da3f842ca7477e5951fc247",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.MaltsevRelations.finite_family_maltsev",
+          "file": "ComplexCSP/Structure/MaltsevRelations.lean",
+          "role": "finite-family construction"
+        },
+        {
+          "name": "ComplexCSP.generated_supports_equalityfree_rectangularity",
+          "file": "ComplexCSP/Structure/SupportMaltsevBridge.lean",
+          "role": "actual support family premise"
+        },
+        {
+          "name": "ComplexCSP.allGeneratedOriginalBO_supportRectangular",
+          "file": "ComplexCSP/Structure/GeneratedBlockOrthogonality.lean",
+          "role": "BO discharges rectangularity"
+        },
+        {
+          "name": "ComplexCSP.JointBO.original",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "literal BO source"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.lemma_7_4",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_7_3_original",
+        "ComplexCSP.PaperSpec.paper_7_3_allGeneratedOriginalBO_supportRectangular",
+        "ComplexCSP.PaperSpec.paper_7_3_generated_supports_equalityfree_rectangularity",
+        "ComplexCSP.PaperSpec.paper_7_4_finite_family_maltsev",
+        "ComplexCSP.PaperSpec.paper_7_4_lemma_7_4"
+      ]
+    },
+    {
+      "number": "7.5",
+      "kind": "theorem",
+      "label": "thm:common-support-maltsev",
+      "title_tex": "Common Mal'tsev operation for generated supports",
+      "source_range": {
+        "start_line": 3889,
+        "end_line": 3900
+      },
+      "statement_tex": "\\begin{theorem}[Common Mal'tsev operation for generated supports]\n\\label{thm:common-support-maltsev}\nIf $\\BO(\\cF)$ holds, then\n\\begin{equation}\n  \\begin{aligned}\n  &\\exists m:D^3\\to D\\quad\\forall G\\in W_{\\cF},\\\\\n  &\\qquad\n    m\\text{ is a Mal'tsev polymorphism of }\\SuppRel G.\n  \\end{aligned}\n  \\label{eq:global-support-maltsev}\n\\end{equation}\n\\end{theorem}",
+      "statement_sha256": "6c6a4cf0d74b9d27502158d9b4af5b28b50b3dfde2ce9758f39a23961921b85f",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.JointBO.common_support_maltsev",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "literal global endpoint"
+        },
+        {
+          "name": "ComplexCSP.MaltsevRelations.common_maltsev_of_finite_subfamilies",
+          "file": "ComplexCSP/Structure/MaltsevRelations.lean",
+          "role": "finite candidate compactness"
+        },
+        {
+          "name": "ComplexCSP.common_maltsev_of_generated_support_rectangularity",
+          "file": "ComplexCSP/Structure/SupportMaltsevBridge.lean",
+          "role": "actual generated support bridge"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_7_5_common_support_maltsev",
+        "ComplexCSP.PaperSpec.paper_7_5_common_maltsev_of_finite_subfamilies",
+        "ComplexCSP.PaperSpec.paper_7_5_common_maltsev_of_generated_support_rectangularity"
+      ]
+    },
+    {
+      "number": "8.1",
+      "kind": "lemma",
+      "label": "lem:generated-entrywise-powers",
+      "title_tex": "Generated entrywise powers",
+      "source_range": {
+        "start_line": 3944,
+        "end_line": 3947
+      },
+      "statement_tex": "\\begin{lemma}[Generated entrywise powers]\n\\label{lem:generated-entrywise-powers}\nIf $G\\in W_{\\cF}$ and $h\\ge1$, then $\\Pow{G}{h}\\in W_{\\cF}$.\n\\end{lemma}",
+      "statement_sha256": "4d4df9563bb389bae4c6c6f2f6d45c62a8902ba209a9a37f27353acb951f7068",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.paper_generated_pow",
+          "file": "ComplexCSP/Instances/OrderedInstances.lean",
+          "role": "literal ordered generated claim"
+        },
+        {
+          "name": "ComplexCSP.Presentation.power",
+          "file": "ComplexCSP/Instances/PresentationAlgorithms.lean",
+          "role": "executable independent-copy construction"
+        },
+        {
+          "name": "ComplexCSP.Presentation.table_power",
+          "file": "ComplexCSP/Instances/PresentationAlgorithms.lean",
+          "role": "exact output table"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_8_1_paper_generated_pow",
+        "ComplexCSP.PaperSpec.paper_8_1_table_power"
+      ]
+    },
+    {
+      "number": "8.2",
+      "kind": "lemma",
+      "label": "lem:finite-row-phases",
+      "title_tex": "Finite relative row phases",
+      "source_range": {
+        "start_line": 3968,
+        "end_line": 3994
+      },
+      "statement_tex": "\\begin{lemma}[Finite relative row phases]\n\\label{lem:finite-row-phases}\nAssume $\\BO(\\cF)$.  Let $G:D^r\\to K$, $r\\ge2$, belong to $W_{\\cF}$, and\nlet $\\mathbf u=G(\\mathbf x,\\ast)$ and\n$\\mathbf v=G(\\mathbf y,\\ast)$ be nonzero rows with overlapping supports.\nThen their supports are equal.  Fix any anchor $z_0$ in their common support\n$S$, and define\n\\begin{equation}\n  \\lambda:=\\frac{v_{z_0}}{u_{z_0}},\n  \\qquad\n  \\zeta_z:=\n    \\frac{v_z/u_z}{v_{z_0}/u_{z_0}}\n    =\\frac{v_zu_{z_0}}{u_zv_{z_0}}\n  \\qquad(z\\in S).\n  \\label{eq:anchored-row-phases}\n\\end{equation}\nThen $\\lambda\\in K^\\times$ and\n$(\\zeta_z)_{z\\in S}\\in\\mu(K)^S$.  For every $z\\in S$,\n\\begin{equation}\n  v_z=\\lambda\\zeta_z u_z,\n  \\qquad\n  \\zeta_{z_0}=1,\n  \\qquad\n  \\zeta_z^{L_D}=1.\n  \\label{eq:finite-row-phases}\n\\end{equation}\n\\end{lemma}",
+      "statement_sha256": "492b4c00037e1cad9044d241adebf9a35cc15c8cddd1baa50baa034c26d57fb0",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.BlockOrthogonality.finite_row_phases_of_power_BO",
+          "file": "ComplexCSP/Structure/BlockRowPhases.lean",
+          "role": "support and every anchored-phase formula"
+        },
+        {
+          "name": "ComplexCSP.RowPhases.phaseExponent",
+          "file": "ComplexCSP/Structure/RowPhases.lean",
+          "role": "literal lcm(1,…,|D|)"
+        },
+        {
+          "name": "ComplexCSP.JointBO.original",
+          "file": "ComplexCSP/Recognition/GlobalConditions.lean",
+          "role": "original BO of generated powers"
+        },
+        {
+          "name": "ComplexCSP.Instance.generated_pow",
+          "file": "ComplexCSP/Instances/Basic.lean",
+          "role": "power generation"
+        },
+        {
+          "name": "ComplexCSP.Instance.generated_mem_workingField",
+          "file": "ComplexCSP/Algebra/WorkingField.lean",
+          "role": "all ratios live in actual field"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.lemma_8_2",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_7_3_original",
+        "ComplexCSP.PaperSpec.paper_8_2_finite_row_phases_of_power_BO",
+        "ComplexCSP.PaperSpec.paper_8_2_generated_pow",
+        "ComplexCSP.PaperSpec.paper_8_2_generated_mem_workingField",
+        "ComplexCSP.PaperSpec.paper_8_2_lemma_8_2"
+      ]
+    },
+    {
+      "number": "8.3",
+      "kind": "lemma",
+      "label": "lem:nondegenerate-exponential-sums",
+      "title_tex": "Nondegenerate exponential sums",
+      "source_range": {
+        "start_line": 4065,
+        "end_line": 4074
+      },
+      "statement_tex": "\\begin{lemma}[Nondegenerate exponential sums]\n\\label{lem:nondegenerate-exponential-sums}\nLet $s\\ge1$, let $a_1,\\ldots,a_s,b_1,\\ldots,b_s$ be nonzero algebraic\nnumbers, and\nsuppose $b_i/b_j$ is not a root of unity whenever $i\\ne j$.  Then\n\\[\n  p(t)=\\sum_{i=1}^s a_ib_i^t\n\\]\nvanishes for only finitely many integers $t\\ge0$.\n\\end{lemma}",
+      "statement_sha256": "4eaf4c3a073cfd7e0e2a86b887b431c1f270fb96ec2f7ba5053cda602bc44d77",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.lemma_8_3",
+          "file": "ComplexCSP/Algebra/AlgebraicPowerSumZeros.lean",
+          "role": "literal numbered statement"
+        },
+        {
+          "name": "ComplexCSP.finite_weightedPowerSum_zeros_algebraic",
+          "file": "ComplexCSP/Algebra/AlgebraicPowerSumZeros.lean",
+          "role": "stronger one-nonzero-coefficient form"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_8_3_lemma_8_3",
+        "ComplexCSP.PaperSpec.paper_8_3_finite_weightedPowerSum_zeros_algebraic"
+      ]
+    },
+    {
+      "number": "8.4",
+      "kind": "theorem",
+      "label": "thm:omega-support-realization",
+      "title_tex": "Row-equivalence realization",
+      "source_range": {
+        "start_line": 4092,
+        "end_line": 4114
+      },
+      "statement_tex": "\\begin{theorem}[Row-equivalence realization]\n\\label{thm:omega-support-realization}\nAssume $\\BO(\\cF)$.  Let $G:D^r\\to K$, $r\\ge2$, be any member of\n$W_{\\cF}$.  There is an integer $t\\ge0$ such that, for $q=1+tL_D$, the\n$2(r-1)$-ary function\n\\begin{equation}\n  C_q(\\mathbf x,\\mathbf y)\n  =\\sum_{z\\in D}\n       G(\\mathbf x,z)^{(K_\\mu-1)q}G(\\mathbf y,z)^q\n  \\label{eq:omega-detector}\n\\end{equation}\nbelongs to $W_{\\cF}$ and satisfies\n\\begin{equation}\n  \\SuppRel{C_q}=\\RowEq G.\n  \\label{eq:omega-is-support}\n\\end{equation}\nWe call $C_q$ the \\emph{row-equivalence detector}; the displayed equality\nsays that it is nonzero exactly when the rows indexed by $\\mathbf x$ and\n$\\mathbf y$ are both nonzero and linearly dependent.\nGiven the exact table of $G$ and an instance presentation of it, a terminating\nexact search finds such a $t$, the corresponding exponent $q=1+tL_D$, and an\ninstance presentation of $C_q$.\n\\end{theorem}",
+      "statement_sha256": "497fb35d13fc97e04ea852149ce39639bbd5074b7c88a821f575f0a5a2f10283",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.RowEquivalenceRealization.generated_row_equivalence_detector",
+          "file": "ComplexCSP/Structure/RowEquivalenceRealization.lean",
+          "role": "actual generated Ω-support existence"
+        },
+        {
+          "name": "ComplexCSP.RowEquivalenceRealization.exists_detector_support",
+          "file": "ComplexCSP/Structure/RowEquivalenceRealization.lean",
+          "role": "fixed mathematical fieldExponent detector"
+        },
+        {
+          "name": "ComplexCSP.paper_generated_rowDetector",
+          "file": "ComplexCSP/Recognition/GeneratedDetector.lean",
+          "role": "displayed two-copy formula is generated"
+        },
+        {
+          "name": "ComplexCSP.RowDetector.findDetectorTime_success",
+          "file": "ComplexCSP/Structure/RowDetector.lean",
+          "role": "abstract bounded time search"
+        },
+        {
+          "name": "ComplexCSP.RowDetector.fieldExponent_killsTorsion",
+          "file": "ComplexCSP/Algebra/NumberFieldTorsion.lean",
+          "role": "derived number-field torsion bound"
+        },
+        {
+          "name": "ComplexCSP.RowDetectorEmbeddedExistence.generated_detector_exact_workingField",
+          "file": "ComplexCSP/Structure/RowDetectorEmbeddedExistence.lean",
+          "role": "literal fixed working-field mathematical statement"
+        },
+        {
+          "name": "ComplexCSP.EncodedNumberField.validatedRowDetector",
+          "file": "ComplexCSP/Recognition/GeneratedDetectorSearch.lean",
+          "role": "executable common-field presentation compiler"
+        },
+        {
+          "name": "ComplexCSP.EncodedNumberField.validatedRowDetector_support",
+          "file": "ComplexCSP/Recognition/GeneratedDetectorSearch.lean",
+          "role": "returned support is exactly Ω"
+        },
+        {
+          "name": "ComplexCSP.EncodedNumberField.validatedRowDetector_exact_formula",
+          "file": "ComplexCSP/Recognition/GeneratedDetectorSearch.lean",
+          "role": "returned table has exact field-exponent formula"
+        },
+        {
+          "name": "ComplexCSP.EffectiveRoots.torsion_exponent_eq_order",
+          "file": "ComplexCSP/Algebra/EffectiveRootsExactExponent.lean",
+          "role": "cyclic root-group exponent/order bridge"
+        },
+        {
+          "name": "ComplexCSP.EffectiveRoots.checkedRootExponent_eq_fieldExponent",
+          "file": "ComplexCSP/Algebra/EffectiveRootsExactExponent.lean",
+          "role": "runtime exponent equals mathematical exponent"
+        },
+        {
+          "name": "ComplexCSP.uniformAlgebraicRowDetector",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicDetector.lean",
+          "role": "raw separate-value input and original-language presentation output"
+        },
+        {
+          "name": "ComplexCSP.uniformAlgebraicRowDetector_support",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicDetector.lean",
+          "role": "exact Ω support under original selected values"
+        },
+        {
+          "name": "ComplexCSP.uniformAlgebraicRowDetector_exponent",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicDetector.lean",
+          "role": "q=1+L_D t"
+        },
+        {
+          "name": "ComplexCSP.uniformAlgebraicRowDetector_exact_formula",
+          "file": "ComplexCSP/Recognition/UniformAlgebraicDetector.lean",
+          "role": "literal source working-field Kμ formula"
+        },
+        {
+          "name": "ComplexCSP.Recognition.identityPairedCandidate_fieldRange",
+          "file": "ComplexCSP/Algebra/PairedCandidateExactField.lean",
+          "role": "selected field is exactly the generated working field"
+        },
+        {
+          "name": "ComplexCSP.Recognition.identityPairedCandidate_rootExponent_eq",
+          "file": "ComplexCSP/Algebra/PairedCandidateExactField.lean",
+          "role": "computed exponent transported to exact source field"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_8_4_generated_row_equivalence_detector",
+        "ComplexCSP.PaperSpec.paper_8_4_exists_detector_support",
+        "ComplexCSP.PaperSpec.paper_8_4_paper_generated_rowDetector",
+        "ComplexCSP.PaperSpec.paper_8_4_findDetectorTime_success",
+        "ComplexCSP.PaperSpec.paper_8_4_fieldExponent_killsTorsion",
+        "ComplexCSP.PaperSpec.paper_8_4_generated_detector_exact_workingField",
+        "ComplexCSP.PaperSpec.paper_8_4_validatedRowDetector_support",
+        "ComplexCSP.PaperSpec.paper_8_4_validatedRowDetector_exact_formula",
+        "ComplexCSP.PaperSpec.paper_8_4_torsion_exponent_eq_order",
+        "ComplexCSP.PaperSpec.paper_8_4_checkedRootExponent_eq_fieldExponent",
+        "ComplexCSP.PaperSpec.paper_8_4_uniformAlgebraicRowDetector_support",
+        "ComplexCSP.PaperSpec.paper_8_4_uniformAlgebraicRowDetector_exponent",
+        "ComplexCSP.PaperSpec.paper_8_4_uniformAlgebraicRowDetector_exact_formula",
+        "ComplexCSP.PaperSpec.paper_8_4_identityPairedCandidate_fieldRange",
+        "ComplexCSP.PaperSpec.paper_8_4_identityPairedCandidate_rootExponent_eq"
+      ]
+    },
+    {
+      "number": "8.5",
+      "kind": "corollary",
+      "label": "cor:omega-reduces-to-supports",
+      "title_tex": "Support preservation extends to all row relations",
+      "source_range": {
+        "start_line": 4251,
+        "end_line": 4256
+      },
+      "statement_tex": "\\begin{corollary}[Support preservation extends to all row relations]\n\\label{cor:omega-reduces-to-supports}\nAssume $\\BO(\\cF)$.  If one operation $m:D^3\\to D$ preserves $\\SuppRel H$\nfor every $H\\in W_{\\cF}$, then the same operation preserves $\\RowEq G$ for\nevery $G\\in W_{\\cF}$ of arity at least two.\n\\end{corollary}",
+      "statement_sha256": "d186266ebe6423a22bcfddb737fb1eec180ae89744a3ea7c148f1bbb8dd313ca",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.RowEquivalenceRealization.omega_mem_generatedSupports",
+          "file": "ComplexCSP/Structure/RowEquivalenceRealization.lean",
+          "role": "Ω is an actual generated support"
+        },
+        {
+          "name": "ComplexCSP.MaltsevRelations.CommonPolymorphism",
+          "file": "ComplexCSP/Structure/MaltsevRelations.lean",
+          "role": "universal support-preservation predicate"
+        },
+        {
+          "name": "ComplexCSP.PaperBridge.lemma_8_5",
+          "file": "ComplexCSP/Structure/PaperBridge.lean",
+          "role": "explicit paper bridge or companion theorem"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_8_5_omega_mem_generatedSupports",
+        "ComplexCSP.PaperSpec.paper_8_5_lemma_8_5"
+      ]
+    },
+    {
+      "number": "9.1",
+      "kind": "lemma",
+      "label": "lem:omega-implies-type",
+      "title_tex": "Row equivalence forces Type Partition",
+      "source_range": {
+        "start_line": 4282,
+        "end_line": 4287
+      },
+      "statement_tex": "\\begin{lemma}[Row equivalence forces Type Partition]\n\\label{lem:omega-implies-type}\nLet $G:D^r\\to\\AlgNums$, $r\\ge2$, and let $m:D^3\\to D$ be a Mal'tsev\noperation preserving $\\RowEq G$.  Then the type map of $G$ is a\ntype-partition map.\n\\end{lemma}",
+      "statement_sha256": "82361bcf665ff2e59b1e35cdc95c21edce93d735bb142c8266076d3335e5bed7",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.RowTypes.complex_type_partition",
+          "file": "ComplexCSP/Structure/RowTypes.lean",
+          "role": "literal original complex table endpoint"
+        },
+        {
+          "name": "ComplexCSP.RowTypes.rowEquivalence_iff",
+          "file": "ComplexCSP/Structure/RowTypes.lean",
+          "role": "class relation equals actual proportionality"
+        },
+        {
+          "name": "ComplexCSP.RowTypes.preserves_omega_pairs",
+          "file": "ComplexCSP/Structure/RowTypes.lean",
+          "role": "literal Ω preservation bridge"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_9_1_complex_type_partition",
+        "ComplexCSP.PaperSpec.paper_9_1_rowEquivalence_iff",
+        "ComplexCSP.PaperSpec.paper_9_1_preserves_omega_pairs"
+      ]
+    },
+    {
+      "number": "9.2",
+      "kind": "theorem",
+      "label": "thm:structural-collapse",
+      "title_tex": "Structural collapse",
+      "source_range": {
+        "start_line": 4349,
+        "end_line": 4370
+      },
+      "statement_tex": "\\begin{theorem}[Structural collapse]\n\\label{thm:structural-collapse}\nFor every nonempty finite domain $D$ and every finite algebraic-complex\nconstraint language $\\cF$,\n\\[\n  \\BO(\\cF)\\quad\\Longrightarrow\\quad\\TP(\\cF)\\wedge\\Mal(\\cF).\n\\]\nMore explicitly, under $\\BO(\\cF)$ there is one Mal'tsev operation\n$m:D^3\\to D$ such that, for every $G\\in W_{\\cF}$,\n\\begin{equation*}\n  \\begin{aligned}\n  &m\\text{ preserves }\\SuppRel G,\\\\\n  &\\arity(G)\\ge2\n    \\quad\\Longrightarrow\\quad\n    m\\text{ preserves }\\RowEq G.\n  \\end{aligned}\n\\end{equation*}\nConsequently,\n\\[\n  \\CC(\\cF)\\quad\\Longleftrightarrow\\quad\\BO(\\cF).\n\\]\n\\end{theorem}",
+      "statement_sha256": "5ae841c4c59a153e2ea38503bf14176f1835d3dab5963831a66d2fd9942a8b8f",
+      "status": "proved",
+      "declarations": [
+        {
+          "name": "ComplexCSP.JointBO.global_type_partition",
+          "file": "ComplexCSP/Structure/StructuralCollapse.lean",
+          "role": "all actual original row types"
+        },
+        {
+          "name": "ComplexCSP.JointBO.global_maltsev",
+          "file": "ComplexCSP/Structure/StructuralCollapse.lean",
+          "role": "single operation for full support/Ω family"
+        },
+        {
+          "name": "ComplexCSP.structural_collapse",
+          "file": "ComplexCSP/Structure/StructuralCollapse.lean",
+          "role": "literal CC iff BO"
+        },
+        {
+          "name": "ComplexCSP.RowEquivalenceRealization.common_support_and_row_maltsev",
+          "file": "ComplexCSP/Structure/RowEquivalenceRealization.lean",
+          "role": "explicit common-operation output"
+        }
+      ],
+      "goals": [
+        "ComplexCSP.PaperSpec.paper_1_1_structural_collapse",
+        "ComplexCSP.PaperSpec.paper_9_2_global_type_partition",
+        "ComplexCSP.PaperSpec.paper_9_2_global_maltsev",
+        "ComplexCSP.PaperSpec.paper_9_2_common_support_and_row_maltsev"
+      ]
+    }
+  ]
+}
