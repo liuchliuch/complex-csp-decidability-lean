@@ -78,3 +78,16 @@ current tree without rewriting that receipt or the frozen propositions.
 Generated objects, checker exports, and logs stay under `.lake` and are excluded
 from the release archive. `verification/release.json` records only the compact
 results for the packaged sources.
+
+## Publication records
+
+[original-release.json](../verification/original-release.json) preserves the
+verification record from the prepared package. The current
+[release.json](../verification/release.json) also identifies publication changes
+and the exact current file digest. Its original build and Comparator results
+refer to the unchanged mathematical inputs.
+
+The Linux launcher preserves lean4export's `--` argument separator with the
+pinned Landrun parser. It invokes the real Landrun binary with the same sandbox
+permissions. This compatibility fix changes the launcher, rather than the
+theorem statements or proofs.

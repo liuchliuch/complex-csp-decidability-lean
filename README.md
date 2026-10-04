@@ -38,7 +38,7 @@ python3 scripts/verify.py
 It compares the frozen statements, checks the allowed axioms, and replays the
 exported proof dependencies through Lean's kernel. The default mode uses
 [Landrun](https://github.com/zouuup/landrun) on Linux.
-For an author's local macOS check without the Linux sandbox, use
+On macOS, use the explicit local mode
 `python3 scripts/verify.py --no-sandbox`. The proof comparison and kernel replay
 are the same in both modes.
 
@@ -49,7 +49,7 @@ them to the proved declarations. The verification command does not regenerate
 the specification from the solution.
 
 [Verification notes](docs/verification.md) describe the input representation,
-trust boundary, regression checks, and release verification results.
+checking methods, regression examples, and verification records.
 
 ## Source layout
 
@@ -67,12 +67,5 @@ trust boundary, regression checks, and release verification results.
 
 To cite the paper, use [CITATION.cff](CITATION.cff).
 
-This release does not grant an open-source license. The reused source provenance
-is described in [vendor/plgh/README.md](vendor/plgh/README.md).
-
-The Linux sandbox launcher preserves lean4export's own `--` separator with the
-pinned Landrun CLI parser. It invokes the real Landrun binary with the original
-permissions. Mathematical sources, fixed theorem interfaces and dependency pins
-are unchanged. The original verification receipt is retained in
-[original-release.json](verification/original-release.json); the current receipt
-also records these publication tooling changes.
+A software license has not been specified. Provenance of the included PlanarHom
+sources is described in [vendor/plgh/README.md](vendor/plgh/README.md).

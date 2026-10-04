@@ -2,7 +2,7 @@
   "schema_version": 1,
   "date": "2026-10-04",
   "lean_version": "4.24.0",
-  "source_tree_sha256": "e32147072334d83034c62d6185a85b52928dd75b7fb5c2148ce6ecc5f27b1b0c",
+  "source_tree_sha256": "6bb6e370ef7310f7550032b288194f420300dc28ba64d2700667a8bbf04ac797",
   "builds": {
     "original": "passed",
     "reorganized": "passed",
@@ -51,7 +51,8 @@
     "unchanged_inputs": "All mathematical Lean files, toolchain and dependency lockfile are byte-for-byte unchanged.",
     "modified_files": [
       "scripts/verify.py",
-      "README.md"
+      "README.md",
+      "docs/verification.md"
     ],
     "added_files": [
       "scripts/landrun-runner.sh",
@@ -59,5 +60,13 @@
     ],
     "purpose": "Preserve the inner lean4export -- delimiter while retaining real Linux Landrun isolation.",
     "argument_preservation_test": "passed; sandbox flags and child arguments are preserved exactly"
+  },
+  "documentation_changes": {
+    "modified_files": [
+      "README.md",
+      "docs/verification.md"
+    ],
+    "previous_source_tree_sha256": "e32147072334d83034c62d6185a85b52928dd75b7fb5c2148ce6ecc5f27b1b0c",
+    "scope": "Documentation only; mathematical files, verification programs and dependency pins are unchanged."
   }
 }
