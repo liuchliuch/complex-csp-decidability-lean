@@ -69,3 +69,10 @@ To cite the paper, use [CITATION.cff](CITATION.cff).
 
 This release does not grant an open-source license. The reused source provenance
 is described in [vendor/plgh/README.md](vendor/plgh/README.md).
+
+The Linux sandbox launcher preserves lean4export's own `--` separator with the
+pinned Landrun CLI parser. It invokes the real Landrun binary with the original
+permissions. Mathematical sources, fixed theorem interfaces and dependency pins
+are unchanged. The original verification receipt is retained in
+[original-release.json](verification/original-release.json); the current receipt
+also records these publication tooling changes.

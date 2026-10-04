@@ -51,6 +51,15 @@ os.execvpe(args[0], args, os.environ)
         shim.chmod(0o755)
         bins.insert(0, adapter)
         print('Mode: explicit local author check; process sandbox disabled.', flush=True)
+    else:
+        adapter = ROOT / '.lake/verification/sandbox-bin'
+        adapter.mkdir(parents=True, exist_ok=True)
+        shim = adapter / 'landrun'
+        if shim.is_symlink() or shim.exists():
+            shim.unlink()
+        shim.symlink_to(ROOT / 'scripts/landrun-runner.sh')
+        env['LANDRUN_EXECUTABLE'] = str(Path(shutil.which('landrun')).resolve())
+        bins.insert(0, adapter)
     env['PATH'] = os.pathsep.join(map(str, bins)) + os.pathsep + env.get('PATH', '')
     run(['lake', 'env', 'comparator', 'verification/comparator.json'], env=env)
     print('Production axiom audit, executable regressions, and frozen-goal Comparator replay passed.')

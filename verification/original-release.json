@@ -2,7 +2,7 @@
   "schema_version": 1,
   "date": "2026-10-04",
   "lean_version": "4.24.0",
-  "source_tree_sha256": "e32147072334d83034c62d6185a85b52928dd75b7fb5c2148ce6ecc5f27b1b0c",
+  "source_tree_sha256": "8ab86f339005eb1cc9a9962841e7a50694296fdab56cd869bec84b980e765422",
   "builds": {
     "original": "passed",
     "reorganized": "passed",
@@ -43,21 +43,6 @@
   },
   "github_actions": {
     "linux_landrun_workflow": "configured",
-    "remote_run": "See the current GitHub Actions run; Linux validation is not inferred from the historical macOS receipt."
-  },
-  "publication_changes": {
-    "original_receipt": "verification/original-release.json",
-    "original_source_tree_sha256": "8ab86f339005eb1cc9a9962841e7a50694296fdab56cd869bec84b980e765422",
-    "unchanged_inputs": "All mathematical Lean files, toolchain and dependency lockfile are byte-for-byte unchanged.",
-    "modified_files": [
-      "scripts/verify.py",
-      "README.md"
-    ],
-    "added_files": [
-      "scripts/landrun-runner.sh",
-      "verification/original-release.json"
-    ],
-    "purpose": "Preserve the inner lean4export -- delimiter while retaining real Linux Landrun isolation.",
-    "argument_preservation_test": "passed; sandbox flags and child arguments are preserved exactly"
+    "remote_run": "not yet run"
   }
 }
