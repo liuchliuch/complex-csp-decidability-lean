@@ -15,6 +15,17 @@ import sys
 from cached_build import ROOT, environment
 
 
+def toolchain_environment():
+    env = environment()
+    prefix = Path(subprocess.check_output(['lean', '--print-prefix'], cwd=ROOT,
+                                          env=env, text=True).strip())
+    # lean4export invokes `lean --print-prefix` inside Comparator's sandbox.
+    # Only the actual toolchain is executable there; the elan shim is outside
+    # that allow-list. Match the PATH that `lake env comparator` normally sets.
+    env['PATH'] = str(prefix / 'bin') + os.pathsep + env['PATH']
+    return env
+
+
 def build_adapter(directory, env):
     """Compile a native launcher accepted by Landrun's existing execute policy.
 
@@ -26,7 +37,8 @@ an ELF executable for Landrun's dependency inspection on Linux.
     adapter.mkdir(exist_ok=True)
     output = directory / '.lake/build/lib/lean'
     output.mkdir(parents=True, exist_ok=True)
-    prefix = Path(subprocess.check_output(['lean', '--print-prefix'], cwd=ROOT, text=True).strip())
+    prefix = Path(subprocess.check_output(['lean', '--print-prefix'], cwd=ROOT,
+                                          env=env, text=True).strip())
     lean = prefix / 'bin/lean'
     if not os.access(lean, os.X_OK):
         raise RuntimeError('Missing toolchain Lean executable: ' + str(lean))
@@ -91,9 +103,9 @@ def main():
         (directory / 'comparator.json').write_text(json.dumps(probe_config, indent=2) + '\n')
         # Comparator asks `lake build <module>`. For generated probes this
         # deliberately narrow adapter performs precisely that Lean compilation.
-        env = environment()
+        env = toolchain_environment()
         adapter = build_adapter(directory, env)
-        env['PATH'] = str(adapter) + os.pathsep + os.environ['PATH']
+        env['PATH'] = str(adapter) + os.pathsep + env['PATH']
         env['LEAN_PATH'] = str(directory / '.lake/build/lib/lean') + os.pathsep + env['LEAN_PATH']
         print('Official Comparator negative control: ' + case, flush=True)
         # Keep the trusted project as Comparator's sandbox root. Probe sources

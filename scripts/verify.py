@@ -81,19 +81,23 @@ os.execvpe(args[0], args, os.environ)
                         'build([sys.argv[2]])\n')
         lake.chmod(0o755)
         env['PATH'] = os.pathsep.join(map(str, [lake_adapter] + bins)) + os.pathsep + os.environ.get('PATH', '')
-        run([sys.executable, ROOT / 'scripts/cached_build.py', 'ComplexCSP'], env=env)
+        run([sys.executable, ROOT / 'scripts/cached_build.py',
+             'ComplexCSP', 'verification.Statements'], env=env)
         lean = ['lean']
         comparator = ['comparator']
     else:
-        run(['lake', 'build', 'ComplexCSP', '@Comparator/comparator', '@lean4export/lean4export'])
+        run(['lake', 'build', 'ComplexCSP', 'verification.Statements',
+             '@Comparator/comparator', '@lean4export/lean4export'])
         lean = ['lake', 'env', 'lean']
         comparator = ['lake', 'env', 'comparator']
+    # Check the rejection path before the expensive full proof replay. The
+    # probes import the frozen statements, which the build above makes available.
+    run([sys.executable, ROOT / 'scripts/comparator_negative.py'], env=env)
     # Run source audits and executable assertions once, independently of cached check objects.
     for module in ['verification/Axioms', 'tests/Instances', 'tests/AlgebraicInput',
                    'tests/Degrees', 'tests/Identity', 'tests/Detector', 'tests/Recognition']:
         run(lean + ['-s', '65536', '-j', '1', ROOT / (module + '.lean')], env=env)
     run(comparator + ['verification/comparator.json'], env=env)
-    run([sys.executable, ROOT / 'scripts/comparator_negative.py'], env=env)
     print('Production axiom audit, executable regressions, frozen-goal Comparator replay, '
           'and negative controls passed.')
 

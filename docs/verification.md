@@ -74,6 +74,9 @@ It also runs two official Comparator negative controls on the current
 Appendix F.B.1 goal: replacing its type by `True`, and supplying its unchanged
 type through an injected axiom. Each must fail with its specific mismatch
 or illegal-axiom diagnostic; a failed build does not count as rejection.
+These controls run immediately after the build, before the full proof replay.
+The probe export uses the real Lean toolchain executable inside the existing
+Landrun policy.
 
 To check that every source byte still matches the verified release receipt, run
 `python3 scripts/audit.py --release`. Ordinary development checks validate the
