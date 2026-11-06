@@ -10,7 +10,7 @@ import Mathlib.Logic.Encodable.Pi
 /-!
 # Common tags for typed families
 
-The dependent-arity form of Lemma 5.4, with a total sequential search over
+The dependent-arity form of Lemma F.5.5, with a total sequential search over
 encoded finite vectors of positive integer tags. This complements ScalarTags.
 -/
 namespace ComplexCSP.ScalarTags
@@ -167,7 +167,7 @@ theorem exists_common_typed_tags (arity : ι → ℕ)
     have hpacked := congrArg (packValue (E := F)) he
     exact (ht i j hij ha).2 (by simpa [G] using hpacked)
 
-/-- The literal positive-rational existence assertion of Lemma 5.4. -/
+/-- The literal positive-rational existence assertion of Lemma F.5.5. -/
 theorem exists_common_rational_tags (arity : ι → ℕ)
     (h : (i : ι) → E (arity i)) (g : (i : ι) → F (arity i))
     (hh : ∀ i j, i ≠ j → arity i = arity j → h i ≠ 0 ∨ h j ≠ 0)

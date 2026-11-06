@@ -6,13 +6,16 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
 /-!
-# Counterexample to the literal simple-instance implication in Theorem 5.2
+# The simple-instance counterexample in Appendix F.B.1
 
-The manuscript's TeX lines 2268–2271 prohibit repeated occurrences of one unary
-function at a variable. Under that exact convention, strictly positive unary profiles (1,2,5) and
-(1,3,4) with a label pinned to the weight-one entry have identical values on every
+The 2026-11-06 STOC snapshot prohibits repeated occurrences of one unary
+function at a variable in its definition of simplicity (Appendix F.B).
+Under that exact convention, strictly positive unary profiles (1,2,6) and
+(1,3,5) with a label pinned to the weight-one entry have identical values on every
 simple instance and are not isomorphic. No claim about all-instance equality
-is made; repeating a unary constraint twice distinguishes the profiles.
+is made; repeating a unary constraint twice gives 41 and 35. The current
+Theorem F.5.2 uses all instances and is proved by `all_instance_completeness`.
+The names mentioning Theorem 5.2 below retain the historical v1 attribution.
 -/
 namespace ComplexCSP.Theorem52Counterexample
 open scoped BigOperators
@@ -123,9 +126,9 @@ theorem all_simple_unary_equal [CommSemiring K] [Fintype D] [Fintype V] [Fintype
     · simp only [if_neg hc]
 
 /-- Both profiles are positive, injective, and have the same total weight. -/
-def firstProfile : Fin 3 → ℚ := fun i => if i = 0 then 1 else if i = 1 then 2 else 5
+def firstProfile : Fin 3 → ℚ := fun i => if i = 0 then 1 else if i = 1 then 2 else 6
 
-def secondProfile : Fin 3 → ℚ := fun i => if i = 0 then 1 else if i = 1 then 3 else 4
+def secondProfile : Fin 3 → ℚ := fun i => if i = 0 then 1 else if i = 1 then 3 else 5
 
 def zeroPin : Fin 1 → Fin 3 := fun _ => 0
 
@@ -142,7 +145,7 @@ theorem secondProfile_injective : Function.Injective secondProfile := by decide
 theorem profile_sums : (∑ x, firstProfile x) = ∑ x, secondProfile x := by
   norm_num [Fin.sum_univ_succ, firstProfile, secondProfile, show (2 : Fin 3) ≠ 1 by decide]
 
-theorem profile_sum_value : (∑ x, firstProfile x) = 8 := by
+theorem profile_sum_value : (∑ x, firstProfile x) = 9 := by
   norm_num [Fin.sum_univ_succ, firstProfile, show (2 : Fin 3) ≠ 1 by decide]
 
 theorem profile_pin : firstProfile 0 = secondProfile 0 := by decide
@@ -170,12 +173,12 @@ theorem secondProfile_twinFree {a b : Fin 3}
     (h : (unaryLanguage secondProfile).Twins a b) : a = b :=
   secondProfile_injective ((unary_twins_iff secondProfile a b).mp h)
 
-/-- Every constrained hidden variable contributes eight, every isolated hidden
+/-- Every constrained hidden variable contributes nine, every isolated hidden
 variable contributes three, and the pinned variable contributes one. -/
 theorem positive_profile_simple_value {H : Type} [Fintype H] [DecidableEq H]
     (I : Instance (unaryLanguage firstProfile) (Fin 1) H) (hs : PaperSimple I) :
     I.partition zeroPin = ∏ h : H,
-      if Sum.inr h ∈ (occurrences I).toFinset then (8 : ℚ) else 3 := by
+      if Sum.inr h ∈ (occurrences I).toFinset then (9 : ℚ) else 3 := by
   rw [partition_simple I ((paperSimple_iff_simple I).mp hs)]
   have hb : (∏ v : Fin 1, if Sum.inl v ∈ (occurrences I).toFinset then
       firstProfile (zeroPin v) else 1) = 1 := by simp [zeroPin, firstProfile]
@@ -206,8 +209,8 @@ theorem positive_profiles_not_isomorphic :
     simpa only [unaryLanguage, firstProfile, Function.comp_apply] using hv
   exact secondProfile_ne_two (e 1) htwo.symm
 
-/-- Literal falsification of the simple-instance implication in the paper's
-Theorem 5.2, using one unary function and one boundary label. Quantification
+/-- Appendix F.B.1 falsifies the simple-instance implication in the first
+version's Theorem 5.2, using one unary function and one boundary label. Quantification
 over `Fin n` covers every finite number of hidden variables. -/
 theorem printed_theorem_5_2_counterexample :
     (∀ (n : ℕ) (I : Instance (unaryLanguage firstProfile) (Fin 1) (Fin n)),
@@ -226,7 +229,7 @@ theorem doubledUnary_not_simple : ¬ PaperSimple doubledUnary := by
   rw [paperSimple_iff_simple]
   simp [Simple, occurrences, doubledUnary]
 
-theorem doubledUnary_first_value : doubledUnary.partition zeroPin = 30 := by
+theorem doubledUnary_first_value : doubledUnary.partition zeroPin = 41 := by
   have he : doubledUnary.partition zeroPin = ∑ x, firstProfile x * firstProfile x := by
     unfold Instance.partition
     exact Fintype.sum_equiv (Equiv.funUnique (Fin 1) (Fin 3)) _ _
@@ -235,7 +238,7 @@ theorem doubledUnary_first_value : doubledUnary.partition zeroPin = 30 := by
   norm_num [Fin.sum_univ_succ, firstProfile, show (2 : Fin 3) ≠ 1 by decide]
 
 theorem doubledUnary_second_value :
-    (doubledUnary.retarget (fun _ x => secondProfile (x 0))).partition zeroPin = 26 := by
+    (doubledUnary.retarget (fun _ x => secondProfile (x 0))).partition zeroPin = 35 := by
   have he : (doubledUnary.retarget (fun _ x => secondProfile (x 0))).partition zeroPin =
       ∑ x, secondProfile x * secondProfile x := by
     unfold Instance.partition

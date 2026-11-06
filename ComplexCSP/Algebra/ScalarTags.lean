@@ -5,7 +5,7 @@ import Mathlib.Data.Fintype.Pi
 /-!
 # Common positive scalar tags
 
-The scalar-avoidance step of Lemma 5.4. Positive integer scalars suffice to avoid
+The scalar-avoidance step of Lemma F.5.5. Positive integer scalars suffice to avoid
 any finite collection of equalities in each of two table families. The finite
 search below has actual coefficient/table decidability parameters.
 -/
@@ -79,7 +79,7 @@ theorem tag_update_injOn {ι : Type*} [DecidableEq ι] [DecidableEq (A → K)] (
 
 /-- Common positive integer tags for two finite table families. Each family
 may contain one zero table, but not two. Applied separately at each arity,
-this is the common-scalar-tag existence assertion of Lemma 5.4. -/
+this is the common-scalar-tag existence assertion of Lemma F.5.5. -/
 theorem exists_common_positive_tags {ι B : Type*}
     (x : ι → A → K) (y : ι → B → K)
     (hx0 : ∀ i j, x i = 0 → x j = 0 → i = j)

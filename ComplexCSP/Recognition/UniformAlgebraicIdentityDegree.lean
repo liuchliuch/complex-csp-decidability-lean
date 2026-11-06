@@ -2,7 +2,7 @@ import ComplexCSP.Recognition.UniformAlgebraicIdentity
 import ComplexCSP.Algebra.UniformCyclotomicExtensionRuntime
 
 /-!
-# Exact recognition: uniform Theorem 5.9 frontend
+# Exact recognition: uniform Theorem F.10.2 frontend
 
 The primitive filter root and its containing field are computed by the actual
 validated cyclotomic search. Both coefficient conversion and genuine

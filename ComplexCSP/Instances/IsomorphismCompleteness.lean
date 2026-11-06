@@ -3,8 +3,9 @@ import ComplexCSP.Instances.IsomorphismTwins
 
 /-! # All-instance isomorphism and prescribed pin twins
 
-The strengthened all-instance premise yields the full equivalence, including
-twin multiplicities. See docs/paper.md for the correction to printed Theorem 5.2. -/
+The all-instance premise in the current Theorem F.5.2 yields the full
+equivalence, including twin multiplicities. See docs/paper.md for the historical
+v1 simple-instance error and its current Appendix F.B.1 counterexample. -/
 
 namespace ComplexCSP
 
@@ -59,7 +60,7 @@ theorem exists_both_surjective_extension (a : V → A) (b : V → B)
 /-- **Corrected all-instance completeness.** Equality on every finite
 instance implies a domain isomorphism matching the prescribed pins up to twins.
 Repeated constraints/scopes are essential to the premise. This theorem does not
-assert the paper's false simple-instance implication. -/
+assert the historical v1 simple-instance implication. -/
 theorem all_instance_completeness (a : V → A) (b : V → B)
     (h : AllPinnedEqual L g a b) :
     ∃ e : A ≃ B, L.IsTargetIso g e ∧
@@ -88,8 +89,8 @@ theorem all_instance_pinned_iso_iff (a : V → A) (b : V → B) :
   · rintro ⟨e, he, hp⟩ H hH dH I
     exact I.partition_eq_of_iso_pin_twins g e he a b hp
 
-/-- The existing finite candidate checker is complete for the proved repair's
-all-instance premise. It is not thereby complete for the paper's simple premise. -/
+/-- The finite candidate checker is complete for Theorem F.5.2's
+all-instance premise. The historical v1 simple-instance premise is insufficient. -/
 theorem pinnedIsoCheck_correct_all_instances
     [DecidableEq A] [DecidableEq B] [DecidableEq K] [Fintype ι] [Fintype V]
     (a : V → A) (b : V → B) :

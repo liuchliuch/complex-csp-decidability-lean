@@ -64,7 +64,7 @@ theorem lemma_8_5 {D ι : Type} [Fintype D] [Fintype ι]
   exact hm (n+n) (by omega) F hF
 
 /-- Cancelling one table-wide nonzero normalization preserves every intrinsic
-entry equation in 4.1, including arbitrary four (not only adjacent) entries. -/
+entry equation in F.3.5, including arbitrary four (not only adjacent) entries. -/
 theorem normalization_norm_iff (c a b : ℂ) (hc : c ≠ 0) :
     ‖c*a‖ = ‖c*b‖ ↔ ‖a‖ = ‖b‖ := by
   rw [norm_mul,norm_mul]

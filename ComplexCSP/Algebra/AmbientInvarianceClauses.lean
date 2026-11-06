@@ -1,6 +1,6 @@
 import ComplexCSP.Algebra.LegalPurificationTables
 
-/-! # Every clause of Lemma 3.1 for actual legal ambient purifications
+/-! # The ambient row clauses of Lemma F.3.1 for actual legal ambient purifications
 
 The global BO equivalence already follows from the structural map theorem. This
 file exposes the stronger, individual positive-magnitude-block vanishing clause,
@@ -98,7 +98,7 @@ end ComplexCSP.Purification.PurificationMap
 namespace ComplexCSP
 open BlockOrthogonality RowTypes
 
-/-- The conclusions of Lemma 3.1, packaged only as theorem output. This is not
+/-- The ambient row conclusions of Lemma F.3.1, packaged only as theorem output. This is not
 an input interface that assumes ambient invariance. -/
 structure AmbientTableAgreement {X D : Type*} [Fintype D] (P Q : X → D → ℂ) : Prop where
   supports : ∀ x, support (P x) = support (Q x)
@@ -174,7 +174,8 @@ end AmbientTableAgreement
 namespace GeneratingSet.LegalGeneratingSet
 variable {X D : Type*} [Fintype D] {S T : Finset ℂˣ}
 
-/-- Literal Lemma 3.1 with printed purification or positive normalization. -/
+/-- The ambient row clauses with printed purification or positive normalization.
+The additional group-extension clauses are exposed in ComplexCSP.Paper. -/
 theorem table_normalized_ambient_agreement
     (L : LegalGeneratingSet S) (M : LegalGeneratingSet T) (G : X → D → ℂ)
     (hS : ContainsTable S G) (hT : ContainsTable T G)

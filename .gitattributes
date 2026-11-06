@@ -2,3 +2,4 @@
 *.lean text
 *.tex text
 *.bib text
+*.pdf binary

@@ -2,7 +2,7 @@ import ComplexCSP.Recognition.UniformAlgebraicIdentityInput
 import ComplexCSP.Recognition.UniformAlgebraicIdentityTransport
 
 /-!
-# Exact recognition: uniform Theorem 5.7 frontend for arbitrary algebraic coefficients
+# Exact recognition: uniform Theorem F.5.8 frontend for arbitrary algebraic coefficients
 
 Both language entries and every polynomial coefficient are separate standard
 algebraic-number descriptions. Direct and conjugate variables are independent;

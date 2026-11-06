@@ -71,7 +71,7 @@ theorem eval_tensor (I : Instance L B H) (φ : J → K →+* K)
       exact congrArg (fun z => (∏ j, φ j (c.eval
         (Sum.elim (fun v => a v j) (fun v => b v j)))) * z) ih
 
-/-- Lemma 5.3, at the level of actual finite constraint instances.
+/-- Lemma F.5.4, at the level of actual finite constraint instances.
 The equivalence transposes a tensor assignment `H → J → D` into independent
 layer assignments `J → H → D`, then distributivity factors the finite sum. -/
 theorem partition_tensor [Fintype D] [Fintype H] [DecidableEq H] [DecidableEq J]
@@ -114,12 +114,12 @@ def Instance.tensorConjugate (I : Instance L B H) (p q : ℕ) :
     Instance (L.tensorConjugate p q) B H :=
   I.tensor (tensorLayerMaps p q)
 
-/-- The pin transposition in Lemma 5.3, including every boundary label. -/
+/-- The pin transposition in Lemma F.5.4, including every boundary label. -/
 def tensorPins {p q : ℕ} (a : Fin p → B → D) (b : Fin q → B → D) :
     B → (Fin p ⊕ Fin q) → D :=
   fun v => Sum.elim (fun j => a j v) (fun j => b j v)
 
-/-- Lemma 5.3's displayed formula, now for original and conjugate layers.
+/-- Lemma F.5.4's displayed formula, now for original and conjugate layers.
 Both empty products are included, so `p = q = 0` is covered. -/
 theorem Instance.partition_tensorConjugate [Fintype D] [Fintype H] [DecidableEq H]
     (I : Instance L B H) (p q : ℕ) (a : Fin p → B → D) (b : Fin q → B → D) :

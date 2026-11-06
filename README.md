@@ -1,17 +1,23 @@
 # Complex-weighted CSP decidability in Lean
 
 A Lean formalization of Chenghua Liu and Boning Meng,
-[*From Block Orthogonality to Decidability in Complex-Weighted Counting CSP*](https://arxiv.org/abs/2608.14845v1).
+[*From Block Orthogonality to Decidability in Complex-Weighted Counting CSP*](https://arxiv.org/abs/2608.14845).
 The development includes exact uniform recognition, the structural collapse to
 Block Orthogonality, the degree-multiple extension, and concrete FP and #P-hardness
 implications for fixed languages.
 
-**Scope.** Theorem 5.2 of the paper's first version is false with its printed
-simple-instance premise. This repository proves an explicit counterexample and
-a corrected theorem whose premise quantifies over all finite instances.
-The recognition proofs use that correction. The original manuscript is preserved
-unchanged; [the paper map and correction](docs/paper.md) identify every numbered
-item and the affected argument.
+**Current manuscript.** The target is the [STOC 2027 source](paper/stoc2027-CSP.tex)
+exported from Overleaf on **2026-11-06**, with its [compiled PDF](paper/stoc2027-CSP.pdf).
+The [paper map](docs/paper.md) covers all 48 numbered items in the short paper,
+full paper, and appendix. Theorem F.5.2 is the proved **all-instance** pinned
+isomorphism theorem. Appendix F.B.1 refutes the historical simple-instance
+premise using the exact current profiles `(1,2,6)` and `(1,3,5)`.
+
+The updated public bridges in [ComplexCSP/Paper.lean](ComplexCSP/Paper.lean)
+cover the explicit purification group properties in F.3.1 and the general
+indexed-family comparison in F.5.6. The independent specification has 127
+Comparator goals with stable, label-based identifiers. Historical arXiv v1
+sources and receipts remain separately identified.
 
 ## Build
 
@@ -41,6 +47,9 @@ exported proof dependencies through Lean's kernel. The default mode uses
 On macOS, use the explicit local mode
 `python3 scripts/verify.py --no-sandbox`. The proof comparison and kernel replay
 are the same in both modes.
+For an existing checkout with pinned, shared dependency caches, use
+`python3 scripts/verify.py --no-sandbox --reuse-dependencies`. This mode uses
+direct Lean builds for local sources and never invokes Lake against dependencies.
 
 Start a mathematical review in [verification/Statements.lean](verification/Statements.lean).
 That file contains propositions without proofs. [Challenge.lean](verification/Challenge.lean)
@@ -62,7 +71,7 @@ checking methods, regression examples, and verification records.
 | `ComplexCSP/Complexity` | Bit-machine evaluators, counting, and charged hardness reductions |
 | `verification` | Frozen specification, comparator goals and solutions, and paper correspondence |
 | `tests` | Exact-input and instance-semantics regression checks |
-| `paper` | Unmodified arXiv v1 source and the separate minimal correction patch |
+| `paper` | Current self-contained STOC source and PDF; archived arXiv v1 source and historical correction |
 | `vendor/plgh` | Required PlanarHom proof sources |
 
 To cite the paper, use [CITATION.cff](CITATION.cff).

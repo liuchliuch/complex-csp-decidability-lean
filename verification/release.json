@@ -1,20 +1,31 @@
 {
-  "schema_version": 1,
-  "date": "2026-10-04",
+  "schema_version": 2,
+  "date": "2026-11-06",
   "lean_version": "4.24.0",
-  "source_tree_sha256": "6bb6e370ef7310f7550032b288194f420300dc28ba64d2700667a8bbf04ac797",
-  "builds": {
-    "original": "passed",
-    "reorganized": "passed",
-    "independent_directory_fresh_main_sources": "passed; verified vendor and public dependency caches reused"
+  "source_tree_sha256": "a84fa4944bda2ec8ced36471c51a3dad1b5d13b443fe99c0bfd4e6bba6cff36c",
+  "manuscript": "Overleaf STOC 2027 snapshot exported 2026-11-06T14:23:17.798488+00:00",
+  "paper_correspondence": {
+    "numbered_items": 48,
+    "proof_statements": 36,
+    "comparator_goals": 127,
+    "current_pinned_theorem": "F.5.2, all finite labelled instances",
+    "counterexample": "F.B.1: (1,2,6) and (1,3,5); doubled values 41 and 35"
   },
-  "source_inventory": {
-    "production_modules": 3377,
-    "original_main_modules_preserved_under_renaming": 357,
-    "vendored_modules_preserved_byte_for_byte": 3018
+  "incremental_checks": {
+    "counterexample": "passed with direct Lean 4.24.0",
+    "new_public_bridges": "passed with direct Lean 4.24.0"
+  },
+  "historical_receipts": [
+    "verification/original-release.json",
+    "verification/arxiv-v1-release.json"
+  ],
+  "builds": {
+    "production": "passed; direct cached Lean build over all 3378 local production modules",
+    "modules_recompiled": 92,
+    "dependency_mode": "pinned caches reused read-only; no dependency builds"
   },
   "production_axiom_audit": {
-    "declarations": 271562,
+    "declarations": 271566,
     "result": "passed",
     "dependencies": [
       "propext",
@@ -22,51 +33,28 @@
       "Classical.choice"
     ]
   },
-  "paper_correspondence": {
-    "numbered_items": 36,
-    "proof_items_mapped": 31,
-    "declaration_entries_checked": 158,
-    "printed_theorem_5_2": "refuted; all-instance replacement proved"
+  "paper_declaration_audit": {
+    "entries": 204,
+    "result": "passed after correcting equationSet source-file metadata"
   },
   "regressions": {
     "modules": 6,
     "executable_assertions": 36,
-    "result": "passed in the production and independent source directories"
+    "result": "passed"
   },
-  "comparator": {
-    "goals": 123,
-    "statement_and_definition_comparison": "passed",
-    "axiom_policy": "passed",
-    "fresh_lean_kernel_replay": "passed",
-    "kernel_implementation": "Lean 4.24.0 default kernel",
-    "process_isolation": "disabled; explicit local-author mode on macOS ARM64"
-  },
-  "github_actions": {
-    "linux_landrun_workflow": "configured",
-    "remote_run": "See the current GitHub Actions run; Linux validation is not inferred from the historical macOS receipt."
-  },
-  "publication_changes": {
-    "original_receipt": "verification/original-release.json",
-    "original_source_tree_sha256": "8ab86f339005eb1cc9a9962841e7a50694296fdab56cd869bec84b980e765422",
-    "unchanged_inputs": "All mathematical Lean files, toolchain and dependency lockfile are byte-for-byte unchanged.",
-    "modified_files": [
-      "scripts/verify.py",
-      "README.md",
-      "docs/verification.md"
+  "record_type": "local prepublication evidence; official verification status is supplied by the exact-commit CI run",
+  "recorded_utc": "2026-11-06T15:31:06.389100+00:00",
+  "official_verification": {
+    "command": "python3 scripts/verify.py",
+    "workflow": ".github/workflows/lean.yml",
+    "goals": 127,
+    "required_checks": [
+      "frozen statement and definition comparison",
+      "allowed axioms only",
+      "fresh Lean default-kernel replay",
+      "statement-mismatch negative control",
+      "forbidden-axiom negative control"
     ],
-    "added_files": [
-      "scripts/landrun-runner.sh",
-      "verification/original-release.json"
-    ],
-    "purpose": "Preserve the inner lean4export -- delimiter while retaining real Linux Landrun isolation.",
-    "argument_preservation_test": "passed; sandbox flags and child arguments are preserved exactly"
-  },
-  "documentation_changes": {
-    "modified_files": [
-      "README.md",
-      "docs/verification.md"
-    ],
-    "previous_source_tree_sha256": "e32147072334d83034c62d6185a85b52928dd75b7fb5c2148ce6ecc5f27b1b0c",
-    "scope": "Documentation only; mathematical files, verification programs and dependency pins are unchanged."
+    "evidence_policy": "The GitHub Actions run for the exact published commit records these results. This local prepublication receipt does not assert an official Comparator result."
   }
 }

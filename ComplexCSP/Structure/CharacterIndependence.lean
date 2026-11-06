@@ -4,7 +4,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 /-!
 # Monoid characters and finite coefficient grouping
 
-This file formalizes the algebraic core of Lemma 5.6 and the coefficient-grouping
+This file formalizes the algebraic core of Lemma F.5.7 and the coefficient-grouping
 step of the universal identity oracle in the Cai--Chen decidability manuscript.
 Character equality is an explicit input to the executable test below. No procedure
 for deciding equality of arbitrary monoid homomorphisms is postulated here.
@@ -26,7 +26,7 @@ theorem characters_linearIndependent (χ : ι → M →* K)
     LinearIndependent K (fun i => (χ i : M → K)) :=
   (linearIndependent_monoidHom M K).comp χ hχ
 
-/-- Paper Lemma 5.6, with a finite index set and an explicit pointwise relation. -/
+/-- Paper Lemma F.5.7, with a finite index set and an explicit pointwise relation. -/
 theorem character_coefficients_eq_zero (χ : ι → M →* K)
     (hχ : Function.Injective χ) (s : Finset ι) (c : ι → K)
     (h : ∀ x : M, ∑ i ∈ s, c i * χ i x = 0) :

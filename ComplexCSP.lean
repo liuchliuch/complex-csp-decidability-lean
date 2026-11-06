@@ -18,5 +18,8 @@ import ComplexCSP.Recognition.UniformAlgebraicIdentityDegree
 import ComplexCSP.Recognition.UniformComplexityClassification
 import ComplexCSP.Structure.PaperBridge
 
+import ComplexCSP.Paper
+
 /-! Complete production entrypoint, including standalone checked alternatives.
-The original Theorem 5.2 is refuted; the recognition proofs use the corrected all-instance theorem. -/
+The current Theorem F.5.2 uses all finite instances; Appendix F.B.1
+refutes the historical simple-instance premise. -/
